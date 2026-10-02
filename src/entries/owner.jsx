@@ -7,7 +7,7 @@ import Cabecera from '../partials/Cabecera'
 function HolaMundo() {
   return (
     <>
-    <p>te amo ferkix</p>
+    <p>hola soy filipino</p>
     <p> Estamos entendiendo</p>
     </>
 )

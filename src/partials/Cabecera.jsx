@@ -1,3 +1,4 @@
+// src/partials/Cabecera.jsx
 
 import './Cabecera.css'
 

@@ -1,0 +1,454 @@
+/* =========================================================
+   CABECERA ENTERPRISE
+   ========================================================= */
+
+.enterprise-navbar {
+    width: 100%;
+    height: 66px;
+
+    margin: 0;
+    padding: 0 24px;
+
+    box-sizing: border-box;
+
+    background-color: #123A5F;
+
+    display: flex;
+    align-items: center;
+
+    /* Evita que Bootstrap modifique el comportamiento */
+    flex-wrap: nowrap;
+
+    overflow: visible;
+
+    position: relative;
+    z-index: 1000;
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.enterprise-navbar-content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   IZQUIERDA
+   ========================================================= */
+
+.enterprise-navbar-left {
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+
+    min-width: 0;
+    flex-shrink: 1;
+}
+
+
+/* =========================================================
+   LOGO / NOMBRE
+   ========================================================= */
+
+.enterprise-brand {
+    display: inline-flex;
+    align-items: center;
+
+    color: #FFFFFF;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    line-height: 1;
+}
+
+.enterprise-brand:hover {
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   PANEL DE EMPRESA
+   ========================================================= */
+
+.enterprise-nav-link {
+    display: inline-flex;
+    align-items: center;
+
+    height: 66px;
+
+    color: #FFFFFF;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    opacity: 0.95;
+}
+
+.enterprise-nav-link:hover {
+    color: #E6EEF5;
+}
+
+
+/* =========================================================
+   DERECHA
+   ========================================================= */
+
+.enterprise-navbar-right {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   BUSCADOR
+   ========================================================= */
+
+.enterprise-search {
+    width: 256px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    background-color: #FFFFFF;
+
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    flex-shrink: 1;
+}
+
+.enterprise-search-icon {
+    display: none;
+}
+
+.enterprise-search-input {
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+
+    padding: 0 14px;
+
+    border: 0;
+    outline: none;
+
+    background-color: transparent;
+
+    color: #16212B;
+
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.enterprise-search-input::placeholder {
+    color: #67757F;
+    opacity: 1;
+}
+
+.enterprise-search-input:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   CUENTA DE EMPRESA
+   ========================================================= */
+
+.enterprise-company-button {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 0;
+
+    border: 0 !important;
+    outline: none !important;
+
+    background: transparent !important;
+
+    color: #FFFFFF !important;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+/*
+   Bootstrap agrega un ::after al dropdown.
+   Lo dejamos pero controlamos su tamaño.
+*/
+
+.enterprise-company-button::after {
+    margin-left: 3px;
+
+    border-top-color: #FFFFFF;
+
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.enterprise-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background-color: #0F8F7E;
+
+    color: #FFFFFF;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   INFORMACIÓN EMPRESA
+   ========================================================= */
+
+.enterprise-company-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    justify-content: center;
+
+    min-width: 0;
+
+    line-height: 1.1;
+
+    text-align: left;
+}
+
+.enterprise-company-info strong {
+    display: block;
+
+    color: #FFFFFF;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+.enterprise-company-info small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #E6EEF5;
+
+    font-size: 9px;
+    font-weight: 400;
+
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   DROPDOWN
+   ========================================================= */
+
+.enterprise-dropdown {
+    min-width: 220px;
+
+    margin-top: 8px !important;
+
+    padding: 6px;
+
+    background-color: #FFFFFF;
+
+    border: 1px solid #DCE3EA;
+    border-radius: 6px;
+
+    box-shadow:
+        0 8px 20px rgba(22, 33, 43, 0.15);
+}
+
+.enterprise-dropdown .dropdown-item {
+    padding: 9px 12px;
+
+    border-radius: 4px;
+
+    color: #16212B;
+
+    font-size: 13px;
+}
+
+.enterprise-dropdown .dropdown-item:hover {
+    background-color: #E6EEF5;
+
+    color: #123A5F;
+}
+
+.enterprise-dropdown .dropdown-divider {
+    border-color: #DCE3EA;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .enterprise-navbar {
+        padding: 0 16px;
+    }
+
+    .enterprise-navbar-left {
+        gap: 20px;
+    }
+
+    .enterprise-search {
+        width: 210px;
+    }
+
+    .enterprise-navbar-right {
+        gap: 12px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - PANTALLAS PEQUEÑAS
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .enterprise-navbar {
+        padding: 0 14px;
+    }
+
+    .enterprise-search {
+        width: 190px;
+    }
+
+    .enterprise-company-info {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MÓVIL
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    .enterprise-navbar {
+        height: 60px;
+
+        padding: 0 12px;
+    }
+
+    .enterprise-navbar-content {
+        gap: 10px;
+    }
+
+    .enterprise-navbar-left {
+        gap: 12px;
+    }
+
+    .enterprise-brand {
+        font-size: 15px;
+    }
+
+    .enterprise-nav-link {
+        display: none;
+    }
+
+    .enterprise-navbar-right {
+        gap: 8px;
+    }
+
+    /* Buscador como botón */
+    .enterprise-search {
+        width: 36px;
+        height: 36px;
+
+        border: 0;
+
+        background-color: transparent;
+    }
+
+    .enterprise-search-icon {
+        width: 36px;
+        height: 36px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 5px;
+
+        background-color: #FFFFFF;
+
+        color: #123A5F;
+
+        font-size: 14px;
+    }
+
+    .enterprise-search-input {
+        display: none;
+    }
+
+    .enterprise-avatar {
+        width: 34px;
+        height: 34px;
+    }
+
+    .enterprise-company-info {
+        display: none;
+    }
+
+    .enterprise-company-button::after {
+        display: none;
+    }
+}
