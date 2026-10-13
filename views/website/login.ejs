@@ -4,24 +4,27 @@
     <div class="form mx-auto p-4 shadow rounded-3">
         <img class="logo d-block mx-auto mb-4" src="/assets/img/Ulimalogo.png" alt="Logo de la Universidad de Lima"
             width="200" height="100">
-        <div class="alert alert-success d-none" role="alert" id="Error">
-            A simple danger alert—check it out!
+        <div class="alert <% if (!mensaje) { %>d-none<% } %> alert-danger" role="alert" id="Error" >
+            <%  mensaje %>
         </div>
 
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control rounded-0" id="txtuser" name="user" placeholder="usuario">
-            <label for="txtuser">Usuario</label>
-        </div>
+        <form action="/login" method="POST">
 
-        <div class="form-floating mb-3">
-            <input type="password" class="form-control rounded-0" id="txtpass" name="pass" placeholder="contraseña">
-            <label for="txtpass">Contraseña</label>
-        </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control rounded-0" id="txtuser" name="user" placeholder="usuario">
+                <label for="txtuser">Usuario</label>
+            </div>
 
-        <button class="btn btn-dark w-75 d-block mx-auto rounded-0 mb-3" onclick="ingresar()" id="btningresar">
-            Iniciar sesión
-        </button>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control rounded-0" id="txtpass" name="pass" placeholder="contraseña">
+                <label for="txtpass">Contraseña</label>
+            </div>
 
+            <button class="btn btn-dark w-75 d-block mx-auto rounded-0 mb-3" onclick="ingresar()" id="btningresar" type="submit">
+                Iniciar sesión
+            </button>
+            
+        </form>
 
         <a href="/reset-password" class="d-block text-center mb-4">
             ¿Has olvidado tu contraseña?

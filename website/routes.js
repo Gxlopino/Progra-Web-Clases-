@@ -2,7 +2,7 @@
 import { Router } from 'express';
 import * as api from './apis.js';
 import * as controller from './controllers.js';
-import { redirectIfAuthenticated, requireAuth } from '../configs/middlewares.js'; 
+import { redirectIfAuthenticated, requireAuth,RedireccionarSiLogeado } from '../configs/middlewares.js'; 
 
 const router = Router();
 
@@ -10,7 +10,9 @@ router.get('/', controller.home);
 router.get('/convocatorias', controller.convocatorias);
 router.get('/empresas', controller.empresas);
 router.get('/como-funciona', controller.como_funciona);
-router.get('/login',controller.login)
+router.get('/login',RedireccionarSiLogeado,controller.login)
+router.post('/login',controller.ingresar)
+router.get('/logout', controller.logout);
 router.get('/register',controller.register)
 router.get('/reset-password',controller.ResetPassword)
 router.get('/about', controller.about);

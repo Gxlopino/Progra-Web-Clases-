@@ -99,7 +99,77 @@ export function requireAuth(req, res, next) {
     statusCode: 401
   });
 }
+export function RedireccionarSiLogeado(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  const isAuthenticated = req.session && req.session.user && req.session.user.role;
+  
+  // Si está autenticado Y está intentando acceder a rutas de autenticación
+  const isAuthRoute = [
+    '/login',
+  ].some(route => req.path === route);
+  
+  if (isAuthenticated && isAuthRoute) {
+    // Redirigir al home si ya está logueado y quiere acceder a rutas de auth
+    return res.redirect('/' + req.session.role);
+  }
+  
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
 
+export function soloOwner(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  const isAuthenticated = req.session && req.session.user && req.session.user.role;
+  
+  if (isAuthenticated) {
+    if(req.session.role!='owner'){
+    // Redirigir al home si ya está logueado y quiere acceder a rutas de auth
+    return res.status(401).render('401', {
+    title: 'Acceso no autorizado',
+    message: 'Debes ser Owner.',
+    statusCode: 401
+  });
+    }
+  }
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
+
+export function soloEnterprise(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  const isAuthenticated = req.session && req.session.user && req.session.user.role;
+  
+  if (isAuthenticated) {
+    if(req.session.role!='enterprise'){
+    // Redirigir al home si ya está logueado y quiere acceder a rutas de auth
+    return res.status(401).render('401', {
+    title: 'Acceso no autorizado',
+    message: 'Debes ser enterprise.',
+    statusCode: 401
+  });
+    }
+  }
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
+
+export function soloLogueado(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  console.log("req.session:", req.session);
+  const isAuthenticated = req.session && req.session.user && req.session.user.role;
+  
+
+  if (!isAuthenticated) {
+    return res.status(401).render('401', {
+    title: 'Acceso no autorizado',
+    message: 'Debes estar logeado.',
+    statusCode: 401
+  });
+    
+  }
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
 // configs/middlewares.js
 /** 
  * Middleware para redirigir a usuarios autenticados

@@ -35,6 +35,7 @@ export function login(req, res) {
   let fondos =["/assets/img/Ulimafondo.png","/assets/img/Ulimafondo2.png","/assets/img/Ulimafondo3.jpg"]
   return res.render('website/login', {
     title: 'Iniciar Sesion',
+    mensaje:null,
     background: fondos[Math.floor(Math.random() * 3)]
   });
 }
@@ -47,12 +48,54 @@ export function ResetPassword(req, res) {
   });
 }
 
+export function ingresar(req, res) {
+  const fondos = [
+    "/assets/img/Ulimafondo.png",
+    "/assets/img/Ulimafondo2.png",
+    "/assets/img/Ulimafondo3.jpg"
+  ];
+
+  const { user, pass } = req.body || {};
+  console.log("user:", user);
+  console.log("pass:", pass);
+
+  const users = [
+    { user: "owner", pass: "123", role: "owner" },
+    { user: "enterprise", pass: "123", role: "enterprise" }
+  ];
+
+  const userFound = users.find((u) => u.user === user && u.pass === pass);
+  console.log("userFound:", userFound);
+
+  if (!userFound) {
+    return res.status(401).render("website/login", {
+      title: "Bienvenido",
+      user,
+      mensaje: "usuario y contraseña no coincide",
+      error: "Credenciales inválidas",
+      background: fondos[Math.floor(Math.random() * fondos.length)]
+    });
+  }
+
+  req.session.user = {
+    id: Date.now(),
+    user: userFound.user,
+    role: userFound.role
+  };
+
+  req.session.role = userFound.role;
+
+  return req.session.save(() => {
+    return res.redirect("/" + userFound.role);
+  });
+}
+
 export function about(req, res) {
   return res.render('website/about', {
     title: 'Acerca de',
     currentPage: 'about',
-    description:
-      'Esta es una aplicación de ejemplo creada con Node.js, Express y EJS.'
+    description:'Esta es una aplicación de ejemplo creada con Node.js, Express y EJS.',
+
   });
 }
 
@@ -137,6 +180,6 @@ export function logout(req, res) {
     res.clearCookie('connect.sid');
 
     // Redirige al login
-    res.redirect('/sign-in');
+    res.redirect('/login');
   });
 }

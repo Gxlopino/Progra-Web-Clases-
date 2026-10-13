@@ -68,6 +68,15 @@ export default function Cabecera() {
                         </a>
                     </div>
 
+                    <div className="d-flex">
+                        <a
+                            href="/logout"
+                            className="btn btn-outline-info px-4"
+                        >
+                            Cerrar sesión
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </nav>
