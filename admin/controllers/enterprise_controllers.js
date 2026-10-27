@@ -3,5 +3,6 @@
 export function home(req, res) {
   return res.render('enterprise/home', {
     title: 'Bienvenido Enterprise',
+    
      });
 }

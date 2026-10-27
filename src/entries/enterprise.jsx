@@ -20,6 +20,7 @@ import ResenasRecibidas from '../pages/enterprise/ResenasRecibidas'
 import CambiarContrasena from '../pages/enterprise/CambiarContrasena'
 import ConfiguracionEmpresa from '../pages/enterprise/ConfiguracionEmpresa'
 import NoEncontrado from '../pages/enterprise/NoEncontrado'
+import CarreraListado from '../pages/enterprise/CarreraListado'
 
 import './enterprise.css'
 
@@ -75,6 +76,11 @@ function App() {
         <Route
           path="resenas"
           element={<ResenasRecibidas />}
+        />
+
+        <Route
+          path="carrers"
+          element={<CarreraListado />}
         />
 
         <Route
