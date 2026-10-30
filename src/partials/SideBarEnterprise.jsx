@@ -42,7 +42,7 @@ export default function SideBarEnterprise() {
             className={linkClass}
           >
             <span className="enterprise-sidebar-bullet" />
-            Carreras
+            Listado Carreras
           </NavLink>
 
           <NavLink

@@ -14,6 +14,16 @@ export const fetchAll = async () => {
 /**
  * Obtener carreras paginadas con filtro por nombre
  */
+export const fetchAllPaginatedSimple = async () => {
+ 
+  // Obtener registros paginados
+  const carrers = await carrerRepository.findAllSimple({
+    order: [['id', 'ASC']]
+  });
+
+  return carrers.map(carrer => carrer.toJSON());
+};
+
 export const fetchAllPaginated = async (page = 1, limit = 10, name = '') => {
   const offset = (page - 1) * limit;
 

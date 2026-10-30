@@ -21,6 +21,7 @@ import CambiarContrasena from '../pages/enterprise/CambiarContrasena'
 import ConfiguracionEmpresa from '../pages/enterprise/ConfiguracionEmpresa'
 import NoEncontrado from '../pages/enterprise/NoEncontrado'
 import CarreraListado from '../pages/enterprise/CarreraListado'
+import CarreraNueva from '../pages/enterprise/CarreraNueva'
 
 import './enterprise.css'
 
@@ -81,6 +82,11 @@ function App() {
         <Route
           path="carrers"
           element={<CarreraListado />}
+        />
+
+        <Route
+          path="carrers/new"
+          element={<CarreraNueva />}
         />
 
         <Route

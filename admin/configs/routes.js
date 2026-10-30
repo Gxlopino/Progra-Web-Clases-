@@ -24,8 +24,10 @@ router.post('/api/v1/nations', nationApis.createNation);
 router.put('/api/v1/nations/:id', nationApis.updateNation);
 router.delete('/api/v1/nations/:id', nationApis.deleteNation);
 
+//Api
+router.get('/api/v1/carrers', carrers_api.listCarrersSimple);
+
 // carrers
-router.get('/api/v1/carrers', carrers_api.listCarrers);
 router.get('/admin/carrers', carrers.home);
 router.get('/owner', soloLogueado,soloOwner,owners.home);
 router.get('/enterprise/carrers', enterprise.home);
