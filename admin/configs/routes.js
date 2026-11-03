@@ -26,6 +26,8 @@ router.delete('/api/v1/nations/:id', nationApis.deleteNation);
 
 //Api
 router.get('/api/v1/carrers', carrers_api.listCarrersSimple);
+router.post('/api/v1/carrers', carrers_api.createCarrer);
+router.delete('/api/v1/carrers/:id',carrers_api.deleteCarrer);
 
 // carrers
 router.get('/admin/carrers', carrers.home);

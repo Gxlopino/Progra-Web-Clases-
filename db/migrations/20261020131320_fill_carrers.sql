@@ -10,6 +10,13 @@ INSERT INTO carrers (name) VALUES
 ('Arquitectura'),
 ('Ingeniería Industrial'),
 ('Marketing');
--- migrate:down
+-- migrate:downs
+
+/*
+SELECT setval(
+    pg_get_serial_sequence('carrers', 'id'),
+    (SELECT MAX(id) FROM carrers)
+);
+*/
 
 delete from carrers;

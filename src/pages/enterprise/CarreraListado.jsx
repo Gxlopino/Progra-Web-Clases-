@@ -25,6 +25,19 @@ const _cargarCarreras = async () => {
   }
 
 };
+
+  const _eliminar = async (e,id) => {
+    try {
+      const response = await axios.delete('/api/v1/carrers/'+id);
+      //console.log(response.data);
+      _cargarCarreras();
+      setMessage(response.data.message);
+      setStatusMessage(response.data.success);
+    }catch (error) {
+      console.error(error);
+    }
+  }
+
   return <>
           <h2>Carreras</h2>
          <p>Bienvenido al panel de la empresa</p>
@@ -50,7 +63,7 @@ const _cargarCarreras = async () => {
                 <td>{carrer.name}</td>
                 <td>
                   <button className="btn btn-primary">Editar</button>
-                  <button className="btn btn-danger">Eliminar</button>
+                  <button className="btn btn-danger" onClick={(e)=> _eliminar(e,carrer.id)}>Eliminar</button>
                 </td>
               </tr>
             ))}

@@ -18,7 +18,7 @@ export async function listCarrersSimple(req, res, next) {
 
     return res.status(200).json({
       success: true,
-      message: 'WOJOJOJOJOW',
+      message: 'WOJOJOWJWOWJWO',
       data: result,
       error: null
     });
