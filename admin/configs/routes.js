@@ -28,11 +28,15 @@ router.delete('/api/v1/nations/:id', nationApis.deleteNation);
 router.get('/api/v1/carrers', carrers_api.listCarrersSimple);
 router.post('/api/v1/carrers', carrers_api.createCarrer);
 router.delete('/api/v1/carrers/:id',carrers_api.deleteCarrer);
+router.get('/api/v1/carrers/:id', carrers_api.getCarrerById);
+router.put('/api/v1/carrers/:id', carrers_api.updateCarrer);
 
 // carrers
 router.get('/admin/carrers', carrers.home);
 router.get('/owner', soloLogueado,soloOwner,owners.home);
 router.get('/enterprise/carrers', enterprise.home);
+router.get('/enterprise/carrers/new', enterprise.home);
+router.get('/enterprise/carrers/:id/edit', enterprise.home);
 router.get('/enterprise', enterprise.home);
 router.get('/enterprise/convocatorias', enterprise.home);
 router.get('/enterprise/convocatorias',enterprise.home);

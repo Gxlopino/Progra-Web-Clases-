@@ -22,6 +22,7 @@ import ConfiguracionEmpresa from '../pages/enterprise/ConfiguracionEmpresa'
 import NoEncontrado from '../pages/enterprise/NoEncontrado'
 import CarreraListado from '../pages/enterprise/CarreraListado'
 import CarreraNueva from '../pages/enterprise/CarreraNueva'
+import CarreraDetalle from '../pages/enterprise/CarreraDetalle'
 
 import './enterprise.css'
 
@@ -87,6 +88,11 @@ function App() {
         <Route
           path="carrers/new"
           element={<CarreraNueva />}
+        />
+        
+        <Route
+          path="carrers/:id/edit"
+          element={<CarreraDetalle />}
         />
 
         <Route

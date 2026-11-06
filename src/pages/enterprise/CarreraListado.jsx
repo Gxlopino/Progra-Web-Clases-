@@ -1,9 +1,11 @@
 import { useState,useEffect } from 'react';
 import './CarreraListado.css'
 import axios from 'axios';
-import { NavLink } from 'react-router-dom';
+import { NavLink,useNavigate } from 'react-router-dom';
 
 export default function CarreraListado() {
+
+const navigate=useNavigate();
 const carrers2 = [];
 const[carrers,setCarrers] = useState(carrers2);
 const[message,setMessage] = useState("");
@@ -38,6 +40,10 @@ const _cargarCarreras = async () => {
     }
   }
 
+  const _editar = async (e,id) => {
+    navigate('/enterprise/carrers/'+id+'/edit')
+  }
+  
   return <>
           <h2>Carreras</h2>
          <p>Bienvenido al panel de la empresa</p>
@@ -62,7 +68,7 @@ const _cargarCarreras = async () => {
                 <td>{carrer.id}</td>
                 <td>{carrer.name}</td>
                 <td>
-                  <button className="btn btn-primary">Editar</button>
+                  <button className="btn btn-primary" onClick ={(e)=> _editar(e,carrer.id)}>Editar</button>
                   <button className="btn btn-danger" onClick={(e)=> _eliminar(e,carrer.id)}>Eliminar</button>
                 </td>
               </tr>
