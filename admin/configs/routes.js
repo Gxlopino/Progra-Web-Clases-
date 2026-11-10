@@ -6,6 +6,7 @@ import * as owners from '../controllers/owner_controllers.js';
 import * as enterprise from '../controllers/enterprise_controllers.js';
 import * as nationApis from '../apis/nations_apis.js';
 import * as carrers_api from '../apis/carrers_api.js';
+import * as students_api from '../apis/students_api.js';
 import { redirectIfAuthenticated, requireAuth,soloEnterprise,soloLogueado,soloOwner } from '../../configs/middlewares.js'; 
 
 const router = Router();
@@ -30,6 +31,12 @@ router.post('/api/v1/carrers', carrers_api.createCarrer);
 router.delete('/api/v1/carrers/:id',carrers_api.deleteCarrer);
 router.get('/api/v1/carrers/:id', carrers_api.getCarrerById);
 router.put('/api/v1/carrers/:id', carrers_api.updateCarrer);
+
+router.get('/api/v1/students', students_api.listStudents);
+router.get('/api/v1/students/:id', students_api.getStudentById);
+router.post('/api/v1/students', students_api.createStudent);
+router.put('/api/v1/students/:id', students_api.updateStudent);
+router.delete('/api/v1/students/:id', students_api.deleteStudent);
 
 // carrers
 router.get('/admin/carrers', carrers.home);

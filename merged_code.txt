@@ -1,0 +1,3287 @@
+
+==================================================
+ARCHIVO: api\index.js
+==================================================
+
+// api/index.js
+import express from 'express';
+import 'dotenv/config';
+
+import bootstrap from '../configs/bootstrap.js';
+
+// Imprimir variables específicas de la app
+/*
+console.log('=== APP ENV VARS ===', {
+  NODE_ENV: process.env.NODE_ENV,
+  DB_HOST: process.env.DB_HOST,
+  DB_PORT: process.env.DB_PORT,
+  DB_NAME: process.env.DB_NAME,
+  DB_USER: process.env.DB_USER,
+  DB_SSL: process.env.DB_SSL,
+  CORS_ORIGIN: process.env.CORS_ORIGIN
+});
+*/
+
+const app = express();
+
+// Configurar para Vercel
+app.set('trust proxy', 1);
+
+// Inicializa toda la app
+bootstrap(app);
+
+// Exportar para Vercel
+export default app;
+
+
+==================================================
+ARCHIVO: admin\apis\carrers_api.js
+==================================================
+
+// admin/controllers/carrers_controller.js
+import * as carrerService from '../services/carrers_services.js';
+
+export function test(req, res) {
+  return res.json({
+    success: true,
+    message: 'Active session',
+    data: ':)'
+  });
+}
+
+export async function listCarrersSimple(req, res, next) {
+  try {
+
+    const result = await carrerService.fetchAllPaginatedSimple();
+    
+    console.log(result);
+
+    return res.status(200).json({
+      success: true,
+      message: 'WOJOJOWJWOWJWO',
+      data: result,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al listar las carreras',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+export async function listCarrers(req, res, next) {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const name = req.query.name || '';
+
+    console.log(`Listando carreras - Página: ${page}, Límite: ${limit}, Filtro: ${name}`);
+
+    // Llamamos al servicio con paginación
+    const result = await carrerService.fetchAllPaginated(page, limit, name);
+
+    return res.status(200).json({
+      success: true,
+      message: 'XDXDDDD',
+      data: {
+        list: result.carrers,
+        total: result.total,
+        pages: result.totalPages,
+        offset: result.offset,
+        limit: limit,
+        page: page
+      },
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al listar las carreras',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Guardar cambios múltiples (nuevos, editados, eliminados)
+ */
+export async function saveCarrers(req, res, next) {
+  try {
+    const { news = [], edits = [], deletes = [] } = req.body;
+
+    console.log('Guardando cambios - Nuevos:', news.length, 'Editados:', edits.length, 'Eliminados:', deletes.length);
+
+    // Procesar eliminaciones
+    for (const id of deletes) {
+      await carrerService.remove(id);
+    }
+
+    // Procesar ediciones
+    for (const edit of edits) {
+      await carrerService.update(edit.id, { name: edit.name });
+    }
+
+    // Procesar nuevas carreras
+    const created = [];
+    for (const newCarrer of news) {
+      const createdCarrer = await carrerService.create({ name: newCarrer.name });
+      // Guardar la relación entre el ID temporal y el real
+      created.push({
+        tmp: newCarrer.id,
+        id: createdCarrer.id
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Carreras guardadas con éxito',
+      data: created,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al guardar las carreras',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Obtener una carrera por su ID (ej. /api/carrers/:id)
+ */
+export async function getCarrerById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const carrer = await carrerService.fetchById(id);
+
+    // Validación si no existe el registro en la BD
+    if (!carrer) {
+      return res.status(404).json({
+        success: false,
+        message: 'Carrera no encontrada',
+        data: null,
+        error: `No existe la carrera con el id ${id}`
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Carrera obtenida con éxito',
+      data: carrer,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al buscar la carrera',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Crear una nueva carrera (POST)
+ */
+export async function createCarrer(req, res) {
+  try {
+    console.log('0 ++++++++++++++++++++');
+    console.log(req.body);
+    const newCarrer = await carrerService.create(req.body);
+    console.log('1 ++++++++++++++++++++');
+    console.log(newCarrer);
+    console.log('2 ++++++++++++++++++++');
+    return res.status(201).json({
+      success: true,
+      message: 'Carrera creada con éxito',
+      data: newCarrer,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al crear la carrera',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Actualizar una carrera existente (PUT)
+ */
+export async function updateCarrer(req, res) {
+  try {
+    const { id } = req.params;
+    const updatedCarrer = await carrerService.update(id, req.body);
+
+    if (!updatedCarrer) {
+      return res.status(404).json({
+        success: false,
+        message: 'Carrera no encontrada',
+        data: null,
+        error: `No existe la carrera con el id ${id}`
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Carrera actualizada con éxito',
+      data: updatedCarrer,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al actualizar la carrera',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Eliminar una carrera (DELETE)
+ */
+export async function deleteCarrer(req, res) {
+  try {
+    const { id } = req.params;
+    const deleted = await carrerService.remove(id);
+
+    if (!deleted) {
+      return res.status(404).json({
+        success: false,
+        message: 'Carrera no encontrada',
+        data: null,
+        error: `No existe la carrera con el id ${id}`
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Carrera eliminada con éxito',
+      data: null,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al eliminar la carrera',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+
+==================================================
+ARCHIVO: admin\apis\nations_apis.js
+==================================================
+
+import * as nationService from '../services/nations_services.js';
+
+export function test(req, res) {
+  return res.json({
+    success: true,
+    message: 'Active session',
+    data: ':)'
+  });
+}
+
+export async function listNations(req, res, next) {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const name = req.query.name || '';
+
+    console.log(`Listando naciones - Página: ${page}, Límite: ${limit}, Filtro: ${name}`);
+
+    // Llamamos al servicio con paginación
+    const result = await nationService.fetchAllPaginated(page, limit, name);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Naciones listadas con éxito',
+      data: {
+        list: result.nations,
+        total: result.total,
+        pages: result.totalPages,
+        offset: result.offset,
+        limit: limit,
+        page: page
+      },
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al listar las naciones',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Guardar cambios múltiples (nuevos, editados, eliminados)
+ */
+export async function saveNations(req, res, next) {
+  try {
+    const { news = [], edits = [], deletes = [] } = req.body;
+
+    console.log('Guardando cambios - Nuevos:', news.length, 'Editados:', edits.length, 'Eliminados:', deletes.length);
+
+    // Procesar eliminaciones
+    for (const id of deletes) {
+      await nationService.remove(id);
+    }
+
+    // Procesar ediciones
+    for (const edit of edits) {
+      await nationService.update(edit.id, { name: edit.name });
+    }
+
+    // Procesar nuevas naciones
+    const created = [];
+    for (const newNation of news) {
+      const createdNation = await nationService.create({ name: newNation.name });
+      // Guardar la relación entre el ID temporal y el real
+      created.push({
+        tmp: newNation.id,
+        id: createdNation.id
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Naciones guardadas con éxito',
+      data: created,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al guardar las naciones',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Obtener una nación por su ID (ej. /api/nations/:id)
+ */
+export async function getNationById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const nation = await nationService.fetchById(id);
+
+    // Validación si no existe el registro en la BD
+    if (!nation) {
+      return res.status(404).json({
+        success: false,
+        message: 'Nación no encontrada',
+        data: null,
+        error: `No existe la nación con el id ${id}`
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Nación obtenida con éxito',
+      data: nation,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al buscar la nación',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Crear una nueva nación (POST)
+ */
+export async function createNation(req, res) {
+  try {
+    console.log('0 ++++++++++++++++++++')
+    console.log(req.body)
+    const newNation = await nationService.create(req.body);
+    console.log('1 ++++++++++++++++++++')
+    console.log(newNation)
+    console.log('2 ++++++++++++++++++++')
+    return res.status(201).json({
+      success: true,
+      message: 'Nación creada con éxito',
+      data: newNation,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al crear la nación',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Actualizar una nación existente (PUT)
+ */
+export async function updateNation(req, res) {
+  try {
+    const { id } = req.params;
+    const updatedNation = await nationService.update(id, req.body);
+
+    if (!updatedNation) {
+      return res.status(404).json({
+        success: false,
+        message: 'Nación no encontrada',
+        data: null,
+        error: `No existe la nación con el id ${id}`
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Nación actualizada con éxito',
+      data: updatedNation,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al actualizar la nación',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+/**
+ * Eliminar una nación (DELETE)
+ */
+export async function deleteNation(req, res) {
+  try {
+    const { id } = req.params;
+    const deleted = await nationService.remove(id);
+
+    if (!deleted) {
+      return res.status(404).json({
+        success: false,
+        message: 'Nación no encontrada',
+        data: null,
+        error: `No existe la nación con el id ${id}`
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: 'Nación eliminada con éxito',
+      data: null,
+      error: null
+    });
+  } catch (error) {
+    console.error(error.stack);
+    return res.status(500).json({
+      success: false,
+      message: 'Error al eliminar la nación',
+      data: null,
+      error: error.message
+    });
+  }
+}
+
+
+==================================================
+ARCHIVO: admin\configs\database.js
+==================================================
+
+import sequelize from '../../configs/database.js';
+
+export default sequelize;
+
+
+
+==================================================
+ARCHIVO: admin\configs\routes.js
+==================================================
+
+// admin/configs/routes.js
+import { Router } from 'express';
+import * as admins from '../controllers/admin_controllers.js';
+import * as carrers from '../controllers/carrer_controllers.js';
+import * as owners from '../controllers/owner_controllers.js';
+import * as enterprise from '../controllers/enterprise_controllers.js';
+import * as nationApis from '../apis/nations_apis.js';
+import * as carrers_api from '../apis/carrers_api.js';
+import { redirectIfAuthenticated, requireAuth,soloEnterprise,soloLogueado,soloOwner } from '../../configs/middlewares.js'; 
+
+const router = Router();
+
+// react views
+router.get('/admin', requireAuth, admins.home);
+router.get('/admin/players', requireAuth, admins.home);
+router.get('/admin/teams', requireAuth, admins.home);
+router.get('/admin/leagues', requireAuth, admins.home);
+router.get('/admin/nations', requireAuth, admins.home);
+router.get('/admin/catalogs', requireAuth, admins.home);
+// api nations
+router.get('/api/v1/nations', nationApis.listNations);
+router.get('/api/v1/nations/:id', nationApis.getNationById);
+router.post('/api/v1/nations', nationApis.createNation);
+router.put('/api/v1/nations/:id', nationApis.updateNation);
+router.delete('/api/v1/nations/:id', nationApis.deleteNation);
+
+//Api
+router.get('/api/v1/carrers', carrers_api.listCarrersSimple);
+router.post('/api/v1/carrers', carrers_api.createCarrer);
+router.delete('/api/v1/carrers/:id',carrers_api.deleteCarrer);
+router.get('/api/v1/carrers/:id', carrers_api.getCarrerById);
+router.put('/api/v1/carrers/:id', carrers_api.updateCarrer);
+
+// carrers
+router.get('/admin/carrers', carrers.home);
+router.get('/owner', soloLogueado,soloOwner,owners.home);
+router.get('/enterprise/carrers', enterprise.home);
+router.get('/enterprise/carrers/new', enterprise.home);
+router.get('/enterprise/carrers/:id/edit', enterprise.home);
+router.get('/enterprise', enterprise.home);
+router.get('/enterprise/convocatorias', enterprise.home);
+router.get('/enterprise/convocatorias',enterprise.home);
+router.get('/enterprise/convocatorias/nueva', enterprise.home);
+router.get('/enterprise/postulantes', enterprise.home);
+router.get('/enterprise/perfil', enterprise.home);
+router.get('/enterprise/resenas', enterprise.home);
+router.get('/enterprise/cambiar-contrasena', enterprise.home);
+router.get('/enterprise/configuracion', enterprise.home);
+export default router;
+
+
+==================================================
+ARCHIVO: admin\controllers\admin_controllers.js
+==================================================
+
+// admin/controllers/admin_controllers.js
+
+export function home(req, res) {
+  return res.render('admin/home', {
+    title: 'Admin Site)',
+    currentPage: 'home',
+    description:
+      'Esta es una aplicación de ejemplo creada con Node.js, Express y EJS.'
+  });
+}
+
+
+==================================================
+ARCHIVO: admin\controllers\carrer_controllers.js
+==================================================
+
+// admin/controllers/carrer_controllers.js
+
+export function home(req, res) {
+  let carrers=[
+  {
+    "id": 1,
+    "name": "Ingeniería de Sistemas"
+  },
+  {
+    "id": 2,
+    "name": "Ingeniería Industrial"
+  },
+  {
+    "id": 3,
+    "name": "Ingeniería Civil"
+  },
+  {
+    "id": 4,
+    "name": "Ingeniería Electrónica"
+  },
+  {
+    "id": 5,
+    "name": "Ingeniería Mecánica"
+  },
+  {
+    "id": 6,
+    "name": "Ingeniería Ambiental"
+  },
+  {
+    "id": 7,
+    "name": "Ingeniería de Software"
+  },
+  {
+    "id": 8,
+    "name": "Administración"
+  },
+  {
+    "id": 9,
+    "name": "Contabilidad"
+  },
+  {
+    "id": 10,
+    "name": "Economía"
+  },
+  {
+    "id": 11,
+    "name": "Derecho"
+  },
+  {
+    "id": 12,
+    "name": "Arquitectura"
+  },
+  {
+    "id": 13,
+    "name": "Psicología"
+  },
+  {
+    "id": 14,
+    "name": "Medicina Humana"
+  },
+  {
+    "id": 15,
+    "name": "Enfermería"
+  },
+  {
+    "id": 16,
+    "name": "Marketing"
+  },
+  {
+    "id": 17,
+    "name": "Comunicaciones"
+  },
+  {
+    "id": 18,
+    "name": "Diseño Gráfico"
+  },
+  {
+    "id": 19,
+    "name": "Negocios Internacionales"
+  },
+  {
+    "id": 20,
+    "name": "Ciencias Políticas"
+  }
+];
+
+  return res.render('admin/carrers', {
+    title: 'Admin  carrers',
+    carrers: carrers,
+    currentPage: 'home',
+    description:
+      'Esta es una aplicación de ejemplo creada con Node.js, Express y EJS.'
+  });
+}
+
+
+==================================================
+ARCHIVO: admin\controllers\district_controllers.js
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: admin\controllers\enterprise_controllers.js
+==================================================
+
+// admin/controllers/carrer_controllers.js
+
+export function home(req, res) {
+  return res.render('enterprise/home', {
+    title: 'Bienvenido Enterprise',
+    
+     });
+}
+
+
+==================================================
+ARCHIVO: admin\controllers\owner_controllers.js
+==================================================
+
+// admin/controllers/carrer_controllers.js
+
+export function home(req, res) {
+  return res.render('owner/home', {
+    title: 'Bienvenido Owner',
+     });
+}
+
+
+==================================================
+ARCHIVO: admin\controllers\semester_controllers.js
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: admin\controllers\skill_controllers.js
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: admin\models\application.js
+==================================================
+
+// admin/models/application.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Application = sequelize.define('Application', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  title: {
+    type: DataTypes.STRING(40),
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  benefits: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  functions: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  vacancies: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  published: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  email_notification: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  closed: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  salarry: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: true,
+  },
+  is_draft: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
+  },
+  modality_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  sementer_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  district_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  workday_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  enterprise_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+}, {
+  tableName: 'applications',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: false,
+});
+
+export default Application;
+
+
+==================================================
+ARCHIVO: admin\models\application_carrer.js
+==================================================
+
+// admin\models\application_carrer.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const ApplicationCarrer = sequelize.define('ApplicationCarrer', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  application_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  carrer_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+}, {
+  tableName: 'applications_carrers',
+  timestamps: false,
+});
+
+export default ApplicationCarrer;
+
+
+==================================================
+ARCHIVO: admin\models\application_skill.js
+==================================================
+
+// admin\models\application_skill.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const ApplicationSkill = sequelize.define('ApplicationSkill', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  application_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  skill_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+}, {
+  tableName: 'applications_skills',
+  timestamps: false,
+});
+
+export default ApplicationSkill;
+
+
+==================================================
+ARCHIVO: admin\models\application_student.js
+==================================================
+
+// admin/models/application_student.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const ApplicationStudent = sequelize.define('ApplicationStudent', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  application_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  student_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  status_applications_student_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  notes: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+}, {
+  tableName: 'applications_students',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: false,
+});
+
+export default ApplicationStudent;
+
+
+==================================================
+ARCHIVO: admin\models\application_studen_review.js
+==================================================
+
+// admin/models/application_studen_review.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const ApplicationStudentReview = sequelize.define('ApplicationStudentReview', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  applications_student_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  points: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  enviroment: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  learning: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  work_load: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  title: {
+    type: DataTypes.STRING(50),
+    allowNull: true,
+  },
+  comment: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  start: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  end_date: {
+    type: DataTypes.DATE,
+    allowNull: true,
+  },
+  anonimous: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+}, {
+  tableName: 'applications_students_reviews',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: 'updated',
+});
+
+export default ApplicationStudentReview;
+
+
+==================================================
+ARCHIVO: admin\models\carrer.js
+==================================================
+
+// admin/models/carrer.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../../configs/database.js';
+
+const Carrer = sequelize.define('Carrer', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true // Corresponde al SERIAL de PostgreSQL
+  },
+  name: {
+    type: DataTypes.STRING(30),
+    allowNull: false
+  }
+}, {
+  tableName: 'carrers', // Fuerza el nombre exacto de la tabla
+  timestamps: false     // Desactiva createdAt y updatedAt
+});
+
+export default Carrer;
+
+
+==================================================
+ARCHIVO: admin\models\district.js
+==================================================
+
+// admin/models/district.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const District = sequelize.define('District', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(40),
+    allowNull: false,
+  },
+}, {
+  tableName: 'districts',
+  timestamps: false,
+});
+
+export default District;
+
+
+==================================================
+ARCHIVO: admin\models\enterprise.js
+==================================================
+
+// admin/models/enterprise.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Enterprise = sequelize.define('Enterprise', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(60),
+    allowNull: false,
+  },
+  ruc: {
+    type: DataTypes.STRING(11),
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING(45),
+    allowNull: false,
+  },
+  phone: {
+    type: DataTypes.STRING(15),
+    allowNull: true,
+  },
+  website_url: {
+    type: DataTypes.STRING(100),
+    allowNull: true,
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  address: {
+    type: DataTypes.STRING(100),
+    allowNull: true,
+  },
+  picture_url: {
+    type: DataTypes.STRING(100),
+    allowNull: true,
+  },
+  district_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  sector_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  size_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+}, {
+  tableName: 'enterprises',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: 'updated',
+});
+
+export default Enterprise;
+
+
+==================================================
+ARCHIVO: admin\models\experience.js
+==================================================
+
+
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Experience = sequelize.define('Experience', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(60),
+    allowNull: false,
+  },
+  enterprise: {
+    type: DataTypes.STRING(60),
+    allowNull: true,
+  },
+  description: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  start_date: {
+    type: DataTypes.DATEONLY,
+    allowNull: true,
+  },
+  end_date: {
+    type: DataTypes.DATEONLY,
+    allowNull: true,
+  },
+  student_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+}, {
+  tableName: 'experiences',
+  timestamps: false,
+});
+
+export default Experience;
+
+
+==================================================
+ARCHIVO: admin\models\index.js
+==================================================
+
+// admin/models/index.js
+import User from './user.js';
+import Profile from './profile.js';
+import Student from './students.js';
+import Enterprise from './enterprise.js';
+import Carrer from './carrer.js';
+import Semester from './semester.js';
+import District from './district.js';
+import Skill from './skill.js';
+import SkillLevel from './skill_level.js';
+import Experience from './experience.js';
+import Link from './link.js';
+import Log from './log.js';
+import Modality from './modality.js';
+import Workday from './workday.js';
+import Application from './application.js';
+import ApplicationStudent from './application_student.js';
+import ApplicationStudentReview from './application_studen_review.js';
+import StatusApplicationStudent from './status_application_student.js';
+import StudentApplicationSaved from './student_application_saved.js';
+import StudentSkillSkillLevel from './student_skill_skil_level.js';
+import ApplicationSkill from './application_skill.js';
+import ApplicationCarrer from './application_carrer.js';
+
+// ==========================================
+// 1. RELACIONES DE PERFIL Y USUARIO
+// ==========================================
+
+// User -> Profile (1:1)
+User.hasOne(Profile, { foreignKey: 'user_id', as: 'profile' });
+Profile.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+// User -> Student (1:1)
+User.hasOne(Student, { foreignKey: 'user_id', as: 'student' });
+Student.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+// User -> Enterprises (1:N)
+User.hasMany(Enterprise, { foreignKey: 'user_id', as: 'enterprises' });
+Enterprise.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+// User -> Logs (1:N)
+User.hasMany(Log, { foreignKey: 'user_id', as: 'logs' });
+Log.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+
+// ==========================================
+// 2. RELACIONES DEL ESTUDIANTE
+// ==========================================
+
+// Carrer -> Students (1:N)
+Carrer.hasMany(Student, { foreignKey: 'carrere_id', as: 'students' });
+Student.belongsTo(Carrer, { foreignKey: 'carrere_id', as: 'carrer' });
+
+// Semester -> Students (1:N)
+Semester.hasMany(Student, { foreignKey: 'sementer_id', as: 'students' });
+Student.belongsTo(Semester, { foreignKey: 'sementer_id', as: 'semester' });
+
+// District -> Students (1:N)
+District.hasMany(Student, { foreignKey: 'district_id', as: 'students' });
+Student.belongsTo(District, { foreignKey: 'district_id', as: 'district' });
+
+// Student -> Experiences (1:N)
+Student.hasMany(Experience, { foreignKey: 'student_id', as: 'experiences' });
+Experience.belongsTo(Student, { foreignKey: 'student_id', as: 'student' });
+
+// Student -> Links (1:N)
+Student.hasMany(Link, { foreignKey: 'student_id', as: 'links' });
+Link.belongsTo(Student, { foreignKey: 'student_id', as: 'student' });
+
+// ==========================================
+// 3. RELACIONES DE HABILIDADES DE ESTUDIANTES
+// ==========================================
+
+// Student -> StudentSkillSkillLevel (1:N)
+Student.hasMany(StudentSkillSkillLevel, { foreignKey: 'student_id', as: 'student_skills' });
+StudentSkillSkillLevel.belongsTo(Student, { foreignKey: 'student_id', as: 'student' });
+
+// Skill -> StudentSkillSkillLevel (1:N)
+Skill.hasMany(StudentSkillSkillLevel, { foreignKey: 'skill_id', as: 'student_skills' });
+StudentSkillSkillLevel.belongsTo(Skill, { foreignKey: 'skill_id', as: 'skill' });
+
+// SkillLevel -> StudentSkillSkillLevel (1:N)
+SkillLevel.hasMany(StudentSkillSkillLevel, { foreignKey: 'skill_level_id', as: 'student_skills' });
+StudentSkillSkillLevel.belongsTo(SkillLevel, { foreignKey: 'skill_level_id', as: 'skill_level' });
+
+// Multi-muchos entre Student y Skill pasando por la tabla pivote
+Student.belongsToMany(Skill, {
+  through: StudentSkillSkillLevel,
+  foreignKey: 'student_id',
+  otherKey: 'skill_id',
+  as: 'skills'
+});
+Skill.belongsToMany(Student, {
+  through: StudentSkillSkillLevel,
+  foreignKey: 'skill_id',
+  otherKey: 'student_id',
+  as: 'students'
+});
+
+// ==========================================
+// 4. RELACIONES DE EMPRESAS Y OFERTAS (APPLICATIONS)
+// ==========================================
+
+// District -> Enterprises (1:N)
+District.hasMany(Enterprise, { foreignKey: 'district_id', as: 'enterprises' });
+Enterprise.belongsTo(District, { foreignKey: 'district_id', as: 'district' });
+
+// Enterprise -> Applications (1:N)
+Enterprise.hasMany(Application, { foreignKey: 'enterprise_id', as: 'applications' });
+Application.belongsTo(Enterprise, { foreignKey: 'enterprise_id', as: 'enterprise' });
+
+// Modality -> Applications (1:N)
+Modality.hasMany(Application, { foreignKey: 'modality_id', as: 'applications' });
+Application.belongsTo(Modality, { foreignKey: 'modality_id', as: 'modality' });
+
+// District -> Applications (1:N)
+District.hasMany(Application, { foreignKey: 'district_id', as: 'applications' });
+Application.belongsTo(District, { foreignKey: 'district_id', as: 'district' });
+
+// Workday -> Applications (1:N)
+Workday.hasMany(Application, { foreignKey: 'workday_id', as: 'applications' });
+Application.belongsTo(Workday, { foreignKey: 'workday_id', as: 'workday' });
+
+// Semester -> Applications (1:N)
+Semester.hasMany(Application, { foreignKey: 'sementer_id', as: 'applications' });
+Application.belongsTo(Semester, { foreignKey: 'sementer_id', as: 'semester' });
+
+// ==========================================
+// 5. POSTULACIONES DE ESTUDIANTES (APPLICATION_STUDENTS)
+// ==========================================
+
+// Student -> ApplicationStudent (1:N)
+Student.hasMany(ApplicationStudent, { foreignKey: 'student_id', as: 'applications_submitted' });
+ApplicationStudent.belongsTo(Student, { foreignKey: 'student_id', as: 'student' });
+
+// Application -> ApplicationStudent (1:N)
+Application.hasMany(ApplicationStudent, { foreignKey: 'application_id', as: 'applications_received' });
+ApplicationStudent.belongsTo(Application, { foreignKey: 'application_id', as: 'application' });
+
+// StatusApplicationStudent -> ApplicationStudent (1:N)
+StatusApplicationStudent.hasMany(ApplicationStudent, { foreignKey: 'status_applications_student_id', as: 'applications' });
+ApplicationStudent.belongsTo(StatusApplicationStudent, { foreignKey: 'status_applications_student_id', as: 'status' });
+
+// ApplicationStudent -> ApplicationStudentReview (1:N)
+ApplicationStudent.hasMany(ApplicationStudentReview, { foreignKey: 'applications_student_id', as: 'reviews' });
+ApplicationStudentReview.belongsTo(ApplicationStudent, { foreignKey: 'applications_student_id', as: 'application_student' });
+
+// Relación N:M directa entre Student y Application (Postulaciones)
+Student.belongsToMany(Application, {
+  through: ApplicationStudent,
+  foreignKey: 'student_id',
+  otherKey: 'application_id',
+  as: 'applied_applications'
+});
+Application.belongsToMany(Student, {
+  through: ApplicationStudent,
+  foreignKey: 'application_id',
+  otherKey: 'student_id',
+  as: 'applicant_students'
+});
+
+// ==========================================
+// 6. OFERTAS GUARDADAS POR ESTUDIANTES
+// ==========================================
+
+// Student -> StudentApplicationSaved (1:N)
+Student.hasMany(StudentApplicationSaved, { foreignKey: 'student_id', as: 'saved_applications_records' });
+StudentApplicationSaved.belongsTo(Student, { foreignKey: 'student_id', as: 'student' });
+
+// Application -> StudentApplicationSaved (1:N)
+Application.hasMany(StudentApplicationSaved, { foreignKey: 'application_id', as: 'saved_by_students_records' });
+StudentApplicationSaved.belongsTo(Application, { foreignKey: 'application_id', as: 'application' });
+
+// Relación N:M entre Student y Application (Guardados)
+Student.belongsToMany(Application, {
+  through: StudentApplicationSaved,
+  foreignKey: 'student_id',
+  otherKey: 'application_id',
+  as: 'saved_applications'
+});
+Application.belongsToMany(Student, {
+  through: StudentApplicationSaved,
+  foreignKey: 'application_id',
+  otherKey: 'student_id',
+  as: 'saved_by_students'
+});
+
+// ==========================================
+// 7. REQUISITOS DE LA OFERTA (SKILLS Y CARRERS)
+// ==========================================
+
+// Application <-> Skill (N:M a través de ApplicationSkill)
+Application.belongsToMany(Skill, {
+  through: ApplicationSkill,
+  foreignKey: 'application_id',
+  otherKey: 'skill_id',
+  as: 'skills'
+});
+Skill.belongsToMany(Application, {
+  through: ApplicationSkill,
+  foreignKey: 'skill_id',
+  otherKey: 'application_id',
+  as: 'applications' 
+});
+
+// Application <-> Carrer (N:M a través de ApplicationCarrer)
+Application.belongsToMany(Carrer, { 
+  through: ApplicationCarrer, 
+  foreignKey: 'application_id', 
+  otherKey: 'carrer_id', 
+  as: 'carrers' 
+});
+Carrer.belongsToMany(Application, { 
+  through: ApplicationCarrer, 
+  foreignKey: 'carrer_id', 
+  otherKey: 'application_id', 
+  as: 'applications' 
+});
+
+// Exportar todos los modelos vinculados
+export {
+  User,
+  Profile,
+  Student,
+  Enterprise,
+  Carrer,
+  Semester,
+  District,
+  Skill,
+  SkillLevel,
+  Experience,
+  Link,
+  Log,
+  Modality,
+  Workday,
+  Application,
+  ApplicationStudent,
+  ApplicationStudentReview,
+  StatusApplicationStudent,
+  StudentApplicationSaved,
+  StudentSkillSkillLevel,
+  ApplicationSkill,
+  ApplicationCarrer,
+};
+
+
+==================================================
+ARCHIVO: admin\models\link.js
+==================================================
+
+// 
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Link = sequelize.define('Link', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+  },
+  url: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  student_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+}, {
+  tableName: 'links',
+  timestamps: false,
+});
+
+export default Link;
+
+
+==================================================
+ARCHIVO: admin\models\log.js
+==================================================
+
+// admin/models/log.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Log = sequelize.define('Log', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  description: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+}, {
+  tableName: 'logs',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: false,
+});
+
+export default Log;
+
+
+==================================================
+ARCHIVO: admin\models\modality.js
+==================================================
+
+// admin/models/modality.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Modality = sequelize.define('Modality', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(40),
+    allowNull: false,
+  },
+}, {
+  tableName: 'modalities',
+  timestamps: false,
+});
+
+export default Modality;
+
+
+==================================================
+ARCHIVO: admin\models\nation.js
+==================================================
+
+// admin/models/nation.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../../configs/database.js';
+
+const Nation = sequelize.define('Nation', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true // Corresponde al SERIAL de PostgreSQL
+  },
+  name: {
+    type: DataTypes.STRING(40),
+    allowNull: true // Cambia a false si es un campo obligatorio
+  }
+}, {
+  tableName: 'nations', // Fuerza el nombre exacto de la tabla
+  timestamps: false     // Desactiva createdAt y updatedAt si tu tabla no los tiene
+});
+
+export default Nation;
+
+
+==================================================
+ARCHIVO: admin\models\profile.js
+==================================================
+
+// admin/models/profile.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Profile = sequelize.define('Profile', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(60),
+    allowNull: false,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+    unique: true,
+  },
+}, {
+  tableName: 'profiles',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: 'updated',
+});
+
+export default Profile;
+
+
+==================================================
+ARCHIVO: admin\models\semester.js
+==================================================
+
+// admin/models/semester.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Semester = sequelize.define('Semester', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+  },
+}, {
+  tableName: 'semesters',
+  timestamps: false,
+});
+
+export default Semester;
+
+
+==================================================
+ARCHIVO: admin\models\skill.js
+==================================================
+
+// admin/models/skill.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Skill = sequelize.define('Skill', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+  },
+}, {
+  tableName: 'skills',
+  timestamps: false,
+});
+
+export default Skill;
+
+
+==================================================
+ARCHIVO: admin\models\skill_level.js
+==================================================
+
+// admin/models/skill_level.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const SkillLevel = sequelize.define('SkillLevel', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+  },
+}, {
+  tableName: 'skill_levels',
+  timestamps: false,
+});
+
+export default SkillLevel;
+
+
+==================================================
+ARCHIVO: admin\models\status_application_student.js
+==================================================
+
+// admin/models/status_application_student.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const StatusApplicationStudent = sequelize.define('StatusApplicationStudent', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(30),
+    allowNull: false,
+  },
+}, {
+  tableName: 'status_applications_students',
+  timestamps: false,
+});
+
+export default StatusApplicationStudent;
+
+
+==================================================
+ARCHIVO: admin\models\students.js
+==================================================
+
+// admin/models/student.js
+
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Student = sequelize.define('Student', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  names: {
+    type: DataTypes.STRING(45),
+    allowNull: false,
+  },
+  last_names: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING(45),
+    allowNull: false,
+  },
+  phone: {
+    type: DataTypes.STRING(15),
+    allowNull: true,
+  },
+  district_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  picture_url: {
+    type: DataTypes.STRING(100),
+    allowNull: true,
+  },
+  summary: {
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  carrere_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  sementer_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
+  },
+}, {
+  tableName: 'students',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: 'updated',
+});
+
+export default Student;
+
+
+==================================================
+ARCHIVO: admin\models\student_application_saved.js
+==================================================
+
+// admin/models/student_application_saved.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const StudentApplicationSaved = sequelize.define('StudentApplicationSaved', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  student_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  application_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+}, {
+  tableName: 'students_applications_saved',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: false,
+});
+
+export default StudentApplicationSaved;
+
+
+==================================================
+ARCHIVO: admin\models\student_skill_skil_level.js
+==================================================
+
+// admin\models\student_skill_skil_level.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const StudentSkillSkillLevel = sequelize.define('StudentSkillSkillLevel', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  student_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  skill_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  skill_level_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+}, {
+  tableName: 'students_skills_skill_levels',
+  timestamps: false,
+});
+
+export default StudentSkillSkillLevel;
+
+
+==================================================
+ARCHIVO: admin\models\user.js
+==================================================
+
+// admin/models/user.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  email: {
+    type: DataTypes.STRING(45),
+    allowNull: false,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  reset_token: {
+    type: DataTypes.STRING(100),
+    allowNull: true,
+  },
+}, {
+  tableName: 'users',
+  timestamps: true,
+  createdAt: 'created',
+  updatedAt: 'updated',
+});
+
+export default User;
+
+
+==================================================
+ARCHIVO: admin\models\workday.js
+==================================================
+
+// admin/models/workday.js
+import { DataTypes } from 'sequelize';
+import sequelize from '../configs/database.js';
+
+const Workday = sequelize.define('Workday', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  name: {
+    type: DataTypes.STRING(40),
+    allowNull: false,
+  },
+}, {
+  tableName: 'workdays',
+  timestamps: false,
+});
+
+export default Workday;
+
+
+==================================================
+ARCHIVO: admin\repositories\carrers_repositories.js
+==================================================
+
+// admin/repositories/carrers_repository.js
+import Carrer from '../models/carrer.js';
+import { Op } from 'sequelize';
+
+const showLogs = process.env.SHOW_DB_ERRORS === 'true' || process.env.NODE_ENV === 'development';
+
+class CarrerRepository {
+  /**
+   * Obtiene todos los registros
+   */
+  async findAll() {
+    try {
+      return await Carrer.findAll();
+    } catch (error) {
+      if (showLogs) console.error('🔥 [CarrerRepo.findAll] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Obtiene registros con paginación
+   */
+  async findAllSimple(options = {}) {
+    try {
+      const { order = [['id', 'ASC']] } = options;
+      return await Carrer.findAll({
+        order
+      });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [CarrerRepo.findAllSimple] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Obtiene registros con paginación
+   */
+  async findAllPaginated(options = {}) {
+    try {
+      const { where = {}, offset = 0, limit = 10, order = [['id', 'DESC']] } = options;
+      return await Carrer.findAll({
+        where,
+        offset,
+        limit,
+        order,
+      });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [CarrerRepo.findAllPaginated] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Cuenta registros con filtros
+   */
+  async count(where = {}) {
+    try {
+      return await Carrer.count({ where });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [CarrerRepo.count] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Busca carrera por ID
+   */
+  async findById(id) {
+    try {
+      return await Carrer.findByPk(id);
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [CarrerRepo.findById] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Crea un nuevo registro
+   */
+  async create(data) {
+    try {
+      return await Carrer.create(data);
+    } catch (error) {
+      if (showLogs) console.error('🔥 [CarrerRepo.create] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Actualiza un registro por ID
+   */
+  async update(id, data) {
+    try {
+      const carrer = await Carrer.findByPk(id);
+      if (!carrer) return null;
+      return await carrer.update(data);
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [CarrerRepo.update] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Elimina un registro por ID
+   */
+  async delete(id) {
+    try {
+      const carrer = await Carrer.findByPk(id);
+      if (!carrer) return null;
+      await carrer.destroy();
+      return true;
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [CarrerRepo.delete] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+}
+
+export default new CarrerRepository();
+
+
+==================================================
+ARCHIVO: admin\repositories\nations_repositories.js
+==================================================
+
+// admin/repositories/nations_repositories.js
+import Nation from '../models/nation.js';
+import { Op } from 'sequelize';
+
+const showLogs = process.env.SHOW_DB_ERRORS === 'true' || process.env.NODE_ENV === 'development';
+
+class NationRepository {
+  /**
+   * Obtiene todos los registros
+   */
+  async findAll() {
+    try {
+      return await Nation.findAll();
+    } catch (error) {
+      if (showLogs) console.error('🔥 [NationRepo.findAll] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Obtiene registros con paginación
+   */
+  async findAllPaginated(options = {}) {
+    try {
+      const { where = {}, offset = 0, limit = 10, order = [['id', 'DESC']] } = options;
+      return await Nation.findAll({
+        where,
+        offset,
+        limit,
+        order
+      });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [NationRepo.findAllPaginated] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Cuenta registros con filtros
+   */
+  async count(where = {}) {
+    try {
+      return await Nation.count({ where });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [NationRepo.count] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Busca nación por ID
+   */
+  async findById(id) {
+    try {
+      return await Nation.findByPk(id);
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [NationRepo.findById] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Crea un nuevo registro
+   */
+  async create(data) {
+    try {
+      return await Nation.create(data);
+    } catch (error) {
+      if (showLogs) console.error('🔥 [NationRepo.create] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Actualiza un registro por ID
+   */
+  async update(id, data) {
+    try {
+      const nation = await Nation.findByPk(id);
+      if (!nation) return null;
+      return await nation.update(data);
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [NationRepo.update] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Elimina un registro por ID
+   */
+  async delete(id) {
+    try {
+      const nation = await Nation.findByPk(id);
+      if (!nation) return null;
+      await nation.destroy();
+      return true;
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [NationRepo.delete] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+}
+
+export default new NationRepository();
+
+
+==================================================
+ARCHIVO: admin\repositories\students_repositories.js
+==================================================
+
+// admin/repositories/students_repositories.js
+import Student from '../models/students.js';
+import { Op } from 'sequelize';
+
+const showLogs = process.env.SHOW_DB_ERRORS === 'true' || process.env.NODE_ENV === 'development';
+
+class StudentRepository {
+  /**
+   * Obtiene todos los registros
+   */
+  async findAll() {
+    try {
+      return await Student.findAll();
+    } catch (error) {
+      if (showLogs) console.error('🔥 [StudentRepo.findAll] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Obtiene registros con paginación
+   */
+  async findAllPaginated(options = {}) {
+    try {
+      const { where = {}, offset = 0, limit = 10, order = [['id', 'DESC']] } = options;
+      return await Student.findAll({
+        where,
+        offset,
+        limit,
+        order,
+      });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [StudentRepo.findAllPaginated] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Cuenta registros con filtros
+   */
+  async count(where = {}) {
+    try {
+      return await Student.count({ where });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [StudentRepo.count] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Busca estudiante por ID
+   */
+  async findById(id) {
+    try {
+      return await Student.findByPk(id);
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [StudentRepo.findById] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Busca estudiante por email
+   */
+  async findByEmail(email) {
+    try {
+      return await Student.findOne({ where: { email } });
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [StudentRepo.findByEmail] Error (email: ${email}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Crea un nuevo registro
+   */
+  async create(data) {
+    try {
+      return await Student.create(data);
+    } catch (error) {
+      if (showLogs) console.error('🔥 [StudentRepo.create] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Actualiza un registro por ID
+   */
+  async update(id, data) {
+    try {
+      const student = await Student.findByPk(id);
+      if (!student) return null;
+      return await student.update(data);
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [StudentRepo.update] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Elimina un registro por ID
+   */
+  async delete(id) {
+    try {
+      const student = await Student.findByPk(id);
+      if (!student) return null;
+      await student.destroy();
+      return true;
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [StudentRepo.delete] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+}
+
+export default new StudentRepository();
+
+
+
+==================================================
+ARCHIVO: admin\repositories\users_repositories.js
+==================================================
+
+// admin/repositories/users_repositories.js
+import User from '../models/user.js';
+import { Op } from 'sequelize';
+
+const showLogs = process.env.SHOW_DB_ERRORS === 'true' || process.env.NODE_ENV === 'development';
+
+class UserRepository {
+  /**
+   * Obtiene todos los registros
+   */
+  async findAll() {
+    try {
+      return await User.findAll();
+    } catch (error) {
+      if (showLogs) console.error('🔥 [UserRepo.findAll] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Obtiene registros con paginación
+   */
+  async findAllPaginated(options = {}) {
+    try {
+      const { where = {}, offset = 0, limit = 10, order = [['id', 'DESC']] } = options;
+      return await User.findAll({
+        where,
+        offset,
+        limit,
+        order,
+      });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [UserRepo.findAllPaginated] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Cuenta registros con filtros
+   */
+  async count(where = {}) {
+    try {
+      return await User.count({ where });
+    } catch (error) {
+      if (showLogs) console.error('🔥 [UserRepo.count] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Busca usuario por ID
+   */
+  async findById(id) {
+    try {
+      return await User.findByPk(id);
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [UserRepo.findById] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Busca usuario por email
+   */
+  async findByEmail(email) {
+    try {
+      return await User.findOne({ where: { email } });
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [UserRepo.findByEmail] Error (email: ${email}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Crea un nuevo registro
+   */
+  async create(data) {
+    try {
+      return await User.create(data);
+    } catch (error) {
+      if (showLogs) console.error('🔥 [UserRepo.create] Error:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Actualiza un registro por ID
+   */
+  async update(id, data) {
+    try {
+      const user = await User.findByPk(id);
+      if (!user) return null;
+      return await user.update(data);
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [UserRepo.update] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Elimina un registro por ID
+   */
+  async delete(id) {
+    try {
+      const user = await User.findByPk(id);
+      if (!user) return null;
+      await user.destroy();
+      return true;
+    } catch (error) {
+      if (showLogs) console.error(`🔥 [UserRepo.delete] Error (id: ${id}):`, error);
+      throw error;
+    }
+  }
+}
+
+export default new UserRepository();
+
+
+
+==================================================
+ARCHIVO: admin\services\carrers_services.js
+==================================================
+
+// admin/services/carrers_services.js
+import carrerRepository from '../repositories/carrers_repositories.js';
+import { Op } from 'sequelize';
+
+/**
+ * Obtener todas las carreras
+ */
+export const fetchAll = async () => {
+  const carrers = await carrerRepository.findAll();
+
+  return carrers.map(carrer => carrer.toJSON());
+};
+
+/**
+ * Obtener carreras paginadas con filtro por nombre
+ */
+export const fetchAllPaginatedSimple = async () => {
+ 
+  // Obtener registros paginados
+  const carrers = await carrerRepository.findAllSimple({
+    order: [['id', 'ASC']]
+  });
+
+  return carrers.map(carrer => carrer.toJSON());
+};
+
+export const fetchAllPaginated = async (page = 1, limit = 10, name = '') => {
+  const offset = (page - 1) * limit;
+
+  // Construir filtros
+  const whereClause = {};
+  if (name) {
+    whereClause.name = {
+      [Op.iLike]: `%${name}%`
+    };
+  }
+
+  // Obtener total de registros
+  const total = await carrerRepository.count(whereClause);
+
+  // Obtener registros paginados
+  const carrers = await carrerRepository.findAllPaginated({
+    where: whereClause,
+    offset: offset,
+    limit: limit,
+    order: [['id', 'DESC']]
+  });
+
+  const totalPages = Math.ceil(total / limit);
+  const offsetResult = offset;
+
+  return {
+    carrers: carrers.map(carrer => carrer.toJSON()),
+    total,
+    totalPages,
+    offset: offsetResult,
+    page,
+    limit
+  };
+};
+
+/**
+ * Obtener una carrera por su ID
+ */
+export const fetchById = async (id) => {
+  const carrer = await carrerRepository.findById(id);
+
+  if (!carrer) {
+    return null;
+  }
+
+  return carrer.toJSON();
+};
+
+/**
+ * Servicio para crear una carrera
+ */
+export const create = async (data) => {
+  const newCarrer = await carrerRepository.create(data);
+  return newCarrer.toJSON();
+};
+
+/**
+ * Servicio para actualizar una carrera
+ */
+export const update = async (id, data) => {
+  const updatedCarrer = await carrerRepository.update(id, data);
+  if (!updatedCarrer) return null;
+  return updatedCarrer.toJSON();
+};
+
+/**
+ * Servicio para eliminar una carrera
+ */
+export const remove = async (id) => {
+  return await carrerRepository.delete(id);
+};
+
+
+==================================================
+ARCHIVO: admin\services\nations_services.js
+==================================================
+
+// admin/services/nations_services.js
+import nationRepository from '../repositories/nations_repositories.js';
+import { Op } from 'sequelize';
+
+/**
+ * Obtener todas las naciones
+ */
+export const fetchAll = async () => {
+  const nations = await nationRepository.findAll();
+
+  return nations.map(nation => nation.toJSON());
+};
+
+export const fetchAllPaginated = async (page = 1, limit = 10, name = '') => {
+  const offset = (page - 1) * limit;
+  
+  // Construir filtros
+  const whereClause = {};
+  if (name) {
+    whereClause.name = {
+      [Op.iLike]: `%${name}%`
+    };
+  }
+
+  // Obtener total de registros
+  const total = await nationRepository.count(whereClause);
+  
+  // Obtener registros paginados
+  const nations = await nationRepository.findAllPaginated({
+    where: whereClause,
+    offset: offset,
+    limit: limit,
+    order: [['id', 'DESC']]
+  });
+
+  const totalPages = Math.ceil(total / limit);
+  const offsetResult = offset;
+
+  return {
+    nations: nations.map(nation => nation.toJSON()),
+    total,
+    totalPages,
+    offset: offsetResult,
+    page,
+    limit
+  };
+};
+
+/**
+ * Obtener una nación por su ID
+ */
+export const fetchById = async (id) => {
+  const nation = await nationRepository.findById(id);
+
+  if (!nation) {
+    return null; // O lanzar un error personalizado si prefieres
+  }
+
+  return nation.toJSON();
+};
+
+/**
+ * Servicio para crear una nación
+ */
+export const create = async (data) => {
+  const newNation = await nationRepository.create(data);
+  return newNation.toJSON();
+};
+
+/**
+ * Servicio para actualizar una nación
+ */
+export const update = async (id, data) => {
+  const updatedNation = await nationRepository.update(id, data);
+  if (!updatedNation) return null;
+  return updatedNation.toJSON();
+};
+
+/**
+ * Servicio para eliminar una nación
+ */
+export const remove = async (id) => {
+  return await nationRepository.delete(id);
+};
+
+
+==================================================
+ARCHIVO: configs\bootstrap.js
+==================================================
+
+// configs/bootstrap.js
+import path from 'path';
+import morgan from 'morgan';
+import express from 'express';
+import session from 'express-session';
+import { fileURLToPath } from 'url';
+import engine from 'ejs-mate';
+import dotenv from 'dotenv';
+import flash from 'connect-flash';
+import FileStore from 'session-file-store';
+import fs from 'fs';
+import crypto from 'crypto';
+
+import websiteRoutes from '../website/routes.js';
+import adminRoutes from '../admin/configs/routes.js';
+import { notFoundHandler, viewFlash, viewEnv, viewSession, viewHelpers } from './middlewares.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const FileStoreSession = FileStore(session);
+
+dotenv.config();
+
+// Detectar si estamos en Vercel
+const isVercel = process.env.VERCEL === '1' || process.env.VERCEL === 'true';
+
+export default function bootstrap(app) {
+  // Logs - solo en desarrollo o si está activado
+  if (process.env.NODE_ENV !== 'production' || process.env.LOGGING === 'true') {
+    app.use(morgan('dev'));
+  }
+
+  // Body parsers
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: true }));
+
+  // CORS middleware - Configurar para Vercel
+  app.use((req, res, next) => {
+    const allowedOrigins = process.env.CORS_ORIGIN 
+      ? process.env.CORS_ORIGIN.split(',') 
+      : ['https://*.vercel.app', 'http://localhost:4000', 'http://localhost:3000'];
+    
+    const origin = req.headers.origin;
+    if (allowedOrigins.includes('*') || (origin && allowedOrigins.some(allowed => origin.includes(allowed.replace('*', ''))))) {
+      res.header('Access-Control-Allow-Origin', origin || '*');
+    }
+    
+    res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,Authorization');
+    res.header('Access-Control-Allow-Credentials', 'true');
+    
+    if (req.method === 'OPTIONS') {
+      return res.sendStatus(200);
+    }
+    next();
+  });
+
+  // Configuración de sesiones - Adaptada para Vercel
+  const sessionPath = isVercel 
+    ? '/tmp/sessions' 
+    : path.join(__dirname, '../../sessions');
+
+  // Crear directorio de sesiones (solo en local)
+  if (!isVercel && !fs.existsSync(sessionPath)) {
+    fs.mkdirSync(sessionPath, { recursive: true });
+  }
+
+  // Configuración de la sesión
+  const sessionConfig = {
+    secret: process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex'),
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production',
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
+      sameSite: 'lax'
+    }
+  };
+
+  // En Vercel, usar store con path de /tmp
+  if (isVercel) {
+    // Crear directorio temporal si no existe
+    if (!fs.existsSync('/tmp/sessions')) {
+      fs.mkdirSync('/tmp/sessions', { recursive: true });
+    }
+    
+    sessionConfig.store = new FileStoreSession({
+      path: '/tmp/sessions',
+      retries: 0,
+      ttl: 60 * 60 * 24,
+      reapInterval: 60 * 60 // Limpiar cada hora
+    });
+  } else {
+    // En local, usar el path normal
+    sessionConfig.store = new FileStoreSession({
+      path: sessionPath,
+      retries: 0,
+      ttl: 60 * 60 * 24
+    });
+  }
+
+  app.use(session(sessionConfig));
+  app.use(flash());
+
+  // Middlewares
+  app.use(viewFlash);
+  app.use(viewEnv);
+  app.use(viewSession);
+  app.use(viewHelpers);
+
+  // Vistas - Configurar rutas absolutas para Vercel
+  const viewsPath = path.join(__dirname, '../views');
+  app.engine('ejs', engine);
+  app.set('view engine', 'ejs');
+  app.set('views', [viewsPath]);
+
+  // Archivos estáticos - Orden importante para Vercel
+  const distPath = path.join(__dirname, '../public/dist');
+  if (fs.existsSync(distPath)) {
+    app.use('/dist', express.static(distPath));
+  }
+  
+  const publicPath = path.join(__dirname, '../public');
+  if (fs.existsSync(publicPath)) {
+    app.use(express.static(publicPath));
+  }
+
+  // Variables globales
+  app.locals.siteTitle = process.env.SITE_TITLE || 'Mi sitio web';
+  app.locals.adminEmail = process.env.ADMIN_EMAIL || 'admin@ejemplo.com';
+
+  // Rutas Web
+  app.use('/', websiteRoutes);
+  app.use('/', adminRoutes);
+
+  // Para SPA de React - Redirigir todas las rutas no encontradas al index.html
+  /*
+  app.get('/*', (req, res, next) => {
+    // Verificar si es una ruta de API o archivo estático
+    if (req.path.startsWith('/api/') || req.path.includes('.')) {
+      return next();
+    }
+    // Servir el index.html de React
+    const indexPath = path.join(__dirname, '../public/dist/index.html');
+    if (fs.existsSync(indexPath)) {
+      res.sendFile(indexPath);
+    } else {
+      next();
+    }
+  });*/
+
+  // Middleware 404
+  app.use(notFoundHandler);
+}
+
+
+==================================================
+ARCHIVO: configs\database.js
+==================================================
+
+import { Sequelize } from 'sequelize';
+import pg from 'pg'; // <-- Forzar la inclusión del paquete en el build de Vercel
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const isSSL = process.env.DB_SSL === 'true';
+
+const sequelize = new Sequelize(
+  process.env.DB_NAME || 'postgres',
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 5432,
+    dialect: 'postgres',
+    dialectModule: pg, // <-- Asignar directamente el conector
+    logging: process.env.NODE_ENV !== 'production' ? console.log : false,
+    pool: {
+      max: 2, // Se reduce para entornos Serverless para no agotar el pool de Supabase
+      min: 0,
+      acquire: 30000,
+      idle: 10000
+    },
+    dialectOptions: isSSL ? {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    } : {}
+  }
+);
+
+export default sequelize;
+
+
+==================================================
+ARCHIVO: configs\helpers.js
+==================================================
+
+// configs/helpers.js
+
+export function hasRole(session, roleName) {
+  if (!session || !Array.isArray(session.roles)) {
+    return false;
+  }
+
+  return session.roles.some(role => 
+    role?.name?.toLowerCase() === roleName?.toLowerCase()
+  );
+}
+
+export function roleHasPermission(session, roleName, permissionName) {
+  if (!session?.roles?.length || !roleName || !permissionName) {
+    return false;
+  }
+
+  const normalizedRole = roleName.trim().toLowerCase();
+  const normalizedPermission = permissionName.trim().toLowerCase();
+
+  const role = session.roles.find(r =>
+    r?.name?.trim().toLowerCase() === normalizedRole
+  );
+
+  if (!role?.permissions?.length) {
+    return false;
+  }
+
+  return role.permissions.some(permission =>
+    permission?.name?.trim().toLowerCase() === normalizedPermission
+  );
+}
+
+
+==================================================
+ARCHIVO: configs\middlewares.js
+==================================================
+
+// configs/middlewares.js
+
+import { hasRole } from '../configs/helpers.js';
+
+/**
+ * Middleware para manejar errores 404
+ * Si es una petición API (empieza con /api) devuelve JSON
+ * Si es una petición web normal devuelve la vista 404
+ */
+export function notFoundHandler(req, res) {
+  // Verificar si es una petición a la API
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({
+      success: false,
+      message: 'Recurso no encontrado',
+      data: null,
+      error: 'Error 404'
+    });
+  }
+  
+  // Para peticiones no-API (y solo GET) renderizar vista 404
+  if (req.method === 'GET') {
+    return res.status(404).render('404', {
+      title: 'Página no encontrada',
+      message: 'La página que buscas no existe.'
+    });
+  }
+  
+  // Para otros métodos HTTP en rutas no-API
+  return res.status(404).json({
+    success: false,
+    message: 'Recurso no encontrado',
+    data: null,
+    error: 'Error 404'
+  });
+}
+
+/**
+ * Middleware para manejo de errores generales
+ * (Opcional - puedes expandirlo según necesites)
+ */
+export function errorHandler(err, req, res, next) {
+  console.error('Error:', err.stack || err);
+  
+  // Determinar si es una petición API
+  const isApiRequest = req.path.startsWith('/api/');
+  
+  const statusCode = err.statusCode || 500;
+  
+  if (isApiRequest) {
+    return res.status(statusCode).json({
+      success: false,
+      message: err.message || 'Error interno del servidor',
+      data: null,
+      error: `Error ${statusCode}`
+    });
+  }
+  
+  // Para peticiones web
+  res.status(statusCode).render('error', {
+    title: 'Error',
+    message: err.message || 'Ha ocurrido un error inesperado.',
+    statusCode: statusCode
+  });
+}
+
+export function requireAuth(req, res, next) {
+  // Verificar si es una petición API
+  const isApiRequest = req.path.startsWith('/api/');
+  
+  // Verificar si el usuario tiene sesión activa
+  const isAuthenticated = req.session && req.session.user && req.session.user.id;
+  if (isAuthenticated) {
+    // Si está autenticado, continuar
+    return next();
+  }
+  
+  // Si NO está autenticado y es la ruta raíz '/'
+  if (req.path === '/') {
+    // Redireccionar a sign-in
+    return res.redirect('/sign-in');
+  }
+  
+  // Si NO está autenticado
+  if (isApiRequest || req.method !== 'GET') {
+    // Para APIs o métodos no-GET, devolver JSON
+    return res.status(401).json({
+      success: false,
+      message: 'Acceso no autorizado',
+      data: null,
+      error: 'Error 401: No autenticado'
+    });
+  }
+  
+  // Para peticiones GET no-API, mostrar vista 401
+  return res.status(401).render('401', {
+    title: 'Acceso no autorizado',
+    message: 'Debes iniciar sesión para acceder a esta página.',
+    statusCode: 401
+  });
+}
+export function RedireccionarSiLogeado(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  const isAuthenticated = req.session && req.session.user && req.session.user.role;
+  
+  // Si está autenticado Y está intentando acceder a rutas de autenticación
+  const isAuthRoute = [
+    '/login',
+  ].some(route => req.path === route);
+  
+  if (isAuthenticated && isAuthRoute) {
+    // Redirigir al home si ya está logueado y quiere acceder a rutas de auth
+    return res.redirect('/' + req.session.role);
+  }
+  
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
+
+export function soloOwner(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  const isAuthenticated = req.session && req.session.user && req.session.user.role;
+  
+  if (isAuthenticated) {
+    if(req.session.role!='owner'){
+    // Redirigir al home si ya está logueado y quiere acceder a rutas de auth
+    return res.status(401).render('401', {
+    title: 'Acceso no autorizado',
+    message: 'Debes ser Owner.',
+    statusCode: 401
+  });
+    }
+  }
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
+
+export function soloEnterprise(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  const isAuthenticated = req.session && req.session.user && req.session.user.role;
+  
+  if (isAuthenticated) {
+    if(req.session.role!='enterprise'){
+    // Redirigir al home si ya está logueado y quiere acceder a rutas de auth
+    return res.status(401).render('401', {
+    title: 'Acceso no autorizado',
+    message: 'Debes ser enterprise.',
+    statusCode: 401
+  });
+    }
+  }
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
+
+export function soloLogueado(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  console.log("req.session:", req.session);
+  const isAuthenticated = req.session && req.session.user && req.session.user.role;
+  
+
+  if (!isAuthenticated) {
+    return res.status(401).render('401', {
+    title: 'Acceso no autorizado',
+    message: 'Debes estar logeado.',
+    statusCode: 401
+  });
+    
+  }
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
+// configs/middlewares.js
+/** 
+ * Middleware para redirigir a usuarios autenticados
+ * Si el usuario ya tiene sesión activa, lo redirige a la página principal
+ */
+export function redirectIfAuthenticated(req, res, next) {
+  // Verificar si el usuario tiene sesión activa
+  const isAuthenticated = req.session && req.session.user && req.session.user.id;
+  
+  // Si está autenticado Y está intentando acceder a rutas de autenticación
+  const isAuthRoute = [
+    '/sign-in',
+    '/sign-up',
+    '/login',
+    '/register',
+    '/reset-password'
+  ].some(route => req.path === route);
+  
+  if (isAuthenticated && isAuthRoute) {
+    // Redirigir al home si ya está logueado y quiere acceder a rutas de auth
+    return res.redirect('/');
+  }
+  
+  // Si no está autenticado o no es una ruta de auth, continuar
+  next();
+}
+
+export function viewFlash(req, res, next) {
+  res.locals.successMessage = req.flash('success');
+  res.locals.errorMessage = req.flash('error');
+  next();
+}
+
+export function viewSession(req, res, next) {
+  res.locals.session = req.session;
+  res.locals.user = req.session?.user || null;
+  res.locals.isAuthenticated = !!req.session?.user?.id;
+
+  next();
+}
+
+export function viewEnv(req, res, next) {
+  res.locals.BASE_URL = process.env.BASE_URL || '/';
+  res.locals.STATIC_URL = process.env.STATIC_URL || '/';
+  res.locals.FILES_URL = process.env.URL_FILES_SERVICE || '/';
+  res.locals.ACCESS_URL = process.env.URL_ACCESS_SERVICE || '/';
+    
+  next();
+}
+
+export function viewHelpers(req, res, next) {
+  res.locals.hasRole = (roleName) => 
+    hasRole(req.session, roleName);
+  res.locals.roleHasPermission = (role, permission) =>
+    roleHasPermission(req.session, role, permission);
+
+  next();
+}
+
+
+==================================================
+ARCHIVO: website\apis.js
+==================================================
+
+// website/apis.js
+
+export const sessionInfo = (req, res) => {
+  // No hay sesión o no está autenticado
+  if (!req.session || !req.session.user) {
+    return res.status(401).json({
+      success: false,
+      message: 'No active session',
+      data: null,
+      error: 'SESSION_NOT_FOUND'
+    });
+  }
+
+  // Hay sesión
+  return res.json({
+    success: true,
+    message: 'Active session',
+    data: {
+      user: req.session.user
+    }
+  });
+}
+
+
+==================================================
+ARCHIVO: website\controllers.js
+==================================================
+
+// website/controllers.js
+export function home(req, res) {
+  return res.render('website/home', {
+    title: 'Crear cuenta :)',
+    currentPage: 'home',
+    description:
+      'Esta es una aplicación de ejemplo creada con Node.js, Express y EJS.'
+  });
+}
+export function register(req, res) {
+  return res.render('website/register', {
+    title: 'Crear cuenta :)',
+  });
+}
+
+export function convocatorias(req, res) {
+  return res.render('website/convocatorias', {
+    title: 'Convocatorias',
+  });
+}
+
+export function empresas(req, res) {
+  return res.render('website/empresas', {
+    title: 'Empresas',
+  });
+}
+
+export function como_funciona(req, res) {
+  return res.render('website/como-funciona', {
+    title: 'Como funciona',
+  });
+}
+
+export function login(req, res) {
+  let fondos =["/assets/img/Ulimafondo.png","/assets/img/Ulimafondo2.png","/assets/img/Ulimafondo3.jpg"]
+  return res.render('website/login', {
+    title: 'Iniciar Sesion',
+    mensaje:null,
+    background: fondos[Math.floor(Math.random() * 3)]
+  });
+}
+
+export function ResetPassword(req, res) {
+  let fondos =["/assets/img/Ulimafondo.png","/assets/img/Ulimafondo2.png","/assets/img/Ulimafondo3.jpg"]
+  return res.render('website/reset-password', {
+    title: 'Recuperar Cuenta',
+    background: fondos[Math.floor(Math.random() * 3)]
+  });
+}
+
+export function ingresar(req, res) {
+  const fondos = [
+    "/assets/img/Ulimafondo.png",
+    "/assets/img/Ulimafondo2.png",
+    "/assets/img/Ulimafondo3.jpg"
+  ];
+
+  const { user, pass } = req.body || {};
+  console.log("user:", user);
+  console.log("pass:", pass);
+
+  const users = [
+    { user: "owner", pass: "123", role: "owner" },
+    { user: "enterprise", pass: "123", role: "enterprise" }
+  ];
+
+  const userFound = users.find((u) => u.user === user && u.pass === pass);
+  console.log("userFound:", userFound);
+
+  if (!userFound) {
+    return res.status(401).render("website/login", {
+      title: "Bienvenido",
+      user,
+      mensaje: "usuario y contraseña no coincide",
+      error: "Credenciales inválidas",
+      background: fondos[Math.floor(Math.random() * fondos.length)]
+    });
+  }
+
+  req.session.user = {
+    id: Date.now(),
+    user: userFound.user,
+    role: userFound.role
+  };
+
+  req.session.role = userFound.role;
+
+  return req.session.save(() => {
+    return res.redirect("/" + userFound.role);
+  });
+}
+
+export function about(req, res) {
+  return res.render('website/about', {
+    title: 'Acerca de',
+    currentPage: 'about',
+    description:'Esta es una aplicación de ejemplo creada con Node.js, Express y EJS.',
+
+  });
+}
+
+
+export function contact(req, res) {
+  return res.render('website/contact', {
+    title: 'Acerca de',
+    currentPage: 'contact',
+    description:
+      'Esta es una aplicación de ejemplo creada con Node.js, Express y EJS.'
+  });
+}
+
+export function players(req, res) {
+  return res.render('website/players', {
+    title: 'Acerca de',
+    currentPage: 'players',
+    description:
+      'Esta es una aplicación de ejemplo creada con Node.js, Express y EJS.'
+  });
+}
+
+export function signIn(req, res) {
+  return res.render('website/sign-in', {
+    title: 'Bienvenido',
+  });
+}
+
+export async function login2(req, res) {
+  const { user, password } = req.body;
+  const validUser = process.env.DEFAULT_USER || 'admin';
+  const validPassword = process.env.DEFAULT_PASSWORD || '123';
+
+  if (validUser == user && validPassword == password) {
+    req.session.user = {id:1, username: user};
+
+    req.flash('success', '¡Bienvenido! Has iniciado sesión correctamente.');
+    
+    return req.session.save(() => {
+      res.redirect('/admin');
+    });
+  }
+
+  // ❌ credenciales incorrectas
+  req.flash('error', 'Credenciales incorrectas');
+  
+  // ✅ Extraer flash messages manualmente antes de renderizar
+  const success_messages = req.flash('success');
+  const error_messages = req.flash('error');
+  const warning_messages = req.flash('warning');
+  const info_messages = req.flash('info');
+  
+  const hasFlashMessages = 
+    success_messages.length > 0 ||
+    error_messages.length > 0 ||
+    warning_messages.length > 0 ||
+    info_messages.length > 0;
+
+  console.log("1 +++++++++++++++++++++++++++++++++++++")
+
+  res.render('website/sign-in', {
+    title: 'Iniciar Sesión',
+    user: user, // Mantener el usuario en el formulario
+    
+    // ✅ Pasar explícitamente los flash messages
+    success_messages,
+    error_messages,
+    warning_messages,
+    info_messages,
+    hasFlashMessages
+  });
+}
+
+export function logout(req, res) {
+  req.session.destroy(err => {
+    if (err) {
+      console.error('Error al cerrar sesión:', err);
+      return res.redirect('/');
+    }
+
+    // Limpia la cookie de sesión (opcional pero recomendado)
+    res.clearCookie('connect.sid');
+
+    // Redirige al login
+    res.redirect('/login');
+  });
+}
+
+
+==================================================
+ARCHIVO: website\models.js
+==================================================
+
+// website/models.js
+
+
+
+==================================================
+ARCHIVO: website\repositories.js
+==================================================
+
+// website/repositores.js
+
+
+
+==================================================
+ARCHIVO: website\routes.js
+==================================================
+
+// website/routes.js
+import { Router } from 'express';
+import * as api from './apis.js';
+import * as controller from './controllers.js';
+import { redirectIfAuthenticated, requireAuth,RedireccionarSiLogeado } from '../configs/middlewares.js'; 
+
+const router = Router();
+
+router.get('/', controller.home);
+router.get('/convocatorias', controller.convocatorias);
+router.get('/empresas', controller.empresas);
+router.get('/como-funciona', controller.como_funciona);
+router.get('/login',RedireccionarSiLogeado,controller.login)
+router.post('/login',controller.ingresar)
+router.get('/logout', controller.logout);
+router.get('/register',controller.register)
+router.get('/reset-password',controller.ResetPassword)
+router.get('/about', controller.about);
+router.get('/contact', controller.contact);
+router.get('/players', controller.players);
+router.get('/sign-in', controller.signIn);
+router.post('/sign-in', redirectIfAuthenticated, controller.login);
+router.get('/sign-out', requireAuth, controller.logout);
+router.get('/api/v1/sessions', api.sessionInfo);
+
+
+export default router;
+
+
+==================================================
+ARCHIVO: website\services.js
+==================================================
+
+//website/services.js
+
+
+
