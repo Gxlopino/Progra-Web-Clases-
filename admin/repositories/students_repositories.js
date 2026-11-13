@@ -2,6 +2,7 @@
 import Student from '../models/students.js';
 import District from '../models/district.js';
 import User from '../models/user.js';
+import Profile from '../models/profile.js';
 import Carrer from '../models/carrer.js';
 import Semester from '../models/semester.js';
 import '../models/index.js';
@@ -13,7 +14,11 @@ const studentRelations = [
   { model: District, as: 'district' },
   { model: Carrer, as: 'carrers' },
   { model: Semester, as: 'semester' },
-  { model: User, as: 'user' }
+  {
+    model: User,
+    as: 'user',
+    include: [{ model: Profile, as: 'profile' }]
+  }
 ];
 
 class StudentRepository {

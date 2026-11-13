@@ -7,6 +7,8 @@ import * as enterprise from '../controllers/enterprise_controllers.js';
 import * as nationApis from '../apis/nations_apis.js';
 import * as carrers_api from '../apis/carrers_api.js';
 import * as students_api from '../apis/students_api.js';
+import * as districts_api from '../apis/districts_api.js';
+import * as semesters_api from '../apis/semesters_api.js';
 import { redirectIfAuthenticated, requireAuth,soloEnterprise,soloLogueado,soloOwner } from '../../configs/middlewares.js'; 
 
 const router = Router();
@@ -38,6 +40,9 @@ router.post('/api/v1/students', students_api.createStudent);
 router.put('/api/v1/students/:id', students_api.updateStudent);
 router.delete('/api/v1/students/:id', students_api.deleteStudent);
 
+router.get('/api/v1/districts', districts_api.listDistricts);
+router.get('/api/v1/semesters', semesters_api.listSemesters);
+
 // carrers
 router.get('/admin/carrers', carrers.home);
 router.get('/owner', soloLogueado,soloOwner,owners.home);
@@ -53,4 +58,7 @@ router.get('/enterprise/perfil', enterprise.home);
 router.get('/enterprise/resenas', enterprise.home);
 router.get('/enterprise/cambiar-contrasena', enterprise.home);
 router.get('/enterprise/configuracion', enterprise.home);
+router.get('/enterprise/students', enterprise.home);
+router.get('/enterprise/students/new', enterprise.home);
+router.get('/enterprise/students/:id/edit', enterprise.home);
 export default router;

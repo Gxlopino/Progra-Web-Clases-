@@ -1,0 +1,4989 @@
+
+==================================================
+ESTRUCTURA COMPLETA DEL PROYECTO SRC
+==================================================
+
+src/
+├── assets
+│   ├── hero.png
+│   ├── react.svg
+│   └── vite.svg
+├── entries
+│   ├── admin.css
+│   ├── admin.jsx
+│   ├── enterprise.css
+│   ├── enterprise.jsx
+│   ├── owner.jsx
+│   ├── web copy.jsx
+│   ├── web.css
+│   └── web.jsx
+├── helpers
+│   ├── datetime.js
+│   └── random.js
+├── pages
+│   ├── enterprise
+│   │   ├── BandejaPostulantes.css
+│   │   ├── BandejaPostulantes.jsx
+│   │   ├── CambiarContrasena.css
+│   │   ├── CambiarContrasena.jsx
+│   │   ├── CarreraDetalle.css
+│   │   ├── CarreraDetalle.jsx
+│   │   ├── CarreraListado.css
+│   │   ├── CarreraListado.jsx
+│   │   ├── CarreraNueva.css
+│   │   ├── CarreraNueva.jsx
+│   │   ├── ConfiguracionEmpresa.css
+│   │   ├── ConfiguracionEmpresa.jsx
+│   │   ├── MisConvocatorias.css
+│   │   ├── MisConvocatorias.jsx
+│   │   ├── NoEncontrado.css
+│   │   ├── NoEncontrado.jsx
+│   │   ├── NuevaConvocatoria.css
+│   │   ├── NuevaConvocatoria.jsx
+│   │   ├── PerfilEmpresa.css
+│   │   ├── PerfilEmpresa.jsx
+│   │   ├── ResenasRecibidas.css
+│   │   └── ResenasRecibidas.jsx
+│   ├── CatalogsPage.jsx
+│   ├── DashboardPage.jsx
+│   ├── LeaguesPage.jsx
+│   ├── NationsPage.jsx
+│   ├── PlayersPage.jsx
+│   └── TeamsPage.jsx
+├── partials
+│   ├── Cabecera.css
+│   ├── Cabecera.jsx
+│   ├── CabeceraEnterprise.css
+│   ├── CabeceraEnterprise.jsx
+│   ├── FooterEnterprise.css
+│   ├── FooterEnterprise.jsx
+│   ├── Navbar.jsx
+│   ├── Sidebar.jsx
+│   ├── SideBarEnterprise.css
+│   └── SideBarEnterprise.jsx
+└── widgets
+    ├── Autocomplete.css
+    ├── Autocomplete.jsx
+    ├── DataTable.css
+    ├── DataTable.jsx
+    ├── UploadFile.css
+    └── UploadFile.jsx
+
+
+==================================================
+CODIGO COMPLETO DEL PROYECTO SRC
+==================================================
+
+==================================================
+ARCHIVO: src\assets\react.svg
+==================================================
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
+
+
+==================================================
+ARCHIVO: src\assets\vite.svg
+==================================================
+
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="47" fill="none" aria-labelledby="vite-logo-title" viewBox="0 0 77 47"><title id="vite-logo-title">Vite</title><style>.parenthesis{fill:#000}@media (prefers-color-scheme:dark){.parenthesis{fill:#fff}}</style><path fill="#9135ff" d="M40.151 45.71c-.663.844-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.493c-.92 0-1.457-1.04-.92-1.788l7.479-10.471c1.07-1.498 0-3.578-1.842-3.578H15.443c-.92 0-1.456-1.04-.92-1.788l9.696-13.576c.213-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.472c-1.07 1.497 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.087.89 1.83L40.153 45.712z"/><mask id="a" width="48" height="47" x="14" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M40.047 45.71c-.663.843-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.389c-.92 0-1.457-1.04-.92-1.788l7.479-10.472c1.07-1.497 0-3.578-1.842-3.578H15.34c-.92 0-1.456-1.04-.92-1.788l9.696-13.575c.213-.297.556-.474.92-.474H53.93c.92 0 1.456 1.04.92 1.788L47.37 13.03c-1.07 1.498 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.088.89 1.831L40.049 45.712z"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#eee6ff" rx="5.508" ry="14.704" transform="rotate(269.814 20.96 11.29)scale(-1 1)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#eee6ff" rx="10.399" ry="29.851" transform="rotate(89.814 -16.902 -8.275)scale(1 -1)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#8900ff" rx="5.508" ry="30.487" transform="rotate(89.814 -19.197 -7.127)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.928 4.177)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.738 5.52)scale(1 -1)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#eee6ff" rx="14.072" ry="22.078" transform="rotate(93.35 31.245 55.578)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx="14.592" cy="9.743" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(39.51 14.592 9.743)"/></g><g filter="url(#k)"><ellipse cx="61.728" cy="-5.321" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 61.728 -5.32)"/></g><g filter="url(#l)"><ellipse cx="55.618" cy="7.104" fill="#00c2ff" rx="5.971" ry="9.665" transform="rotate(37.892 55.618 7.104)"/></g><g filter="url(#m)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#n)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#o)"><ellipse cx="49.857" cy="30.678" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 49.857 30.678)"/></g><g filter="url(#p)"><ellipse cx="52.623" cy="33.171" fill="#00c2ff" rx="5.971" ry="15.297" transform="rotate(37.892 52.623 33.17)"/></g></g><path d="M6.919 0c-9.198 13.166-9.252 33.575 0 46.789h6.215c-9.25-13.214-9.196-33.623 0-46.789zm62.424 0h-6.215c9.198 13.166 9.252 33.575 0 46.789h6.215c9.25-13.214 9.196-33.623 0-46.789" class="parenthesis"/><defs><filter id="b" width="60.045" height="41.654" x="-5.564" y="16.92" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-40.407" y="-6.762" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-35.435" y="2.801" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-30.84" y="20.8" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-29.307" y="21.949" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="29.961" y="-17.13" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-13.43" y="-22.082" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="34.321" y="-37.644" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="38.847" y="-10.552" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="22.45" y="-1.645" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="32.919" y="11.36" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter></defs></svg>
+
+
+
+==================================================
+ARCHIVO: src\entries\admin.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\entries\admin.jsx
+==================================================
+
+// src/entries/admin.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
+
+// Estilos globales
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './admin.css';
+
+// Componentes parciales
+import Sidebar from '../partials/Sidebar';
+import Navbar from '../partials/Navbar';
+
+// Páginas del sistema (CRUDs)
+import DashboardPage from '../pages/DashboardPage';
+import NationsPage from '../pages/NationsPage';
+import LeaguesPage from '../pages/LeaguesPage';
+import TeamsPage from '../pages/TeamsPage';
+import PlayersPage from '../pages/PlayersPage';
+import CatalogsPage from '../pages/CatalogsPage';
+
+// Layout Principal (Dashboard + Sidebar + Navbar)
+function AdminDashboardLayout() {
+  return (
+    <div className="d-flex" style={{ minHeight: '100vh' }}>
+      <Sidebar />
+      <div className="flex-grow-1 d-flex flex-column bg-light">
+        <Navbar />
+        <main className="p-4 flex-grow-1">
+          {/* El contenido de la ruta activa se renderiza aquí */}
+          <Outlet />
+        </main>
+      </div>
+    </div>
+  );
+}
+
+// Configuración de Rutas
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/admin" element={<AdminDashboardLayout />}>
+          <Route index element={<DashboardPage />} />
+          <Route path="nations" element={<NationsPage />} />
+          <Route path="leagues" element={<LeaguesPage />} />
+          <Route path="teams" element={<TeamsPage />} />
+          <Route path="players" element={<PlayersPage />} />
+          <Route path="catalogs" element={<CatalogsPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+// Montaje en el DOM
+const container = document.getElementById('root');
+if (container) {
+  ReactDOM.createRoot(container).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\entries\enterprise.css
+==================================================
+
+/* =========================================================
+   PALETA DE COLORES
+   ========================================================= */
+
+:root {
+  --color-primary: #123A5F;
+  --color-primary-dark: #0C2A46;
+  --color-primary-soft: #E6EEF5;
+
+  --color-accent: #0F8B7E;
+
+  --color-bg: #F7F9FB;
+  --color-surface: #FFFFFF;
+  --color-border: #DCE3EA;
+
+  --color-text: #16212B;
+  --color-text-muted: #67757F;
+
+  --color-success: #1E7F4D;
+  --color-warning: #B7791F;
+  --color-danger: #B4322B;
+  --color-info: #3B6FA8;
+
+  /* Bootstrap */
+  --bs-primary: #123A5F;
+  --bs-primary-rgb: 18, 58, 95;
+
+  --bs-success: #1E7F4D;
+  --bs-success-rgb: 30, 127, 77;
+
+  --bs-warning: #B7791F;
+  --bs-warning-rgb: 183, 121, 31;
+
+  --bs-danger: #B4322B;
+  --bs-danger-rgb: 180, 50, 43;
+
+  --bs-info: #3B6FA8;
+  --bs-info-rgb: 59, 111, 168;
+
+  --bs-body-bg: #F7F9FB;
+  --bs-body-color: #16212B;
+
+  --bs-border-color: #DCE3EA;
+}
+
+
+/* =========================================================
+   ESTRUCTURA GENERAL
+   ========================================================= */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+
+/*
+ * #root ocupa como mínimo toda la pantalla.
+ *
+ * Esto permite que:
+ * Cabecera
+ *      ↓
+ * contenido
+ *      ↓
+ * Footer
+ *
+ * se distribuyan correctamente en vertical.
+ */
+#root {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   LAYOUT ENTERPRISE
+   ========================================================= */
+
+/*
+ * Área que contiene:
+ *
+ * ┌──────────────┬─────────────────────┐
+ * │              │                     │
+ * │   SIDEBAR    │      CONTENT        │
+ * │              │                     │
+ * └──────────────┴─────────────────────┘
+ */
+.enterprise-layout {
+  width: 100%;
+
+  flex: 1;
+
+  display: flex;
+
+  min-width: 0;
+}
+
+
+/*
+ * Contenido principal.
+ *
+ * El flex: 1 hace que ocupe todo el espacio
+ * disponible que deja el sidebar.
+ */
+.enterprise-content {
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 30px;
+
+  background-color: var(--color-bg);
+}
+
+
+/* =========================================================
+   COMPONENTES GENERALES
+   ========================================================= */
+
+.card {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+.text-muted {
+  color: var(--color-text-muted) !important;
+}
+
+
+/* =========================================================
+   UTILIDADES PERSONALIZADAS
+   ========================================================= */
+
+.bg-primary-soft {
+  background-color: var(--color-primary-soft) !important;
+}
+
+.bg-surface {
+  background-color: var(--color-surface) !important;
+}
+
+.text-primary-custom {
+  color: var(--color-primary) !important;
+}
+
+.text-muted-custom {
+  color: var(--color-text-muted) !important;
+}
+
+.border-custom {
+  border-color: var(--color-border) !important;
+}
+
+
+/* =========================================================
+   BOTÓN ACCENT
+   ========================================================= */
+
+.btn-accent {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #0F8B7E;
+  --bs-btn-border-color: #0F8B7E;
+
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #0C746A;
+  --bs-btn-hover-border-color: #0C746A;
+
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #095F57;
+  --bs-btn-active-border-color: #095F57;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767.98px) {
+
+  .enterprise-content {
+    padding: 20px;
+  }
+
+}
+
+
+
+==================================================
+ARCHIVO: src\entries\enterprise.jsx
+==================================================
+
+ // src/entries/enterprise.jsx
+
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Outlet
+} from 'react-router-dom'
+
+import CabeceraEnterprise from '../partials/CabeceraEnterprise'
+import SideBarEnterprise from '../partials/SideBarEnterprise'
+import FooterEnterprise from '../partials/FooterEnterprise'
+import MisConvocatorias from '../pages/enterprise/MisConvocatorias'
+import NuevaConvocatoria from '../pages/enterprise/NuevaConvocatoria'
+import BandejaPostulantes from '../pages/enterprise/BandejaPostulantes'
+import PerfilEmpresa from '../pages/enterprise/PerfilEmpresa'
+import ResenasRecibidas from '../pages/enterprise/ResenasRecibidas'
+import CambiarContrasena from '../pages/enterprise/CambiarContrasena'
+import ConfiguracionEmpresa from '../pages/enterprise/ConfiguracionEmpresa'
+import NoEncontrado from '../pages/enterprise/NoEncontrado'
+import CarreraListado from '../pages/enterprise/CarreraListado'
+import CarreraNueva from '../pages/enterprise/CarreraNueva'
+import CarreraDetalle from '../pages/enterprise/CarreraDetalle'
+
+import './enterprise.css'
+
+// Layout general
+function EnterpriseLayout() {
+  return (
+    <>
+      <CabeceraEnterprise />
+
+      <div className="enterprise-layout">
+        <SideBarEnterprise />
+
+        <main className="enterprise-content">
+          <Outlet />
+        </main>
+      </div>
+
+      <FooterEnterprise />
+    </>
+  )
+}
+
+// Función App: contiene solamente las rutas
+function App() {
+  return (
+    <Routes>
+      <Route
+        path="/enterprise"
+        element={<EnterpriseLayout />}
+      >
+        <Route index element={<MisConvocatorias />} />
+
+        <Route
+          path="convocatorias"
+          element={<MisConvocatorias />}
+        />
+
+        <Route
+          path="convocatorias/nueva"
+          element={<NuevaConvocatoria />}
+        />
+
+        <Route
+          path="postulantes"
+          element={<BandejaPostulantes />}
+        />
+
+        <Route
+          path="perfil"
+          element={<PerfilEmpresa />}
+        />
+
+        <Route
+          path="resenas"
+          element={<ResenasRecibidas />}
+        />
+
+        <Route
+          path="carrers"
+          element={<CarreraListado />}
+        />
+
+        <Route
+          path="carrers/new"
+          element={<CarreraNueva />}
+        />
+        
+        <Route
+          path="carrers/:id/edit"
+          element={<CarreraDetalle />}
+        />
+
+        <Route
+          path="cambiar-contrasena"
+          element={<CambiarContrasena />}
+        />
+
+        <Route
+          path="configuracion"
+          element={<ConfiguracionEmpresa />}
+        />
+      </Route>
+
+      <Route path="*" element={<NoEncontrado />} />
+    </Routes>
+  )
+}
+
+// Montaje en el DOM
+const container = document.getElementById('root')
+
+if (container) {
+  ReactDOM.createRoot(container).render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>
+  )
+}
+
+
+==================================================
+ARCHIVO: src\entries\owner.jsx
+==================================================
+
+// src/entries/owner.jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import Cabecera from '../partials/Cabecera'
+
+// 2. Pasamos los valores (props) desde el componente principal
+function HolaMundo() {
+  return (
+    <>
+    <p>hola soy filipino</p>
+    <p> Estamos entendiendo</p>
+    </>
+)
+}
+
+// 3. Montaje en el DOM
+const container = document.getElementById('root')
+
+if (container) {
+  ReactDOM.createRoot(container).render(
+    <React.StrictMode>
+      <Cabecera />
+      <HolaMundo />
+    </React.StrictMode>
+  )
+}
+
+
+==================================================
+ARCHIVO: src\entries\web copy.jsx
+==================================================
+
+// src/entries/web.jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import './web.css' 
+
+// 1. Recibimos los props mediante desestructuración ({ titulo, descripcion, color })
+function MiTarjeta({ titulo, descripcion, color }) {
+  return (
+    <div style={{ padding: '1rem', border: '1px solid #e5e7eb', borderRadius: '8px', maxWidth: '400px', margin: '1rem auto', background: '#f9fafb' }}>
+      {/* Usamos el prop 'color' y 'titulo' */}
+      <h3 style={{ color: color || '#10b981', margin: '0 0 0.5rem 0' }}>{titulo}</h3>
+      {/* Usamos el prop 'descripcion' */}
+      <p style={{ margin: 0, color: '#4b5563' }}>{descripcion}</p>
+    </div>
+  )
+}
+
+// 2. Pasamos los valores (props) desde el componente principal
+function HolaMundo() {
+  return (
+    <div style={{ fontFamily: 'sans-serif', textAlign: 'center', marginTop: '2rem' }}>
+      <h1 style={{ color: '#4f46e5' }}>¡Hola Mundo desde React! 🚀</h1>
+      <p>Esta es mi sub-aplicación desplegada desde <code>src/entries/web.jsx</code>.</p>
+      
+      {/* Llamamos al componente enviándole diferentes props */}
+      <MiTarjeta 
+        titulo="Primer Componente con Props 🧩" 
+        descripcion="Este texto viene desde un prop dinámico." 
+        color="#4f46e5"
+      />
+
+      <MiTarjeta 
+        titulo="¡Segundo Componente reutilizable! ✨" 
+        descripcion="Puedes usar el mismo componente con distinta información." 
+        color="#e11d48"
+      />
+
+      <MiTarjeta 
+        titulo="¡Segundo Componente reutilizable! ✨" 
+        descripcion="Puedes usar el mismo componente con distinta información." 
+        color="#4b5563"
+      />
+
+      <div className="p-4 flex gap-3 items-center">
+        <FontAwesomeIcon icon={faGlobe} className="text-blue-500 text-2xl" />
+        <button className="bg-blue-600 text-white px-3 py-1.5 rounded flex items-center gap-2">
+          <FontAwesomeIcon icon={faPlus} />
+          Crear Nación
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// 3. Montaje en el DOM
+const container = document.getElementById('root')
+
+if (container) {
+  ReactDOM.createRoot(container).render(
+    <React.StrictMode>
+      <HolaMundo />
+    </React.StrictMode>
+  )
+}
+
+
+==================================================
+ARCHIVO: src\entries\web.css
+==================================================
+
+/* src/entries/web.css */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+/* Variables CSS personalizadas para reemplazar la regla @theme de Tailwind */
+:root {
+  --font-sans: "Inter", sans-serif;
+  --color-primary: #ff501c;
+  --color-secondary: #222222;
+  
+  /* Sobrescribir variables nativas de Bootstrap si deseas reemplazar su color primario */
+  --bs-primary: #ff501c;
+  --bs-primary-rgb: 255, 80, 28;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+
+==================================================
+ARCHIVO: src\entries\web.jsx
+==================================================
+
+// src/entries/web.jsx
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './web.css' 
+
+// 1. Recibimos los props mediante desestructuración ({ titulo, descripcion, color })
+function MiTarjeta({ titulo, descripcion, color }) {
+  return (
+    <div style={{ padding: '1rem', border: '1px solid #e5e7eb', borderRadius: '8px', maxWidth: '400px', margin: '1rem auto', background: '#f9fafb' }}>
+      {/* Usamos el prop 'color' y 'titulo' */}
+      <h3 style={{ color: color || '#10b981', margin: '0 0 0.5rem 0' }}>{titulo}</h3>
+      {/* Usamos el prop 'descripcion' */}
+      <p style={{ margin: 0, color: '#4b5563' }}>{descripcion}</p>
+    </div>
+  )
+}
+
+// 2. Pasamos los valores (props) desde el componente principal
+function HolaMundo() {
+  return (
+    <div style={{ fontFamily: 'sans-serif', textAlign: 'center', marginTop: '2rem' }}>
+      <h1 style={{ color: '#4f46e5' }}>¡Hola Mundo desde React! 🚀</h1>
+      <p>Esta es mi sub-aplicación desplegada desde <code>src/entries/web.jsx</code>.</p>
+      
+      {/* Llamamos al componente enviándole diferentes props */}
+      <MiTarjeta 
+        titulo="Primer Componente con Props 🧩🧩🧩🧩🧩" 
+        descripcion="Este texto viene desde un prop dinámico." 
+        color="#4f46e5"
+      />
+
+      <MiTarjeta 
+        titulo="¡Segundo Componente reutilizable! ✨" 
+        descripcion="Puedes usar el mismo componente con distinta información." 
+        color="#e11d48"
+      />
+
+      <MiTarjeta 
+        titulo="¡Segundo Componente reutilizable! ✨" 
+        descripcion="Puedes usar el mismo componente con distinta información." 
+        color="#4b5563"
+      />
+
+      <div className="p-4 flex gap-3 items-center">
+        <FontAwesomeIcon icon={faGlobe} className="text-blue-500 text-2xl" />
+        <button className="bg-blue-600 text-white px-3 py-1.5 rounded flex items-center gap-2">
+          <FontAwesomeIcon icon={faPlus} />
+          Crear Nación
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// 3. Montaje en el DOM
+const container = document.getElementById('root')
+
+if (container) {
+  ReactDOM.createRoot(container).render(
+    <React.StrictMode>
+      <HolaMundo />
+    </React.StrictMode>
+  )
+}
+
+
+==================================================
+ARCHIVO: src\helpers\datetime.js
+==================================================
+
+// src/helpers/datetime.js
+export const toDatetimeLocalWithSeconds = (dateStr) => {
+  const date = new Date(dateStr);
+  const offset = date.getTimezoneOffset();
+  date.setMinutes(date.getMinutes() - offset); // Convertir a hora local
+  return date.toISOString().slice(0, 19); // YYYY-MM-DDTHH:MM:SS
+};
+
+export default toDatetimeLocalWithSeconds;
+
+
+==================================================
+ARCHIVO: src\helpers\random.js
+==================================================
+
+// src/helpers/random.js
+const random = (length) => {
+  var result           = '';
+  var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+  for ( var i = 0; i < length; i++ ) {
+     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
+export default random;
+
+
+==================================================
+ARCHIVO: src\pages\CatalogsPage.jsx
+==================================================
+
+// src/pages/CatalogsPage.jsx
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTags, faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+export default function CatalogsPage() {
+  const [activeTab, setActiveTab] = useState('play_styles');
+
+  return (
+    <div className="bg-white p-4 rounded shadow-sm">
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h4 className="fw-bold m-0">
+          <FontAwesomeIcon icon={faTags} className="me-2 text-primary" /> 
+          Catálogos Auxiliares
+        </h4>
+        <button className="btn btn-primary btn-sm d-flex align-items-center gap-2">
+          <FontAwesomeIcon icon={faPlus} /> Agregar Registro
+        </button>
+      </div>
+
+      {/* Navegación por Pestañas */}
+      <ul className="nav nav-tabs mb-4">
+        <li className="nav-item">
+          <button 
+            className={`nav-link ${activeTab === 'play_styles' ? 'active fw-bold' : ''}`}
+            onClick={() => setActiveTab('play_styles')}
+          >
+            Estilos (`play_styles`)
+          </button>
+        </li>
+        <li className="nav-item">
+          <button 
+            className={`nav-link ${activeTab === 'positions' ? 'active fw-bold' : ''}`}
+            onClick={() => setActiveTab('positions')}
+          >
+            Posiciones (`positions`)
+          </button>
+        </li>
+        <li className="nav-item">
+          <button 
+            className={`nav-link ${activeTab === 'foots' ? 'active fw-bold' : ''}`}
+            onClick={() => setActiveTab('foots')}
+          >
+            Pies (`foots`)
+          </button>
+        </li>
+        <li className="nav-item">
+          <button 
+            className={`nav-link ${activeTab === 'sexs' ? 'active fw-bold' : ''}`}
+            onClick={() => setActiveTab('sexs')}
+          >
+            Sexo (`sexs`)
+          </button>
+        </li>
+      </ul>
+
+      {/* Contenido según la pestaña seleccionada */}
+      <table className="table table-hover align-middle border">
+        <thead className="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nombre / Descripción (`name`)</th>
+            <th className="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {activeTab === 'play_styles' && (
+            <>
+              <tr><td>1</td><td>Tiki-Taka</td><td className="text-end"><button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button><button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button></td></tr>
+              <tr><td>2</td><td>Counter-Attack</td><td className="text-end"><button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button><button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button></td></tr>
+            </>
+          )}
+
+          {activeTab === 'positions' && (
+            <>
+              <tr><td>1</td><td>ST (Delantero)</td><td className="text-end"><button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button><button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button></td></tr>
+              <tr><td>2</td><td>GK (Portero)</td><td className="text-end"><button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button><button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button></td></tr>
+            </>
+          )}
+
+          {activeTab === 'foots' && (
+            <>
+              <tr><td>1</td><td>Left (Zurdo)</td><td className="text-end"><button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button><button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button></td></tr>
+              <tr><td>2</td><td>Right (Diestro)</td><td className="text-end"><button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button><button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button></td></tr>
+            </>
+          )}
+
+          {activeTab === 'sexs' && (
+            <>
+              <tr><td>1</td><td>Male</td><td className="text-end"><button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button><button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button></td></tr>
+              <tr><td>2</td><td>Female</td><td className="text-end"><button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button><button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button></td></tr>
+            </>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\pages\DashboardPage.jsx
+==================================================
+
+// src/pages/DashboardPage.jsx
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe, faTrophy, faShieldHalved, faUserNinja } from '@fortawesome/free-solid-svg-icons';
+
+export default function DashboardPage() {
+  return (
+    <div>
+      <h2 className="fw-bold mb-3">Panel Principal</h2>
+      <p className="text-muted">Resumen general de las entidades registradas en el sistema.</p>
+
+      <div className="row g-3 mt-2">
+        <div className="col-md-3">
+          <div className="card border-0 shadow-sm p-3 border-start border-primary border-4">
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 className="text-muted text-uppercase fw-bold m-0">Naciones</h6>
+                <h2 className="fw-bold m-0 mt-2">211</h2>
+              </div>
+              <FontAwesomeIcon icon={faGlobe} className="text-primary fs-1 opacity-25" />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-3">
+          <div className="card border-0 shadow-sm p-3 border-start border-success border-4">
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 className="text-muted text-uppercase fw-bold m-0">Ligas</h6>
+                <h2 className="fw-bold m-0 mt-2">45</h2>
+              </div>
+              <FontAwesomeIcon icon={faTrophy} className="text-success fs-1 opacity-25" />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-3">
+          <div className="card border-0 shadow-sm p-3 border-start border-warning border-4">
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 className="text-muted text-uppercase fw-bold m-0">Equipos</h6>
+                <h2 className="fw-bold m-0 mt-2">720</h2>
+              </div>
+              <FontAwesomeIcon icon={faShieldHalved} className="text-warning fs-1 opacity-25" />
+            </div>
+          </div>
+        </div>
+
+        <div className="col-md-3">
+          <div className="card border-0 shadow-sm p-3 border-start border-danger border-4">
+            <div className="d-flex justify-content-between align-items-center">
+              <div>
+                <h6 className="text-muted text-uppercase fw-bold m-0">Jugadores</h6>
+                <h2 className="fw-bold m-0 mt-2">18,500</h2>
+              </div>
+              <FontAwesomeIcon icon={faUserNinja} className="text-danger fs-1 opacity-25" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\BandejaPostulantes.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\BandejaPostulantes.jsx
+==================================================
+
+import './BandejaPostulantes.css'
+
+export default function BandejaPostulantes() {
+  return <h2>Bandeja de postulantes</h2>
+}
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\CambiarContrasena.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\CambiarContrasena.jsx
+==================================================
+
+import './CambiarContrasena.css'
+
+export default function CambiarContrasena() {
+  return <h2>Cambiar contraseña</h2>
+}
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\CarreraDetalle.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\CarreraDetalle.jsx
+==================================================
+
+// src/pages/enterprise/CarreraNueva.jsx
+
+import { useState, useEffect } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
+import './CarreraDetalle.css';
+import axios from 'axios';
+
+export default function CarreraDetalle() {
+  const [message, setMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState(false);
+  const [name, setName] = useState("");
+  const {id}= useParams();
+
+  const _obtenerCarrera = (async ()=> {
+    if(id!==undefined){
+      try {
+        const response = await axios.get('/api/v1/carrers'+id);
+        console.log(response.data);
+        setName(response.data.data.name)
+      }catch (error) {
+        console.error(error);
+      }
+    }
+  })
+
+    useEffect(async ()=> {
+  _obtenerCarrera();
+  },[id]);
+
+  const _guardarCarrera = async (e) => {
+    e.preventDefault();
+
+    try {
+      let response;
+      if(id===undefined){
+        response = await axios.post('/api/v1/carrers', {
+        name: name
+      });
+        if (response.data.success) {
+          setName("");
+        }
+      }else{
+        response = await axios.put('/api/v1/carrers/'+id, {
+        name: name
+      });
+      }
+      
+      setMessage(response.data.message);
+      setStatusMessage(response.data.success);
+
+    } catch (error) {
+      console.error(error);
+
+      setMessage(
+        error.response?.data?.message || "Error al registrar la carrera"
+      );
+      setStatusMessage(false);
+    }
+  };
+
+  return (
+    <>
+      <h1>Editar Carrera</h1>
+
+      {message !== "" && (
+        <div
+          className={`alert ${statusMessage ? 'alert-success' : 'alert-danger'}`}
+          role="alert"
+          id="alertMessage"
+        >
+          {message}
+        </div>
+      )}
+
+      <NavLink to="/enterprise/carrers" className="btn btn-secondary mb-3">
+        Retroceder
+      </NavLink>
+
+      <form onSubmit={_guardarCarrera}>
+
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">
+            Nombre de la carrera
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            className="form-control"
+            placeholder="Ingrese el nombre de la carrera"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={30}
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn btn-primary">
+          Guardar Carrera
+        </button>
+
+      </form>
+    </>
+  );
+}
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\CarreraListado.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\CarreraListado.jsx
+==================================================
+
+import { useState,useEffect } from 'react';
+import './CarreraListado.css'
+import axios from 'axios';
+import { NavLink,useNavigate } from 'react-router-dom';
+
+export default function CarreraListado() {
+
+const navigate=useNavigate();
+const carrers2 = [];
+const[carrers,setCarrers] = useState(carrers2);
+const[message,setMessage] = useState("");
+const[statusmessage,setStatusMessage] = useState(false);
+
+ useEffect(() => { 
+  _cargarCarreras();
+},[]);
+
+const _cargarCarreras = async () => {
+  try {
+    const response = await axios.get('/api/v1/carrers');
+    //console.log(response.data);
+    setCarrers(response.data.data);
+    setMessage(response.data.message);
+    setStatusMessage(response.data.success);
+  }catch (error) {
+    console.error(error);
+  }
+
+};
+
+  const _eliminar = async (e,id) => {
+    try {
+      const response = await axios.delete('/api/v1/carrers/'+id);
+      //console.log(response.data);
+      _cargarCarreras();
+      setMessage(response.data.message);
+      setStatusMessage(response.data.success);
+    }catch (error) {
+      console.error(error);
+    }
+  }
+
+  const _editar = async (e,id) => {
+    navigate('/enterprise/carrers/'+id+'/edit')
+  }
+  
+  return <>
+          <h2>Carreras</h2>
+         <p>Bienvenido al panel de la empresa</p>
+        {message != "" ? (
+          <div className={`alert ${statusmessage ? 'alert-success' : 'alert-danger'}`} role="alert" id="alertMessage">
+          {message} {statusmessage}
+          </div>) : (<div></div>)
+        }
+        <NavLink to="/enterprise/carrers/new" className="btn btn-secondary">
+        Agregar Carrera
+        </NavLink>
+        
+         <table className='table'> 
+          <thead>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>operaciones</th>
+          </thead>
+          <tbody>
+            {Array.isArray(carrers) && carrers.map((carrer) => (
+              <tr>
+                <td>{carrer.id}</td>
+                <td>{carrer.name}</td>
+                <td>
+                  <button className="btn btn-primary" onClick ={(e)=> _editar(e,carrer.id)}>Editar</button>
+                  <button className="btn btn-danger" onClick={(e)=> _eliminar(e,carrer.id)}>Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+         </table>
+         </>
+};
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\CarreraNueva.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\CarreraNueva.jsx
+==================================================
+
+// src/pages/enterprise/CarreraNueva.jsx
+
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import './CarreraNueva.css';
+import axios from 'axios';
+
+export default function CarreraNueva() {
+  const [message, setMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState(false);
+  const [name, setName] = useState("");
+
+  const _agregarCarrera = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('/api/v1/carrers', {
+        name: name
+      });
+
+      setMessage(response.data.message);
+      setStatusMessage(response.data.success);
+
+      if (response.data.success) {
+        setName("");
+      }
+
+    } catch (error) {
+      console.error(error);
+
+      setMessage(
+        error.response?.data?.message || "Error al registrar la carrera"
+      );
+      setStatusMessage(false);
+    }
+  };
+
+  return (
+    <>
+      <h1>Carrera Nueva</h1>
+
+      {message !== "" && (
+        <div
+          className={`alert ${statusMessage ? 'alert-success' : 'alert-danger'}`}
+          role="alert"
+          id="alertMessage"
+        >
+          {message}
+        </div>
+      )}
+
+      <NavLink to="/enterprise/carrers" className="btn btn-secondary mb-3">
+        Retroceder
+      </NavLink>
+
+      <form onSubmit={_agregarCarrera}>
+
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">
+            Nombre de la carrera
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            className="form-control"
+            placeholder="Ingrese el nombre de la carrera"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            maxLength={30}
+            required
+          />
+        </div>
+
+        <button type="submit" className="btn btn-primary">
+          Guardar Carrera
+        </button>
+
+      </form>
+    </>
+  );
+}
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\ConfiguracionEmpresa.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\ConfiguracionEmpresa.jsx
+==================================================
+
+import './ConfiguracionEmpresa.css'
+
+export default function ConfiguracionEmpresa() {
+  return <h2>Configuración de la empresa</h2>
+}
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\MisConvocatorias.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\MisConvocatorias.jsx
+==================================================
+
+import './MisConvocatorias.css'
+
+export default function MisConvocatorias() {
+  return <><h2>Mis convocatorias</h2>
+         <p>Hola natalia, mariana,alain.silvana son i grupo jijija</p></>
+}
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\NoEncontrado.css
+==================================================
+
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\NoEncontrado.jsx
+==================================================
+
+import './NoEncontrado.css'
+
+export default function NoEncontrado() {
+  return <h2>Página no encontrada (404)</h2>
+}
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\NuevaConvocatoria.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\NuevaConvocatoria.jsx
+==================================================
+
+import './NuevaConvocatoria.css'
+
+export default function NuevaConvocatoria() {
+  return <h2>Nueva convocatoria</h2>
+}
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\PerfilEmpresa.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\PerfilEmpresa.jsx
+==================================================
+
+import './PerfilEmpresa.css'
+
+export default function PerfilEmpresa() {
+  return <h2>Perfil de la empresa</h2>
+}
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\ResenasRecibidas.css
+==================================================
+
+
+
+
+==================================================
+ARCHIVO: src\pages\enterprise\ResenasRecibidas.jsx
+==================================================
+
+import './ResenasRecibidas.css'
+
+export default function ResenasRecibidas() {
+  return <h2>Reseñas recibidas</h2>
+}
+
+
+==================================================
+ARCHIVO: src\pages\LeaguesPage.jsx
+==================================================
+
+// src/pages/LeaguesPage.jsx
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrophy, faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+export default function LeaguesPage() {
+  return (
+    <div className="bg-white p-4 rounded shadow-sm">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h4 className="fw-bold m-0">
+          <FontAwesomeIcon icon={faTrophy} className="me-2 text-primary" /> 
+          Mantenimiento de Ligas (`leagues`)
+        </h4>
+        <button className="btn btn-primary d-flex align-items-center gap-2">
+          <FontAwesomeIcon icon={faPlus} /> Nueva Liga
+        </button>
+      </div>
+
+      <table className="table table-hover align-middle border">
+        <thead className="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nombre Liga (`name`)</th>
+            <th>Nación (`nation_id`)</th>
+            <th className="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>LaLiga</td>
+            <td>España</td>
+            <td className="text-end">
+              <button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button>
+              <button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Premier League</td>
+            <td>Inglaterra</td>
+            <td className="text-end">
+              <button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button>
+              <button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\pages\NationsPage.jsx
+==================================================
+
+// src/pages/NationsPage.jsx
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faPlus, 
+  faGlobe, 
+  faPencil, 
+  faTrash,
+  faEye,
+  faCopy
+} from '@fortawesome/free-solid-svg-icons';
+import DataTable from '../widgets/DataTable.jsx';
+//import { useAuth } from '../contexts/AuthContext';
+import { toast } from 'react-toastify';
+
+export default function NationsPage() {
+  const { token } = "useAuth()";
+  //const [refreshKey, setRefreshKey] = useState(0);
+
+  // Configuración de columnas
+  const columnKeys = ['id', 'name'];
+  const columnNames = ['ID', 'Nombre'];
+  const columnTypes = ['td', 'input[text]'];
+  const columnClasses = ['text-center', ''];
+  const columnStyles = [{ width: '80px' }, {}];
+  const tdStyles = [{}, {}];
+
+  // Botones de acción personalizados con FontAwesome
+  const actionButtons = [
+    {
+      label: 'Editar',
+      class: 'btn-warning btn-sm',
+      icon: faPencil, // Usar el icono directamente desde FontAwesome
+      style: { minWidth: '70px' },
+      action: (record) => {
+        console.log('Editar nación:', record);
+        toast.info(`Editando: ${record.name}`);
+      }
+    },
+    {
+      label: 'Ver',
+      class: 'btn-info btn-sm',
+      icon: faEye,
+      style: { minWidth: '70px' },
+      action: (record) => {
+        console.log('Ver nación:', record);
+        toast.info(`Viendo: ${record.name}`);
+      }
+    },
+    {
+      label: 'Duplicar',
+      class: 'btn-secondary btn-sm',
+      icon: faCopy,
+      style: { minWidth: '80px' },
+      action: (record) => {
+        console.log('Duplicar nación:', record);
+        toast.info(`Duplicando: ${record.name}`);
+      }
+    },
+    {
+      label: 'Eliminar',
+      class: 'btn-danger btn-sm',
+      icon: faTrash,
+      style: { minWidth: '70px' },
+      action: (record) => {
+        console.log('Eliminar nación:', record);
+        toast.warning(`¿Eliminar ${record.name}?`);
+      }
+    }
+  ];
+
+  // Configuración de paginación
+  const pagination = {
+    display: true,
+    step: 10,
+    totalPages: 0,
+    actualPage: 1
+  };
+
+  // Parámetros de consulta para filtros
+  const [queryParams, setQueryParams] = useState({
+    page: 1,
+    limit: 10,
+    name: ''
+  });
+
+  // Manejador para el botón "Agregar"
+  const handleAdd = () => {
+    toast.info('Abrir modal para crear nueva nación');
+  };
+
+  // Manejador para guardar cambios
+  const handleSave = () => {
+    toast.success('Cambios guardados correctamente');
+    setRefreshKey(prev => prev + 1);
+  };
+
+  return (
+    <div className="bg-white p-4 rounded shadow-sm">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h2>
+          <FontAwesomeIcon icon={faGlobe} className="me-2" />
+          Mantenimiento de Naciones
+        </h2>
+        
+        {/* Filtro por nombre */}
+        <div className="d-flex gap-2 align-items-center">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar por nombre..."
+            value={queryParams.name}
+            onChange={(e) => {
+              setQueryParams(prev => ({
+                ...prev,
+                name: e.target.value,
+                page: 1
+              }));
+            }}
+            style={{ width: '250px' }}
+          />
+          <button 
+            className="btn btn-primary d-flex align-items-center gap-2"
+            onClick={handleAdd}
+          >
+            <FontAwesomeIcon icon={faPlus} /> Crear Nación
+          </button>
+        </div>
+      </div>
+
+      {/* DataTable con configuración completa */}
+      <DataTable
+        //key={refreshKey}
+        recordId="id"
+        fetchURL="/api/v1/nations"
+        saveURL="/api/v1/nations/save"
+        deleteURL="/api/v1/nations"
+        columnKeys={columnKeys}
+        columnTypes={columnTypes}
+        columnNames={columnNames}
+        columnClasses={columnClasses}
+        columnStyles={columnStyles}
+        tdStyles={tdStyles}
+        actionButtons={actionButtons}
+        pagination={pagination}
+        queryParams={queryParams}
+        jwtToken={token}
+        addButton={{
+          display: true,
+          disabled: false,
+          action: handleAdd
+        }}
+        saveButton={{
+          display: true,
+          disabled: false,
+          action: handleSave
+        }}
+        // Configuración personalizada de la columna de acciones
+        actionsColumnClass="text-center" // Clase para el encabezado de acciones
+        actionsColumnStyle={{ minWidth: '320px', backgroundColor: '#f8f9fa' }}
+        actionsCellClass="text-center" // Clase para cada celda de acciones
+        actionsCellStyle={{ padding: '6px 4px' }}
+        messages={{
+          success: 'Naciones actualizadas correctamente',
+          errorNetwork: 'No hay conexión con el servidor',
+          notFound: 'No se encontraron naciones',
+          serverError: 'Error interno del servidor',
+          requestError: 'No se recibió respuesta del servidor',
+          otherError: 'Ocurrió un error al obtener los datos'
+        }}
+        onAlert={(message) => {
+          if (message.status === 'success') {
+            toast.success(message.text);
+          } else if (message.status === 'warning') {
+            toast.warning(message.text);
+          } else if (message.status === 'danger') {
+            toast.error(message.text);
+          } else {
+            toast.info(message.text);
+          }
+        }}
+      />
+    </div>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\pages\PlayersPage.jsx
+==================================================
+
+// src/pages/PlayersPage.jsx
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserNinja, faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+export default function PlayersPage() {
+  return (
+    <div className="bg-white p-4 rounded shadow-sm">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h4 className="fw-bold m-0">
+          <FontAwesomeIcon icon={faUserNinja} className="me-2 text-primary" /> 
+          Mantenimiento de Jugadores (`players`)
+        </h4>
+        <button className="btn btn-primary d-flex align-items-center gap-2">
+          <FontAwesomeIcon icon={faPlus} /> Nuevo Jugador
+        </button>
+      </div>
+
+      <div className="table-responsive">
+        <table className="table table-hover align-middle border">
+          <thead className="table-light">
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Ranking</th>
+              <th>Edad / Altura / Peso</th>
+              <th>Pie / Sexo</th>
+              <th>Equipo</th>
+              <th>Nación</th>
+              <th className="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>
+                <div className="fw-bold">Lionel Messi</div>
+                <small className="text-muted">/players/messi.jpg</small>
+              </td>
+              <td><span className="badge bg-success">90</span></td>
+              <td>36 yrs | 169 cm | 67 kg</td>
+              <td>Izquierdo / Masc</td>
+              <td>Inter Miami</td>
+              <td>Argentina</td>
+              <td className="text-end">
+                <button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button>
+                <button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\pages\TeamsPage.jsx
+==================================================
+
+// src/pages/TeamsPage.jsx
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShieldHalved, faPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+
+export default function TeamsPage() {
+  return (
+    <div className="bg-white p-4 rounded shadow-sm">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h4 className="fw-bold m-0">
+          <FontAwesomeIcon icon={faShieldHalved} className="me-2 text-primary" /> 
+          Mantenimiento de Equipos (`teams`)
+        </h4>
+        <button className="btn btn-primary d-flex align-items-center gap-2">
+          <FontAwesomeIcon icon={faPlus} /> Nuevo Equipo
+        </button>
+      </div>
+
+      <table className="table table-hover align-middle border">
+        <thead className="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nombre Equipo (`name`)</th>
+            <th>Liga (`league_id`)</th>
+            <th className="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Real Madrid CF</td>
+            <td>LaLiga</td>
+            <td className="text-end">
+              <button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button>
+              <button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Manchester City</td>
+            <td>Premier League</td>
+            <td className="text-end">
+              <button className="btn btn-sm btn-outline-warning me-2"><FontAwesomeIcon icon={faEdit} /></button>
+              <button className="btn btn-sm btn-outline-danger"><FontAwesomeIcon icon={faTrash} /></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\partials\Cabecera.css
+==================================================
+
+
+.navbar {
+    min-height: 70px;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+}
+
+.navbar .nav-link {
+    margin: 0 8px;
+    transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #0dcaf0;
+}
+
+.navbar .btn {
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        padding-top: 12px;
+    }
+
+    .navbar .nav-link {
+        margin: 4px 0;
+    }
+
+    .navbar .btn {
+        margin: 8px 0 12px;
+    }
+}
+
+
+==================================================
+ARCHIVO: src\partials\Cabecera.jsx
+==================================================
+
+// src/partials/Cabecera.jsx
+
+import './Cabecera.css'
+
+export default function Cabecera() {
+    return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+            <div className="container">
+
+                {/* Logo de la aplicación */}
+                <a className="navbar-brand fw-bold" href="/">
+                    <span className="text-info">Mi</span>Aplicación
+                </a>
+
+                {/* Botón responsive para móviles */}
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#menuNavegacion"
+                    aria-controls="menuNavegacion"
+                    aria-expanded="false"
+                    aria-label="Abrir menú de navegación"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                {/* Opciones de navegación */}
+                <div
+                    className="collapse navbar-collapse"
+                    id="menuNavegacion"
+                >
+                    <ul className="navbar-nav mx-auto mb-2 mb-lg-0">
+
+                        <li className="nav-item">
+                            <a className="nav-link active" href="/">
+                                Home
+                            </a>
+                        </li>
+
+                        <li className="nav-item">
+                            <a className="nav-link" href="/nosotros">
+                                Nosotros
+                            </a>
+                        </li>
+
+                        <li className="nav-item">
+                            <a className="nav-link" href="/servicios">
+                                Servicios
+                            </a>
+                        </li>
+
+                        <li className="nav-item">
+                            <a className="nav-link" href="/contacto">
+                                Contacto
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    {/* Botón Login a la derecha */}
+                    <div className="d-flex">
+                        <a
+                            href="/login"
+                            className="btn btn-outline-info px-4"
+                        >
+                            Login
+                        </a>
+                    </div>
+
+                    <div className="d-flex">
+                        <a
+                            href="/logout"
+                            className="btn btn-outline-info px-4"
+                        >
+                            Cerrar sesión
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
+    )
+}
+
+
+==================================================
+ARCHIVO: src\partials\CabeceraEnterprise.css
+==================================================
+
+/* =========================================================
+   CABECERA ENTERPRISE
+   ========================================================= */
+
+.enterprise-navbar {
+    width: 100%;
+    height: 66px;
+
+    margin: 0;
+    padding: 0 24px;
+
+    box-sizing: border-box;
+
+    background-color: #123A5F;
+
+    display: flex;
+    align-items: center;
+
+    /* Evita que Bootstrap modifique el comportamiento */
+    flex-wrap: nowrap;
+
+    overflow: visible;
+
+    position: relative;
+    z-index: 1000;
+}
+
+
+/* =========================================================
+   CONTENEDOR PRINCIPAL
+   ========================================================= */
+
+.enterprise-navbar-content {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   IZQUIERDA
+   ========================================================= */
+
+.enterprise-navbar-left {
+    display: flex;
+    align-items: center;
+
+    gap: 30px;
+
+    min-width: 0;
+    flex-shrink: 1;
+}
+
+
+/* =========================================================
+   LOGO / NOMBRE
+   ========================================================= */
+
+.enterprise-brand {
+    display: inline-flex;
+    align-items: center;
+
+    color: #FFFFFF;
+
+    font-size: 17px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    line-height: 1;
+}
+
+.enterprise-brand:hover {
+    color: #FFFFFF;
+}
+
+
+/* =========================================================
+   PANEL DE EMPRESA
+   ========================================================= */
+
+.enterprise-nav-link {
+    display: inline-flex;
+    align-items: center;
+
+    height: 66px;
+
+    color: #FFFFFF;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    text-decoration: none;
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    opacity: 0.95;
+}
+
+.enterprise-nav-link:hover {
+    color: #E6EEF5;
+}
+
+
+/* =========================================================
+   DERECHA
+   ========================================================= */
+
+.enterprise-navbar-right {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   BUSCADOR
+   ========================================================= */
+
+.enterprise-search {
+    width: 256px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+
+    box-sizing: border-box;
+
+    background-color: #FFFFFF;
+
+    border: 1px solid #FFFFFF;
+    border-radius: 5px;
+
+    overflow: hidden;
+
+    flex-shrink: 1;
+}
+
+.enterprise-search-icon {
+    display: none;
+}
+
+.enterprise-search-input {
+    width: 100%;
+    height: 100%;
+
+    box-sizing: border-box;
+
+    padding: 0 14px;
+
+    border: 0;
+    outline: none;
+
+    background-color: transparent;
+
+    color: #16212B;
+
+    font-family: inherit;
+    font-size: 12px;
+}
+
+.enterprise-search-input::placeholder {
+    color: #67757F;
+    opacity: 1;
+}
+
+.enterprise-search-input:focus {
+    outline: none;
+}
+
+
+/* =========================================================
+   CUENTA DE EMPRESA
+   ========================================================= */
+
+.enterprise-company-button {
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 0;
+
+    border: 0 !important;
+    outline: none !important;
+
+    background: transparent !important;
+
+    color: #FFFFFF !important;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+/*
+   Bootstrap agrega un ::after al dropdown.
+   Lo dejamos pero controlamos su tamaño.
+*/
+
+.enterprise-company-button::after {
+    margin-left: 3px;
+
+    border-top-color: #FFFFFF;
+
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   AVATAR
+   ========================================================= */
+
+.enterprise-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background-color: #0F8F7E;
+
+    color: #FFFFFF;
+
+    font-size: 10px;
+    font-weight: 700;
+
+    line-height: 1;
+}
+
+
+/* =========================================================
+   INFORMACIÓN EMPRESA
+   ========================================================= */
+
+.enterprise-company-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    justify-content: center;
+
+    min-width: 0;
+
+    line-height: 1.1;
+
+    text-align: left;
+}
+
+.enterprise-company-info strong {
+    display: block;
+
+    color: #FFFFFF;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+.enterprise-company-info small {
+    display: block;
+
+    margin-top: 3px;
+
+    color: #E6EEF5;
+
+    font-size: 9px;
+    font-weight: 400;
+
+    line-height: 1.2;
+}
+
+
+/* =========================================================
+   DROPDOWN
+   ========================================================= */
+
+.enterprise-dropdown {
+    min-width: 220px;
+
+    margin-top: 8px !important;
+
+    padding: 6px;
+
+    background-color: #FFFFFF;
+
+    border: 1px solid #DCE3EA;
+    border-radius: 6px;
+
+    box-shadow:
+        0 8px 20px rgba(22, 33, 43, 0.15);
+}
+
+.enterprise-dropdown .dropdown-item {
+    padding: 9px 12px;
+
+    border-radius: 4px;
+
+    color: #16212B;
+
+    font-size: 13px;
+}
+
+.enterprise-dropdown .dropdown-item:hover {
+    background-color: #E6EEF5;
+
+    color: #123A5F;
+}
+
+.enterprise-dropdown .dropdown-divider {
+    border-color: #DCE3EA;
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .enterprise-navbar {
+        padding: 0 16px;
+    }
+
+    .enterprise-navbar-left {
+        gap: 20px;
+    }
+
+    .enterprise-search {
+        width: 210px;
+    }
+
+    .enterprise-navbar-right {
+        gap: 12px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - PANTALLAS PEQUEÑAS
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    .enterprise-navbar {
+        padding: 0 14px;
+    }
+
+    .enterprise-search {
+        width: 190px;
+    }
+
+    .enterprise-company-info {
+        display: none;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MÓVIL
+   ========================================================= */
+
+@media (max-width: 520px) {
+
+    .enterprise-navbar {
+        height: 60px;
+
+        padding: 0 12px;
+    }
+
+    .enterprise-navbar-content {
+        gap: 10px;
+    }
+
+    .enterprise-navbar-left {
+        gap: 12px;
+    }
+
+    .enterprise-brand {
+        font-size: 15px;
+    }
+
+    .enterprise-nav-link {
+        display: none;
+    }
+
+    .enterprise-navbar-right {
+        gap: 8px;
+    }
+
+    /* Buscador como botón */
+    .enterprise-search {
+        width: 36px;
+        height: 36px;
+
+        border: 0;
+
+        background-color: transparent;
+    }
+
+    .enterprise-search-icon {
+        width: 36px;
+        height: 36px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border-radius: 5px;
+
+        background-color: #FFFFFF;
+
+        color: #123A5F;
+
+        font-size: 14px;
+    }
+
+    .enterprise-search-input {
+        display: none;
+    }
+
+    .enterprise-avatar {
+        width: 34px;
+        height: 34px;
+    }
+
+    .enterprise-company-info {
+        display: none;
+    }
+
+    .enterprise-company-button::after {
+        display: none;
+    }
+}
+
+
+
+==================================================
+ARCHIVO: src\partials\CabeceraEnterprise.jsx
+==================================================
+
+
+ // src/partials/CabeceraEnterprise.jsx
+import { Link } from 'react-router-dom'
+import './CabeceraEnterprise.css'
+
+export default function CabeceraEnterprise() {
+  return (
+    <nav className="navbar enterprise-navbar">
+      <div className="enterprise-navbar-content">
+
+        {/* Izquierda */}
+        <div className="enterprise-navbar-left">
+
+          <Link className="enterprise-brand" to="/enterprise">
+            PrácticaLima
+          </Link>
+
+          <Link className="enterprise-nav-link" to="/enterprise">
+            PANEL DE EMPRESA
+          </Link>
+
+        </div>
+
+        {/* Derecha */}
+        <div className="enterprise-navbar-right">
+
+          {/* Buscador */}
+          <div className="enterprise-search">
+            <span className="enterprise-search-icon">
+              <i className="bi bi-search"></i>
+            </span>
+
+            <input
+              type="search"
+              className="enterprise-search-input"
+              placeholder="Buscar postulante"
+              aria-label="Buscar postulante"
+            />
+          </div>
+
+          {/* Dropdown empresa */}
+          <div className="dropdown">
+            <button
+              className="enterprise-company-button dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <span className="enterprise-avatar">
+                PL
+              </span>
+
+              <span className="enterprise-company-info">
+                <strong>PrácticaLima</strong>
+                <small>Empresa - cuenta verificada</small>
+              </span>
+            </button>
+
+            <ul className="dropdown-menu dropdown-menu-end enterprise-dropdown">
+
+              <li>
+                <Link
+                  className="dropdown-item"
+                  to="/enterprise/perfil"
+                >
+                  Mi perfil
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  className="dropdown-item"
+                  to="/enterprise/configuracion"
+                >
+                  Configuración
+                </Link>
+              </li>
+
+              <li>
+                <hr className="dropdown-divider" />
+              </li>
+
+              <li>
+                {/* El cierre de sesión depende del servidor */}
+                <a
+                  className="dropdown-item text-danger"
+                  href="/logout"
+                >
+                  Cerrar sesión
+                </a>
+              </li>
+
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+
+==================================================
+ARCHIVO: src\partials\FooterEnterprise.css
+==================================================
+
+.enterprise-footer {
+    width: 100%;
+    min-height: 52px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 24px;
+
+    background-color: #123A5F;
+    color: #FFFFFF;
+
+    font-size: 12px;
+
+    flex-shrink: 0;
+}
+
+.enterprise-footer__left {
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.enterprise-footer__left span {
+    margin: 0 6px;
+
+    color: #E6EEF5;
+}
+
+.enterprise-footer__right {
+    color: #E6EEF5;
+
+    white-space: nowrap;
+}
+
+
+/* ================================
+   TABLET
+================================ */
+
+@media (max-width: 700px) {
+
+    .enterprise-footer {
+        padding: 0 16px;
+
+        font-size: 11px;
+    }
+}
+
+
+/* ================================
+   MÓVIL
+================================ */
+
+@media (max-width: 520px) {
+
+    .enterprise-footer {
+        min-height: auto;
+
+        padding: 12px 16px;
+
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 5px;
+    }
+
+    .enterprise-footer__left,
+    .enterprise-footer__right {
+        white-space: normal;
+    }
+}
+
+
+
+==================================================
+ARCHIVO: src\partials\FooterEnterprise.jsx
+==================================================
+
+// src/partials/FooterEnterprise.jsx
+
+import './FooterEnterprise.css'
+
+export default function FooterEnterprise() {
+    return (
+        <footer className="enterprise-footer">
+            <div className="enterprise-footer__left">
+                PrácticaLima <span>|</span> Panel de Empresa
+            </div>
+
+            <div className="enterprise-footer__right">
+                Soporte: empresas@ulima.edu.pe - (01)4376767
+            </div>
+        </footer>
+    )
+}
+
+
+
+==================================================
+ARCHIVO: src\partials\Navbar.jsx
+==================================================
+
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+
+export default function Navbar({ user = { name: "Usuario Admin" } }) {
+  return (
+    <nav className="navbar navbar-expand navbar-light bg-white border-bottom px-4 py-2">
+      <div className="ms-auto d-flex align-items-center gap-3">
+        <div className="d-flex align-items-center gap-2 text-secondary">
+          <FontAwesomeIcon icon={faUser} />
+          <span className="fw-medium">{user.name}</span>
+        </div>
+        <a href="/sign-out" className="btn btn-outline-danger btn-sm d-flex align-items-center gap-2">
+          <FontAwesomeIcon icon={faSignOutAlt} />
+          Cerrar Sesión
+        </a>
+      </div>
+    </nav>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\partials\Sidebar.jsx
+==================================================
+
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGlobe, faTrophy, faUsers, faRunning, faTags, faChartPie } from '@fortawesome/free-solid-svg-icons';
+
+export default function Sidebar() {
+  const linkClass = ({ isActive }) => 
+    `nav-link d-flex align-items-center gap-2 ${isActive ? 'active bg-primary text-white' : 'text-dark'}`;
+
+  return (
+    <div className="d-flex flex-column p-3 bg-light border-end" style={{ width: '250px', minHeight: '100vh' }}>
+      <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none px-2">
+        <span className="fs-4 fw-bold">Futbol App</span>
+      </a>
+      <hr />
+      <ul className="nav nav-pills flex-column mb-auto gap-1">
+        <li className="nav-item">
+          <NavLink to="/admin" end className={linkClass}>
+            <FontAwesomeIcon icon={faChartPie} /> Dashboard
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/players" className={linkClass}>
+            <FontAwesomeIcon icon={faRunning} /> Jugadores
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/teams" className={linkClass}>
+            <FontAwesomeIcon icon={faUsers} /> Equipos
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/leagues" className={linkClass}>
+            <FontAwesomeIcon icon={faTrophy} /> Ligas
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/nations" className={linkClass}>
+            <FontAwesomeIcon icon={faGlobe} /> Naciones
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/admin/catalogs" className={linkClass}>
+            <FontAwesomeIcon icon={faTags} /> Catálogos Auxiliares
+          </NavLink>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+
+==================================================
+ARCHIVO: src\partials\SideBarEnterprise.css
+==================================================
+
+/* src/partials/SideBarEnterprise.css */
+
+.enterprise-sidebar {
+  width: 250px;
+  min-width: 250px;
+
+  min-height: 100%;
+
+  background-color: #FFFFFF;
+
+  border-right: 1px solid #DCE3EA;
+}
+
+/* Secciones */
+.enterprise-sidebar-section {
+  padding: 18px 12px 4px;
+}
+
+/* Títulos */
+.enterprise-sidebar-title {
+  margin: 0 0 8px 6px;
+
+  color: #67757F;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+/* Lista */
+.enterprise-sidebar-nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+/* Enlaces */
+.enterprise-sidebar-link {
+  min-height: 30px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 10px;
+
+  border-radius: 5px;
+
+  color: #16212B;
+
+  font-size: 12px;
+  font-weight: 400;
+
+  text-decoration: none;
+
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+/* Cuadradito/bullet */
+.enterprise-sidebar-bullet {
+  width: 5px;
+  height: 5px;
+
+  margin-right: 8px;
+
+  flex-shrink: 0;
+
+  border-radius: 1px;
+
+  background-color: #C5D3DF;
+}
+
+/* Hover */
+.enterprise-sidebar-link:hover {
+  background-color: #F7F9FB;
+
+  color: #123A5F;
+}
+
+.enterprise-sidebar-link:hover .enterprise-sidebar-bullet {
+  background-color: #0F8B7E;
+}
+
+/* Elemento activo */
+.enterprise-sidebar-link.active {
+  background-color: #E6EEF5;
+
+  color: #123A5F;
+
+  font-weight: 600;
+}
+
+.enterprise-sidebar-link.active .enterprise-sidebar-bullet {
+  background-color: #123A5F;
+}
+
+
+
+==================================================
+ARCHIVO: src\partials\SideBarEnterprise.jsx
+==================================================
+
+
+ // src/partials/SideBarEnterprise.jsx
+ 
+import { NavLink } from 'react-router-dom'
+import './SideBarEnterprise.css'
+
+export default function SideBarEnterprise() {
+  // Aplica la clase active automáticamente
+  const linkClass = ({ isActive }) =>
+    `enterprise-sidebar-link${isActive ? ' active' : ''}`
+
+  return (
+    <aside className="enterprise-sidebar">
+
+      {/* Convocatorias */}
+      <div className="enterprise-sidebar-section">
+        <h6 className="enterprise-sidebar-title">
+          CONVOCATORIAS
+        </h6>
+
+        <nav className="enterprise-sidebar-nav">
+
+          <NavLink
+            to="/enterprise/convocatorias"
+            end
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Mis convocatorias
+          </NavLink>
+
+          <NavLink
+            to="/enterprise/convocatorias/nueva"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Nueva convocatoria
+          </NavLink>
+
+          <NavLink
+            to="/enterprise/carrers"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Listado Carreras
+          </NavLink>
+
+          <NavLink
+            to="/enterprise/postulantes"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Bandeja de postulantes
+          </NavLink>
+
+        </nav>
+      </div>
+
+      {/* Empresa */}
+      <div className="enterprise-sidebar-section">
+        <h6 className="enterprise-sidebar-title">
+          EMPRESA
+        </h6>
+
+        <nav className="enterprise-sidebar-nav">
+
+          <NavLink
+            to="/enterprise/perfil"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Perfil de la empresa
+          </NavLink>
+
+          <NavLink
+            to="/enterprise/resenas"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Reseñas recibidas
+          </NavLink>
+
+        </nav>
+      </div>
+
+      {/* Cuenta */}
+      <div className="enterprise-sidebar-section">
+        <h6 className="enterprise-sidebar-title">
+          CUENTA
+        </h6>
+
+        <nav className="enterprise-sidebar-nav">
+
+          <NavLink
+            to="/enterprise/cambiar-contrasena"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Cambiar contraseña
+          </NavLink>
+
+          {/* Cerrar sesión: normalmente requiere una petición al servidor */}
+          <a
+            href="/logout"
+            className="enterprise-sidebar-link"
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Cerrar sesión
+          </a>
+
+        </nav>
+      </div>
+
+    </aside>
+  )
+}
+
+
+==================================================
+ARCHIVO: src\widgets\Autocomplete.css
+==================================================
+
+/* autocomplete.css */
+.autocomplete-container {
+  position: relative;
+  width: 100%;
+}
+
+.input-group-wrapper {
+  position: relative;
+}
+
+.form-control {
+  padding-right: 38px;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #666;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  z-index: 2;
+}
+
+.clear-btn:hover {
+  color: #333;
+}
+
+.results-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.result-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.result-item:hover {
+  background-color: #f5f5f5;
+}
+
+.result-item.selected {
+  background-color: #e3f2fd;
+}
+
+.result-label {
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.no-results {
+  padding: 12px;
+  text-align: center;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.error-text {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.loading-text {
+  padding: 12px;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+
+==================================================
+ARCHIVO: src\widgets\Autocomplete.jsx
+==================================================
+
+// src/components/Autocomplete.jsx
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import axios from 'axios';
+import './Autocomplete.css';
+
+const Autocomplete = ({
+  searchUrl = '',
+  jwtKey = 'jwtToken',
+  placeholder = 'Buscar...',
+  minChars = 2,
+  debounceMs = 300,
+  onSelect = null,
+  idKey = 'id',
+  labelKey = 'name',
+  value: initialValue = '',
+  onSelected,
+}) => {
+  // Estado
+  const [searchTerm, setSearchTerm] = useState(initialValue || '');
+  const [results, setResults] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
+  const [selectedLabel, setSelectedLabel] = useState('');
+  const [showResults, setShowResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [value, setValue] = useState(initialValue || '');
+
+  // Refs
+  const debounceTimerRef = useRef(null);
+  const inputRef = useRef(null);
+  const isMountedRef = useRef(true);
+
+  // Efecto para sincronizar value externo
+  useEffect(() => {
+    if (initialValue !== searchTerm) {
+      setSearchTerm(initialValue || '');
+      setValue(initialValue || '');
+    }
+  }, [initialValue]);
+
+  // Limpiar al desmontar
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
+  // Función de búsqueda
+  const search = useCallback(async (term) => {
+    setError('');
+    setResults([]);
+    setShowResults(false);
+
+    if (!term || term.length < minChars) {
+      return;
+    }
+
+    if (!searchUrl) {
+      setError('searchUrl no configurada');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const jwt = typeof localStorage !== 'undefined' ? localStorage.getItem(jwtKey) : null;
+      const config = {
+        headers: jwt ? { Authorization: `Bearer ${jwt}` } : {},
+      };
+
+      const url = `${searchUrl}?name=${encodeURIComponent(term)}`;
+      const response = await axios.get(url, config);
+
+      if (!isMountedRef.current) return;
+
+      if (response.data && response.data.success && response.data.data && Array.isArray(response.data.data.list)) {
+        setResults(response.data.data.list);
+        setShowResults(response.data.data.list.length > 0);
+      } else if (Array.isArray(response.data)) {
+        setResults(response.data);
+        setShowResults(response.data.length > 0);
+      } else {
+        setError(response.data?.message || 'Error en la búsqueda');
+        setShowResults(false);
+      }
+    } catch (err) {
+      if (!isMountedRef.current) return;
+      setError(err.response?.data?.message || err.message || 'Error en la búsqueda');
+      setShowResults(false);
+    } finally {
+      if (isMountedRef.current) {
+        setIsLoading(false);
+      }
+    }
+  }, [searchUrl, jwtKey, minChars]);
+
+  // Manejador de cambio de input
+  const handleInputChange = useCallback((e) => {
+    const newValue = e.target.value;
+    setSearchTerm(newValue);
+    setValue(newValue);
+    
+    // Si estamos escribiendo, resetear selección
+    if (selectedId) {
+      setSelectedId(null);
+      setSelectedLabel('');
+    }
+    
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    if (!newValue) {
+      setResults([]);
+      setShowResults(false);
+      return;
+    }
+
+    debounceTimerRef.current = setTimeout(() => {
+      search(newValue);
+    }, debounceMs);
+  }, [selectedId, search, debounceMs]);
+
+  // Seleccionar un resultado
+  const selectResult = useCallback((item) => {
+    const newValue = item[labelKey];
+    
+    setSelectedId(item[idKey]);
+    setSelectedLabel(newValue);
+    setSearchTerm(newValue);
+    setValue(newValue);
+    setShowResults(false);
+    setResults([]);
+
+    const selectionData = { id: item[idKey], label: newValue };
+    
+    if (onSelected) {
+      onSelected(selectionData);
+    }
+    
+    if (typeof onSelect === 'function') {
+      onSelect(selectionData);
+    }
+  }, [idKey, labelKey, onSelect, onSelected]);
+
+  // Limpiar
+  const clear = useCallback(() => {
+    setSearchTerm('');
+    setValue('');
+    setSelectedId(null);
+    setSelectedLabel('');
+    setResults([]);
+    setShowResults(false);
+    setError('');
+    
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
+  // Manejar blur
+  const handleBlur = useCallback(() => {
+    setTimeout(() => {
+      setShowResults(false);
+    }, 200);
+  }, []);
+
+  // Manejar focus
+  const handleFocus = useCallback(() => {
+    if (results.length > 0) {
+      setShowResults(true);
+    }
+  }, [results]);
+
+  return (
+    <div className="autocomplete-container">
+      <div className="input-group-wrapper">
+        <input
+          ref={inputRef}
+          type="text"
+          className="form-control"
+          placeholder={placeholder}
+          value={value}
+          onChange={handleInputChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          autoComplete="off"
+        />
+        {(selectedId || searchTerm) && (
+          <button 
+            type="button" 
+            className="clear-btn" 
+            onClick={clear} 
+            title="Limpiar"
+          >
+            ✕
+          </button>
+        )}
+      </div>
+
+      {error && (
+        <div className="error-text">{error}</div>
+      )}
+
+      {showResults && (
+        <div className="results-dropdown">
+          {isLoading ? (
+            <div className="loading-text">Buscando...</div>
+          ) : results.length > 0 ? (
+            results.map((item) => (
+              <div 
+                key={item[idKey]}
+                className="result-item"
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  selectResult(item);
+                }}
+              >
+                <div className="result-label">{item[labelKey]}</div>
+              </div>
+            ))
+          ) : (
+            <div className="no-results">Sin resultados</div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Autocomplete;
+
+
+==================================================
+ARCHIVO: src\widgets\DataTable.css
+==================================================
+
+/* DataTable.css */
+
+/* Controles de la tabla */
+.table-controls > .btn {
+  margin-left: 10px;
+}
+
+/* Estilos de paginación */
+.page-link {
+  border-radius: 0px !important;
+}
+
+.page-item {
+  margin-left: 0px;
+}
+
+/* Botones alineados a la derecha */
+.text-end > .btn {
+  margin-left: 5px;
+}
+
+/* Estilos para inputs dentro de la tabla */
+.data-td > input[type="text"] {
+  border-color: transparent !important;
+  background-color: transparent !important;
+}
+
+/* Estilos para checkboxes en el encabezado */
+th > .form-check-input {
+  margin-left: 10px;
+}
+
+/* Selector de filas por página */
+#rows-per-page {
+  border-radius: 0px;
+}
+
+/* Enlaces con íconos */
+a > i {
+  margin-right: 5px !important;
+}
+
+/* Estilos para autocomplete dentro de la tabla */
+.data-td > .autocomplete-container > .input-group-wrapper > .form-control {
+  border: 0px;
+  background: transparent;
+}
+
+/* Estilos adicionales para mejorar la tabla */
+.table {
+  margin-bottom: 0;
+  table-layout: fixed;
+  word-wrap: break-word;
+}
+
+.table thead th {
+  vertical-align: middle;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #dee2e6;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.table tbody td {
+  vertical-align: middle;
+  padding: 0.5rem;
+}
+
+/* Estilos para los inputs dentro de celdas */
+.data-td input[type="text"],
+.data-td input[type="number"],
+.data-td input[type="date"],
+.data-td input[type="datetime-local"] {
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background-color: transparent;
+}
+
+.data-td input[type="text"]:hover,
+.data-td input[type="number"]:hover,
+.data-td input[type="date"]:hover,
+.data-td input[type="datetime-local"]:hover {
+  border-color: #ced4da;
+  background-color: #fff;
+}
+
+.data-td input[type="text"]:focus,
+.data-td input[type="number"]:focus,
+.data-td input[type="date"]:focus,
+.data-td input[type="datetime-local"]:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  background-color: #fff;
+}
+
+/* Checkboxes en celdas */
+.data-td .form-check-input {
+  margin-top: 0;
+  cursor: pointer;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Checkbox en encabezado */
+.form-check-input-all {
+  margin-left: 10px;
+  cursor: pointer;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Botones de acción en la tabla */
+.data-td .btn,
+.text-end .btn {
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+.data-td .btn i,
+.text-end .btn i {
+  margin-right: 4px;
+}
+
+/* Estilos para el autocomplete dentro de la tabla */
+.data-td .autocomplete-container {
+  position: relative;
+  width: 100%;
+}
+
+.data-td .autocomplete-container .input-group-wrapper {
+  position: relative;
+}
+
+.data-td .autocomplete-container .form-control {
+  padding-right: 30px;
+  border: 1px solid transparent;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.data-td .autocomplete-container .form-control:hover {
+  border-color: #ced4da;
+  background-color: #fff;
+}
+
+.data-td .autocomplete-container .form-control:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  background-color: #fff;
+}
+
+.data-td .autocomplete-container .clear-btn {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #999;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.data-td .autocomplete-container .clear-btn:hover {
+  color: #333;
+}
+
+.data-td .autocomplete-container .results-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el footer de la tabla */
+.table tfoot td {
+  background-color: #f8f9fa;
+  padding: 0.75rem;
+  border-top: 2px solid #dee2e6;
+}
+
+/* Mensaje cuando no hay datos */
+.text-center {
+  padding: 2rem;
+  color: #6c757d;
+  font-size: 1.1rem;
+}
+
+/* Responsive - tabla con scroll horizontal en móviles */
+@media (max-width: 768px) {
+  .table-responsive-custom {
+    overflow-x: auto;
+    display: block;
+    width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .table {
+    min-width: 650px;
+  }
+  
+  .data-td input[type="text"],
+  .data-td input[type="number"],
+  .data-td input[type="date"],
+  .data-td input[type="datetime-local"] {
+    font-size: 0.875rem;
+    padding: 2px 4px;
+  }
+  
+  .data-td .btn,
+  .text-end .btn {
+    font-size: 0.75rem;
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .data-td .btn i,
+  .text-end .btn i {
+    margin-right: 2px;
+  }
+}
+
+/* Estilos para el contenedor de controles superiores */
+.d-flex.justify-content-between.align-items-center {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.d-flex.justify-content-between.align-items-center > div {
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Estilos para el select de filas por página */
+#rows-per-page.form-select {
+  width: auto;
+  min-width: 80px;
+  padding: 0.375rem 2rem 0.375rem 0.75rem;
+}
+
+/* Estilos para los botones de paginación */
+.pagination .page-link {
+  cursor: pointer;
+  user-select: none;
+}
+
+.pagination .page-link.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.pagination .page-link i {
+  font-size: 0.9rem;
+}
+
+/* Animación para mensajes de alerta */
+.alert {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilo para celdas con fecha/hora */
+.data-td.datetime-cell {
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Estilo para celdas con números */
+.data-td.number-cell {
+  text-align: right;
+  font-family: 'Courier New', monospace;
+}
+
+/* Tooltip para celdas con contenido largo */
+.data-td .cell-content {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Estilos para el modal de confirmación */
+.modal-content {
+  border-radius: 0.3rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-footer {
+  background-color: #f8f9fa;
+  border-top: 1px solid #dee2e6;
+}
+
+.modal-body .alert {
+  margin-bottom: 1rem;
+}
+
+/* Estilos para el contenedor principal */
+.data-table-container {
+  padding: 1rem;
+  background: #fff;
+  border-radius: 0.3rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* Scrollbar personalizada para dropdowns */
+.results-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.results-dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.results-dropdown::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.results-dropdown::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+
+==================================================
+ARCHIVO: src\widgets\DataTable.jsx
+==================================================
+
+// DataTable.jsx - Versión completa y corregida
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faPlus, 
+  faCheck, 
+  faTimes, 
+  faTrash, 
+  faPen,
+  faAngleDoubleLeft, 
+  faAngleLeft, 
+  faAngleRight, 
+  faAngleDoubleRight,
+  faFolderOpen,
+  faUpload,
+  faEye,
+  faGlobe,
+  faTrophy,
+  faUsers,
+  faRunning,
+  faTags,
+  faChartPie,
+  faEdit,
+  faCopy,
+  faSave
+} from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import { Modal } from 'bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Autocomplete from './Autocomplete.jsx';
+import random from '../helpers/random.js';
+
+// Mapa de iconos
+const ICON_MAP = {
+  'fa-plus': faPlus,
+  'fa-check': faCheck,
+  'fa-times': faTimes,
+  'fa-trash': faTrash,
+  'fa-pencil': faPen,
+  'fa-pen': faPen,
+  'fa-edit': faEdit,
+  'fa-angle-double-left': faAngleDoubleLeft,
+  'fa-angle-left': faAngleLeft,
+  'fa-angle-right': faAngleRight,
+  'fa-angle-double-right': faAngleDoubleRight,
+  'fa-folder-open': faFolderOpen,
+  'fa-upload': faUpload,
+  'fa-picture-o': faEye,
+  'fa-eye': faEye,
+  'fa-globe': faGlobe,
+  'fa-trophy': faTrophy,
+  'fa-users': faUsers,
+  'fa-running': faRunning,
+  'fa-tags': faTags,
+  'fa-chart-pie': faChartPie,
+  'fa-copy': faCopy,
+  'fa-save': faSave,
+};
+
+const DataTable = ({
+  recordId = 'id',
+  observer: initialObserver = { new: [], edit: [], delete: [] },
+  fetchURL = null,
+  saveURL = null,
+  deleteURL = null,
+  data: initialData = [],
+  columnKeys = [],
+  columnTypes = [],
+  columnNames = [],
+  columnClasses = [],
+  columnStyles = [],
+  tdStyles = [],
+  addButton: initialAddButton = {
+    display: false,
+    disabled: false,
+    action: () => {},
+  },
+  saveButton: initialSaveButton = {
+    display: false,
+    disabled: false,
+    action: () => {},
+  },
+  extraData = {},
+  extraReplace = [],
+  actionButtons = [],
+  pagination: initialPagination = {
+    display: false,
+    step: 10,
+    totalPages: 0,
+    actualPage: 1,
+    offset: 0,
+    total: 0,
+    limit: 0,
+  },
+  queryParams: initialQueryParams = {},
+  messages = {
+    success: 'Datos actualizados',
+    errorNetwork: 'No hay conexión con el servidor',
+    notFound: 'Recurso no encontrado',
+    serverError: 'Error interno del servidor',
+    requestError: 'No se recibió respuesta del servidor',
+    otherError: 'Ocurrió un error no esperado al traer los datos del servidor',
+  },
+  jwtToken = null,
+  onAlert,
+  onSuggestionSelected,
+  actionsColumnClass = 'text-end',
+  actionsColumnStyle = { minWidth: '150px' },
+  actionsCellClass = 'text-end',
+  actionsCellStyle = {},
+}) => {
+  const navigate = useNavigate();
+
+  // ESTADOS - Todas las variables están definidas aquí
+  const [data, setData] = useState(initialData);
+  const [observer, setObserver] = useState(initialObserver);
+  const [pagination, setPagination] = useState(initialPagination);
+  const [queryParams, setQueryParams] = useState(initialQueryParams);
+  const [addButton] = useState(initialAddButton);
+  const [saveButton] = useState(initialSaveButton);
+  const [messageConfirmationModal, setMessageConfirmationModal] = useState({
+    text: '',
+    status: ''
+  });
+  const [idForDeleting, setIdForDeleting] = useState(null);
+  const [btnDisabledDeleteConfirmation, setBtnDisabledDeleteConfirmation] = useState(false);
+
+  // REFS
+  const deleteConfirmationModalRef = useRef(null);
+  const deleteConfirmationInstance = useRef(null);
+
+  // EFECTOS
+  useEffect(() => {
+    if (deleteConfirmationModalRef.current) {
+      deleteConfirmationInstance.current = new Modal(deleteConfirmationModalRef.current);
+    }
+  }, []);
+
+  // Llamar list cuando cambian los parámetros de paginación
+  useEffect(() => {
+    if (pagination.display && fetchURL) {
+      list();
+    }
+  }, [pagination.actualPage, pagination.step, fetchURL, pagination.display]);
+
+  // FUNCIONES DE UTILIDAD
+  const getNestedValue = (obj, path) => {
+    if (!obj || !path) return '';
+    return path.split('.').reduce((current, key) => {
+      return current && current[key] !== undefined ? current[key] : '';
+    }, obj);
+  };
+
+  const setNestedValue = (obj, path, value) => {
+    if (!obj || !path) return;
+    const keys = path.split('.');
+    const lastKey = keys.pop();
+    let target = obj;
+    for (const key of keys) {
+      if (!target[key]) target[key] = {};
+      target = target[key];
+    }
+    target[lastKey] = value;
+  };
+
+  const dataSearch = (key, idSearched) => {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i][key] === idSearched) {
+        return data[i];
+      }
+    }
+    return null;
+  };
+
+  const parseAutocompleteOptions = (spec) => {
+    const result = {};
+    const m = String(spec).match(/^autocomplete\((.*)\)$/);
+    if (!m) return result;
+    const inner = m[1];
+    const parts = inner.split(',').map(p => p.trim()).filter(Boolean);
+    parts.forEach(part => {
+      const [k, ...rest] = part.split('=');
+      if (!k) return;
+      const key = k.trim();
+      let val = rest.join('=').trim();
+      if ((val.startsWith("'") && val.endsWith("'")) || (val.startsWith('"') && val.endsWith('"'))) {
+        val = val.slice(1, -1);
+      }
+      if (val === 'true') val = true;
+      else if (val === 'false') val = false;
+      else if (!isNaN(val) && val !== '') val = Number(val);
+      result[key] = val;
+    });
+    return result;
+  };
+
+  const getIcon = (iconName) => {
+    if (!iconName) return null;
+    if (iconName && typeof iconName === 'object' && iconName.icon) {
+      return iconName;
+    }
+    const icon = ICON_MAP[iconName];
+    if (icon) return icon;
+    const cleanName = iconName.replace(/^fa-/, '');
+    return ICON_MAP[`fa-${cleanName}`] || null;
+  };
+
+  const cleanMessage = () => {
+    setTimeout(() => {
+      setMessageConfirmationModal({ text: '', status: '' });
+      setBtnDisabledDeleteConfirmation(false);
+      if (deleteConfirmationInstance.current) {
+        deleteConfirmationInstance.current.hide();
+      }
+    }, 4300);
+  };
+
+  // FUNCIONES DE DATOS
+  const list = useCallback(() => {
+    if (!fetchURL) {
+      console.error('No hay URL para traer datos');
+      return;
+    }
+
+    const params = { ...queryParams };
+    if (pagination.display) {
+      params.step = pagination.step;
+      params.page = pagination.actualPage;
+    }
+
+    axios.get(fetchURL, {
+      params: Object.keys(params).length > 0 ? params : undefined,
+      headers: {
+        'Authorization': `Bearer ${jwtToken}`
+      }
+    })
+      .then(response => {
+        if (pagination.display) {
+          const genericResponse = response.data.data;
+          setData(genericResponse.list || []);
+          setPagination(prev => ({
+            ...prev,
+            totalPages: genericResponse.pages || 0,
+            offset: genericResponse.offset + 1 || 0,
+            total: genericResponse.total || 0,
+            limit: (genericResponse.offset + prev.step) > (genericResponse.total || 0)
+              ? (genericResponse.total || 0)
+              : (genericResponse.offset + prev.step)
+          }));
+        } else {
+          const genericResponse = response.data.data;
+          setData(genericResponse.list || []);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        if (onAlert) {
+          if (error.code === 'ERR_NETWORK') {
+            onAlert({ text: messages.errorNetwork, status: 'danger' });
+          } else if (error.response) {
+            const status = error.response.status;
+            switch (status) {
+              case 404:
+                onAlert({ text: messages.notFound, status: 'warning' });
+                break;
+              case 500:
+                onAlert({ text: messages.serverError, status: 'danger' });
+                break;
+              default:
+                onAlert({ text: `Error HTTP: ${status}`, status: 'danger' });
+                break;
+            }
+          } else if (error.request) {
+            onAlert({ text: messages.requestError, status: 'danger' });
+          } else {
+            onAlert({ text: messages.otherError, status: 'danger' });
+          }
+        }
+      });
+  }, [fetchURL, queryParams, pagination.display, pagination.step, pagination.actualPage, jwtToken, messages, onAlert]);
+
+  const addRow = () => {
+    const tmp = {};
+    for (const key of columnKeys) {
+      if (key === 'id' || key === '_id') {
+        tmp[key] = `tmp_${random(10)}`;
+      } else {
+        tmp[key] = '';
+      }
+    }
+    setData([...data, tmp]);
+  };
+
+  const deleteRow = (record, keyId) => {
+    const idToRemove = record[keyId];
+    const isTmp = idToRemove.toString().includes('tmp');
+
+    setObserver(prev => {
+      const newObserver = { ...prev };
+      newObserver.new = prev.new.filter(u => u !== idToRemove);
+      newObserver.edit = prev.edit.filter(u => u !== idToRemove);
+      if (!prev.delete.includes(idToRemove) && !isTmp) {
+        newObserver.delete = [...prev.delete, idToRemove];
+      }
+      return newObserver;
+    });
+
+    setData(data.filter(item => item[keyId] !== idToRemove));
+  };
+
+  const askToDeleteRow = (record, key) => {
+    setIdForDeleting(record[key]);
+    if (deleteConfirmationInstance.current) {
+      deleteConfirmationInstance.current.show();
+    }
+  };
+
+  const deleteRowFromDB = () => {
+    setBtnDisabledDeleteConfirmation(true);
+    if (deleteURL && idForDeleting) {
+      axios.delete(`${deleteURL}/${idForDeleting}`, {
+        headers: {
+          'Authorization': `Bearer ${jwtToken}`
+        }
+      })
+        .then(response => {
+          console.log(response);
+          setData(data.filter(item => item.id !== idForDeleting));
+          setMessageConfirmationModal({
+            text: response.data.message || 'Registro borrado correctamente',
+            status: 'success'
+          });
+          cleanMessage();
+        })
+        .catch(error => {
+          setMessageConfirmationModal({
+            text: error.message || 'Error al eliminar',
+            status: 'danger'
+          });
+          console.error(error);
+          cleanMessage();
+        });
+    } else {
+      console.error('No hay URL para eliminar datos o id a eliminar');
+    }
+  };
+
+  const saveChanges = () => {
+    console.log(observer);
+    console.log(data);
+
+    const dataToSend = { new: [], edit: [], delete: [] };
+
+    observer.new.forEach(id => {
+      const record = data.find(r => r[recordId] === id);
+      if (record) dataToSend.new.push(record);
+    });
+
+    observer.edit.forEach(id => {
+      const record = data.find(r => r[recordId] === id);
+      if (record) dataToSend.edit.push(record);
+    });
+
+    observer.delete.forEach(id => {
+      dataToSend.delete.push(id);
+    });
+
+    if (dataToSend.new.length === 0 && dataToSend.edit.length === 0 && dataToSend.delete.length === 0) {
+      if (onAlert) {
+        onAlert({
+          text: 'No se han registrados cambios',
+          status: 'warning'
+        });
+      }
+      return;
+    }
+
+    if (!saveURL) {
+      console.error('No hay URL para guardar');
+      return;
+    }
+
+    axios.post(saveURL, {
+      news: dataToSend.new,
+      edits: dataToSend.edit,
+      deletes: dataToSend.delete,
+      extra: extraData,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwtToken}`
+      }
+    })
+      .then(response => {
+        const genericResponse = response.data;
+        const newData = [...data];
+
+        if (genericResponse.data && Array.isArray(genericResponse.data)) {
+          genericResponse.data.forEach(created => {
+            const found = newData.find(r => r[recordId] === created.tmp);
+            if (found) {
+              const newId = created[recordId];
+              const parsedValue = /^\d+$/.test(newId) ? parseInt(newId, 10) : newId;
+              found[recordId] = parsedValue;
+            }
+          });
+        }
+
+        setData(newData);
+        setObserver({ new: [], edit: [], delete: [] });
+
+        if (onAlert) {
+          onAlert({
+            text: messages.success,
+            status: 'success'
+          });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        if (error.response && onAlert) {
+          onAlert({
+            text: error.response.data?.message || 'Error al guardar',
+            status: 'danger'
+          });
+        }
+      });
+  };
+
+  // MANEJADORES DE EVENTOS
+  const handleTextInput = (record, key, event) => {
+    setNestedValue(record, key, event.target.value);
+    const rowKey = record[recordId];
+    if (String(rowKey).includes('tmp')) {
+      if (!observer.new.includes(rowKey)) {
+        setObserver(prev => ({ ...prev, new: [...prev.new, rowKey] }));
+      }
+    } else {
+      if (!observer.edit.includes(rowKey)) {
+        setObserver(prev => ({ ...prev, edit: [...prev.edit, rowKey] }));
+      }
+    }
+    setData([...data]);
+  };
+
+  const handleRadioClick = (record, key, newValue, event) => {
+    record[key] = newValue;
+    const rowKey = record[recordId];
+    if (String(rowKey).includes('tmp')) {
+      if (!observer.new.includes(rowKey)) {
+        setObserver(prev => ({ ...prev, new: [...prev.new, rowKey] }));
+      }
+    } else {
+      if (!observer.edit.includes(rowKey)) {
+        setObserver(prev => ({ ...prev, edit: [...prev.edit, rowKey] }));
+      }
+    }
+    setData([...data]);
+  };
+
+  const handleRadioThClick = (key, event) => {
+    const isChecked = event.target.checked;
+    const newData = data.map(record => {
+      record[key] = isChecked;
+      const rowKey = record[recordId];
+      if (!observer.edit.includes(rowKey)) {
+        setObserver(prev => ({ ...prev, edit: [...prev.edit, rowKey] }));
+      }
+      return record;
+    });
+    setData(newData);
+  };
+
+  const handleSuggestionClicked = (record, event) => {
+    const rowKey = record[recordId];
+    if (String(rowKey).includes('tmp_')) {
+      if (!observer.new.includes(rowKey)) {
+        setObserver(prev => ({ ...prev, new: [...prev.new, rowKey] }));
+      }
+    } else {
+      if (!observer.edit.includes(rowKey)) {
+        setObserver(prev => ({ ...prev, edit: [...prev.edit, rowKey] }));
+      }
+    }
+    setData([...data]);
+    if (onSuggestionSelected && event?.detail) {
+      onSuggestionSelected({
+        record,
+        suggestion: event.detail,
+        rowKey,
+        isNew: String(rowKey).includes('tmp_')
+      });
+    }
+  };
+
+  // FUNCIONES DE PAGINACIÓN
+  const firstPage = () => {
+    setPagination(prev => ({ ...prev, actualPage: 1 }));
+  };
+
+  const previousPage = () => {
+    setPagination(prev => ({ ...prev, actualPage: Math.max(1, prev.actualPage - 1) }));
+  };
+
+  const nextPage = () => {
+    setPagination(prev => ({ ...prev, actualPage: Math.min(prev.totalPages, prev.actualPage + 1) }));
+  };
+
+  const lastPage = () => {
+    setPagination(prev => ({ ...prev, actualPage: prev.totalPages || 1 }));
+  };
+
+  const handleStepChange = (event) => {
+    setPagination(prev => ({
+      ...prev,
+      step: +event.target.value,
+      actualPage: 1,
+      offset: 0
+    }));
+  };
+
+  // NAVEGACIÓN
+  const goToLink = (href) => {
+    navigate(href);
+  };
+
+  const goToHref = (href) => {
+    window.location.href = href;
+  };
+
+  const openTab = (href) => {
+    window.open(href, '_blank');
+  };
+
+  // RENDER
+  return (
+    <>
+      {/* Modal de confirmación */}
+      <div ref={deleteConfirmationModalRef} className="modal fade" tabIndex="-1">
+        <div className="modal-dialog modal-dialog-centered">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title">Confirmación de Eliminación</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div className="modal-body">
+              {messageConfirmationModal.text && (
+                <div className={`alert alert-${messageConfirmationModal.status}`} role="alert">
+                  {messageConfirmationModal.text}
+                </div>
+              )}
+              ¿Seguro que quiere borrar el registro?
+            </div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-bs-dismiss="modal"
+                disabled={btnDisabledDeleteConfirmation}
+              >
+                <FontAwesomeIcon icon={faTimes} className="me-1" /> Cancelar
+              </button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                disabled={btnDisabledDeleteConfirmation}
+                onClick={deleteRowFromDB}
+              >
+                <FontAwesomeIcon icon={faTrash} className="me-1" /> Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Controles de la tabla */}
+      <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <div className="d-flex align-items-center">
+          {pagination.display && data.length > 0 && (
+            <>
+              <label htmlFor="rows-per-page" className="form-label mb-0 me-2">Filas por página:</label>
+              <select
+                className="form-select"
+                id="rows-per-page"
+                style={{ width: '120px' }}
+                value={pagination.step}
+                onChange={handleStepChange}
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </>
+          )}
+        </div>
+        <div className="d-flex gap-2 flex-wrap">
+          {addButton.display && (
+            <button
+              className="btn btn-primary d-flex align-items-center gap-2"
+              disabled={addButton.disabled}
+              onClick={() => {
+                if (typeof addButton.action === 'function') {
+                  addButton.action();
+                } else {
+                  addRow();
+                }
+              }}
+            >
+              <FontAwesomeIcon icon={faPlus} /> Agregar Registro
+            </button>
+          )}
+          <button 
+            className="btn btn-success d-flex align-items-center gap-2" 
+            onClick={saveChanges}
+          >
+            <FontAwesomeIcon icon={faCheck} /> Guardar Cambios
+          </button>
+        </div>
+      </div>
+
+      {/* Tabla */}
+      {data.length > 0 ? (
+        <div className="table-responsive">
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                {columnNames.map((name, i) => (
+                  columnTypes[i] === 'radiobuttonAll' ? (
+                    <th key={i} className={columnClasses[i] || ''} style={columnStyles[i] || {}} scope="col">
+                      {name}
+                      <input
+                        className="form-check-input form-check-input-all"
+                        type="checkbox"
+                        onChange={(event) => handleRadioThClick(columnKeys[i], event)}
+                      />
+                    </th>
+                  ) : (
+                    <th key={i} className={columnClasses[i] || ''} style={columnStyles[i] || {}} scope="col">
+                      {name}
+                    </th>
+                  )
+                ))}
+                {actionButtons.length > 0 && (
+                  <th 
+                    className={actionsColumnClass} 
+                    style={actionsColumnStyle}
+                    scope="col"
+                  >
+                    Acciones
+                  </th>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((record, rowIndex) => (
+                <tr key={rowIndex}>
+                  {columnKeys.map((key, i) => (
+                    <td key={i} className={`data-td ${columnClasses[i] || ''}`} style={tdStyles[i] || {}}>
+                      {columnTypes[i] === 'input[text]' && (
+                        <input
+                          type="text"
+                          value={getNestedValue(record, key)}
+                          onChange={(e) => handleTextInput(record, key, e)}
+                          style={{ width: '100%' }}
+                        />
+                      )}
+                      {String(columnTypes[i]).startsWith('autocomplete') && (() => {
+                        const opts = parseAutocompleteOptions(columnTypes[i]);
+                        return (
+                          <Autocomplete
+                            searchUrl={opts.searchUrl}
+                            idKey={opts.idKey}
+                            labelKey={opts.labelKey}
+                            minChars={opts.minChars}
+                            debounceMs={opts.debounceMs}
+                            hideInput={opts.hideInput}
+                            showProgress={opts.showProgress}
+                            value={getNestedValue(record, key)}
+                            onSelected={(e) => {
+                              const opts2 = parseAutocompleteOptions(columnTypes[i]);
+                              setNestedValue(record, key, e.label || e);
+                              if (opts2.idTarget) {
+                                setNestedValue(record, opts2.idTarget, e.id);
+                              }
+                              handleSuggestionClicked(record, { detail: e });
+                            }}
+                          />
+                        );
+                      })()}
+                      {columnTypes[i] === 'td-datetime' && (
+                        <span>{getNestedValue(record, key)}</span>
+                      )}
+                      {(columnTypes[i] === 'radiobutton' || columnTypes[i] === 'radiobuttonAll') && (
+                        <input
+                          className="form-check-input"
+                          type="checkbox"
+                          checked={getNestedValue(record, key)}
+                          onChange={(event) => {
+                            const newValue = event.target.checked;
+                            setNestedValue(record, key, newValue);
+                            handleRadioClick(record, key, newValue, event);
+                          }}
+                        />
+                      )}
+                      {!['input[text]', 'autocomplete', 'td-datetime', 'radiobutton', 'radiobuttonAll'].some(t =>
+                        String(columnTypes[i]).startsWith(t) || columnTypes[i] === t
+                      ) && (
+                        <span>{getNestedValue(record, key) ?? ''}</span>
+                      )}
+                    </td>
+                  ))}
+                  {actionButtons.length > 0 && (
+                    <td 
+                      className={`actions-cell ${actionsCellClass}`} 
+                      style={actionsCellStyle}
+                    >
+                      <div className="d-flex gap-1 flex-wrap justify-content-end">
+                        {actionButtons.map((button, btnIndex) => {
+                          const icon = getIcon(button.icon);
+                          return (
+                            <button
+                              key={btnIndex}
+                              className={`btn ${button.class || 'btn-secondary'}`}
+                              style={button.style || { minWidth: '60px' }}
+                              onClick={() => {
+                                if (typeof button.action === 'function') {
+                                  button.action(record);
+                                }
+                              }}
+                              title={button.label}
+                              disabled={button.disabled || false}
+                            >
+                              {icon && <FontAwesomeIcon icon={icon} className="me-1" />}
+                              {button.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+            {pagination.display && data.length > 0 && (
+              <tfoot>
+                <tr>
+                  <td colSpan={columnKeys.length + (actionButtons.length > 0 ? 1 : 0)}>
+                    <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                      <div>
+                        <span>
+                          Página {pagination.actualPage || 1} de {pagination.totalPages || 1} -
+                          Mostrando filas {pagination.offset || 0}-{pagination.limit || data.length} de {pagination.total || data.length}
+                        </span>
+                      </div>
+                      <nav aria-label="Page navigation">
+                        <ul className="pagination mb-0">
+                          <li className="page-item">
+                            <button
+                              className={`page-link ${pagination.actualPage === 1 ? 'disabled' : ''}`}
+                              type="button"
+                              onClick={firstPage}
+                              disabled={pagination.actualPage === 1}
+                            >
+                              <FontAwesomeIcon icon={faAngleDoubleLeft} className="me-1" /> Primero
+                            </button>
+                          </li>
+                          <li className="page-item">
+                            <button
+                              className={`page-link ${pagination.actualPage === 1 ? 'disabled' : ''}`}
+                              type="button"
+                              onClick={previousPage}
+                              disabled={pagination.actualPage === 1}
+                            >
+                              <FontAwesomeIcon icon={faAngleLeft} className="me-1" /> Anterior
+                            </button>
+                          </li>
+                          <li className="page-item">
+                            <button
+                              className={`page-link ${pagination.actualPage === pagination.totalPages ? 'disabled' : ''}`}
+                              type="button"
+                              onClick={nextPage}
+                              disabled={pagination.actualPage === pagination.totalPages}
+                            >
+                              Siguiente <FontAwesomeIcon icon={faAngleRight} className="ms-1" />
+                            </button>
+                          </li>
+                          <li className="page-item">
+                            <button
+                              className={`page-link ${pagination.actualPage === pagination.totalPages ? 'disabled' : ''}`}
+                              type="button"
+                              onClick={lastPage}
+                              disabled={pagination.actualPage === pagination.totalPages}
+                            >
+                              Último <FontAwesomeIcon icon={faAngleDoubleRight} className="ms-1" />
+                            </button>
+                          </li>
+                        </ul>
+                      </nav>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            )}
+          </table>
+        </div>
+      ) : (
+        <p className="text-center text-muted py-4">No hay registros para mostrar.</p>
+      )}
+    </>
+  );
+};
+
+export default DataTable;
+
+
+==================================================
+ARCHIVO: src\widgets\UploadFile.css
+==================================================
+
+/* src/components/widgets/UploadFile.css */
+.upload-box { 
+  border: 1px dashed #ccc; 
+  padding: 12px; 
+  border-radius: 6px; 
+}
+
+.file-row { 
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 12px; 
+  padding: 6px 0; 
+}
+
+.small-muted { 
+  font-size: 0.85rem; 
+  color: #666; 
+}
+
+progress { 
+  width: 180px; 
+}
+
+.btn-link { 
+  background: none; 
+  border: none; 
+  color: #007bff; 
+  text-decoration: underline; 
+  cursor: pointer; 
+  padding: 0; 
+  font: inherit; 
+}
+
+.btn-link:hover { 
+  color: #0056b3; 
+}
+
+.status-label { 
+  font-size: 0.8rem; 
+  padding: 2px 6px; 
+  border-radius: 3px; 
+  display: inline-block; 
+  margin-right: 4px; 
+}
+
+.status-label.success { 
+  background-color: #d4edda; 
+  color: #155724; 
+}
+
+.status-label.error { 
+  background-color: #f8d7da; 
+  color: #721c24; 
+}
+
+.status-label.pending { 
+  background-color: #fff3cd; 
+  color: #856404; 
+}
+
+.status-label.info { 
+  background-color: #d1ecf1; 
+  color: #0c5460; 
+}
+
+.message-container { 
+  margin-bottom: 8px; 
+}
+
+
+==================================================
+ARCHIVO: src\widgets\UploadFile.jsx
+==================================================
+
+// src/components/widgets/UploadFile.jsx
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import axios from 'axios';
+import './UploadFile.css'
+
+const UploadFile = ({
+  postUrl = '',
+  jwtKey = 'jwtToken',
+  extraParams = {},
+  responseFormat = 'standard',
+  baseURL = '/',
+  allowedExtensions = [],
+  maxFileSizeMB = 5,
+  multiple = false,
+  maxFiles = 1,
+  fieldName = 'file',
+  headers = {},
+  hideInput = false,
+  showProgress = true,
+  showCleanButton = true,
+  fileUrlPrefix = '',
+  fileUrl: initialFileUrl = '',
+  messageDuration = 5000,
+  onUploaded,
+  onError,
+  onProgress,
+  onClear,
+}) => {
+  // Estado
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [upload, setUpload] = useState({
+    file: null,
+    progress: 0,
+    status: 'pending', // pending | uploading | done | error
+    response: null,
+    error: null,
+    fileUrl: null
+  });
+  const [errors, setErrors] = useState([]);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [fileUrl, setFileUrl] = useState(initialFileUrl);
+  
+  // Ref para el input file
+  const inputRef = useRef(null);
+  
+  // Ref para timeouts
+  const errorTimeoutsRef = useRef([]);
+  const successTimeoutRef = useRef(null);
+
+  // Guardar valor inicial para reset
+  const initialFileUrlRef = useRef(initialFileUrl);
+
+  // Limpiar timeouts al desmontar
+  useEffect(() => {
+    return () => {
+      clearAllTimeouts();
+    };
+  }, []);
+
+  // Funciones de utilidad
+  const humanSize = (bytes) => {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  };
+
+  const clearAllTimeouts = () => {
+    errorTimeoutsRef.current.forEach(timeout => clearTimeout(timeout));
+    errorTimeoutsRef.current = [];
+    
+    if (successTimeoutRef.current) {
+      clearTimeout(successTimeoutRef.current);
+      successTimeoutRef.current = null;
+    }
+  };
+
+  const addErrorWithTimeout = (errorMsg) => {
+    setErrors(prev => [...prev, errorMsg]);
+    
+    const timeout = setTimeout(() => {
+      setErrors(prev => prev.filter(e => e !== errorMsg));
+      errorTimeoutsRef.current = errorTimeoutsRef.current.filter(t => t !== timeout);
+    }, messageDuration);
+    
+    errorTimeoutsRef.current = [...errorTimeoutsRef.current, timeout];
+  };
+
+  const setSuccessWithTimeout = (message) => {
+    setSuccessMessage(message);
+    
+    if (successTimeoutRef.current) {
+      clearTimeout(successTimeoutRef.current);
+    }
+    
+    successTimeoutRef.current = setTimeout(() => {
+      setSuccessMessage('');
+      successTimeoutRef.current = null;
+    }, messageDuration);
+  };
+
+  const validateFile = (file) => {
+    // Validar extensión
+    if (allowedExtensions && allowedExtensions.length > 0) {
+      const name = file.name || '';
+      const ext = name.split('.').pop().toLowerCase();
+      if (!allowedExtensions.map(x => x.toLowerCase()).includes(ext)) {
+        return `Extensión no permitida (.${ext})`;
+      }
+    }
+
+    // Validar tamaño
+    if (maxFileSizeMB && maxFileSizeMB > 0) {
+      const maxBytes = Number(maxFileSizeMB) * 1024 * 1024;
+      if (file.size > maxBytes) {
+        return `Archivo mayor a ${maxFileSizeMB} MB (${humanSize(file.size)})`;
+      }
+    }
+
+    return null;
+  };
+
+  // Función para resetear al estado inicial
+  const resetToInitial = useCallback(() => {
+    setSelectedFile(null);
+    setUpload({
+      file: null,
+      progress: 0,
+      status: 'pending',
+      response: null,
+      error: null,
+      fileUrl: null
+    });
+    setErrors([]);
+    setSuccessMessage('');
+    setFileUrl(initialFileUrlRef.current);
+    
+    if (inputRef.current) {
+      inputRef.current.value = '';
+    }
+    
+    clearAllTimeouts();
+    
+    if (onClear) {
+      onClear({ fileUrl: initialFileUrlRef.current });
+    }
+  }, [onClear]);
+
+  // Función pública clear
+  const clear = useCallback(() => {
+    resetToInitial();
+  }, [resetToInitial]);
+
+  // Exponer clear como método público (similar a export function clear)
+  useEffect(() => {
+    // Si necesitas exponer el método, puedes usar useImperativeHandle
+    // o simplemente pasar la función como prop
+  }, [clear]);
+
+  const triggerFileInput = () => {
+    if (inputRef.current) {
+      inputRef.current.click();
+    }
+  };
+
+  const onFileChange = (e) => {
+    handleFiles(e.target.files);
+  };
+
+  const handleFiles = (fileList) => {
+    setErrors([]);
+    setSuccessMessage('');
+    clearAllTimeouts();
+    
+    const arr = Array.from(fileList || []);
+
+    if (arr.length === 0) return;
+    
+    if (arr.length > 1) {
+      addErrorWithTimeout('Solo puede seleccionar un archivo');
+      return;
+    }
+
+    const file = arr[0];
+    const err = validateFile(file);
+    if (err) {
+      addErrorWithTimeout(`${file.name}: ${err}`);
+      return;
+    }
+
+    // Reemplazar archivo seleccionado
+    setSelectedFile(file);
+    setUpload({
+      file: file,
+      progress: 0,
+      status: 'pending',
+      response: null,
+      error: null,
+      fileUrl: null
+    });
+    
+    // Auto-subir si hideInput es true
+    if (!hideInput && postUrl) {
+      uploadFile(file);
+    }
+  };
+
+  const uploadFile = async (fileParam) => {
+    const fileToUpload = fileParam || selectedFile;
+    
+    if (!fileToUpload) {
+      addErrorWithTimeout('No hay archivo seleccionado');
+      return;
+    }
+
+    if (!postUrl) {
+      addErrorWithTimeout('No se ha configurado postUrl');
+      return;
+    }
+
+    if (upload.status === 'done' || upload.status === 'uploading') {
+      return;
+    }
+
+    setUpload(prev => ({ ...prev, status: 'uploading' }));
+    setErrors([]);
+    setSuccessMessage('');
+    clearAllTimeouts();
+
+    const form = new FormData();
+    form.append(fieldName, fileToUpload);
+    
+    for (const k in extraParams) {
+      if (Object.prototype.hasOwnProperty.call(extraParams, k)) {
+        form.append(k, extraParams[k]);
+      }
+    }
+
+    const jwt = typeof localStorage !== 'undefined' ? localStorage.getItem(jwtKey) : null;
+    const cfg = {
+      headers: {
+        ...headers,
+        ...(jwt ? { Authorization: `Bearer ${jwt}` } : {}),
+        'Content-Type': 'multipart/form-data'
+      },
+      onUploadProgress: (evt) => {
+        const percent = evt.total ? Math.round((evt.loaded * 100) / evt.total) : 0;
+        setUpload(prev => ({ ...prev, progress: percent }));
+        if (onProgress) {
+          onProgress({ file: fileToUpload, progress: percent });
+        }
+      }
+    };
+
+    try {
+      const res = await axios.post(postUrl, form, cfg);
+      
+      let newFileUrl = '';
+      let responseData = res.data;
+
+      setUpload(prev => ({ ...prev, response: responseData }));
+
+      // Extraer URL del archivo de la respuesta
+      if (responseData?.data?.url) {
+        newFileUrl = responseData.data.url;
+      } else if (responseData?.url) {
+        newFileUrl = responseData.url;
+      } else if (responseData?.data?.fileUrl) {
+        newFileUrl = responseData.data.fileUrl;
+      } else if (responseData?.fileUrl) {
+        newFileUrl = responseData.fileUrl;
+      } else if (fileUrlPrefix && responseData?.data) {
+        const d = responseData.data;
+        if (d.folder && d.filename) {
+          newFileUrl = `${fileUrlPrefix}${d.folder}/${d.filename}`;
+        } else if (d.filename) {
+          newFileUrl = fileUrlPrefix + d.filename;
+        }
+      }
+
+      if (newFileUrl) {
+        setFileUrl(newFileUrl);
+        setUpload(prev => ({ ...prev, fileUrl: newFileUrl }));
+      }
+
+      // Normalizar respuesta
+      if (responseFormat === 'standard') {
+        if (responseData?.success) {
+          setUpload(prev => ({ ...prev, status: 'done' }));
+          
+          if (responseData.data?.folder && responseData.data?.filename) {
+            const url = `${responseData.data.folder}/${responseData.data.filename}`;
+            setFileUrl(url);
+            setUpload(prev => ({ ...prev, fileUrl: url }));
+          }
+          
+          const msg = responseData.message || 'Archivo subido exitosamente';
+          setSuccessWithTimeout(msg);
+          console.log('File uploaded successfully. URL:', fileUrl);
+          
+          if (onUploaded) {
+            onUploaded({
+              file: fileToUpload,
+              data: responseData.data,
+              message: responseData.message,
+              fileUrl: newFileUrl || fileUrl
+            });
+          }
+        } else {
+          const errMsg = responseData?.message || responseData?.error || 'Error desconocido';
+          setUpload(prev => ({
+            ...prev,
+            status: 'error',
+            error: errMsg
+          }));
+          addErrorWithTimeout(errMsg);
+          
+          if (onError) {
+            onError({
+              file: fileToUpload,
+              error: errMsg,
+              message: responseData?.message,
+              response: responseData
+            });
+          }
+        }
+      } else {
+        // raw
+        setUpload(prev => ({ ...prev, status: 'done' }));
+        setSuccessWithTimeout('Archivo subido exitosamente');
+        
+        if (onUploaded) {
+          onUploaded({
+            file: fileToUpload,
+            data: responseData,
+            fileUrl: newFileUrl || fileUrl
+          });
+        }
+      }
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || err.message || 'Error al subir el archivo';
+      
+      setUpload(prev => ({
+        ...prev,
+        status: 'error',
+        error: err.response?.data || err.message || err
+      }));
+      
+      addErrorWithTimeout(errorMsg);
+      
+      if (onError) {
+        onError({
+          file: fileToUpload,
+          error: upload.error,
+          response: err.response?.data || null
+        });
+      }
+    }
+  };
+
+  const removeFile = () => {
+    resetToInitial();
+  };
+
+  const openFileInNewTab = () => {
+    console.log('Opening file URL:', fileUrl);
+    if (fileUrl) {
+      window.open(`${baseURL}/${fileUrl}`, '_blank');
+    }
+  };
+
+  // Calcular si el botón clear debe estar deshabilitado
+  const isClearDisabled = !selectedFile && fileUrl === initialFileUrlRef.current;
+
+  return (
+    <div className={!hideInput ? 'upload-box' : ''}>
+      <div className="mb-2">
+        {hideInput ? (
+          <>
+            <button 
+              type="button" 
+              className="btn btn-primary" 
+              onClick={triggerFileInput}
+            >
+              <i className="fa fa-folder-open" aria-hidden="true"></i>
+              Archivo
+            </button>
+
+            <input 
+              ref={inputRef}
+              type="file" 
+              onChange={onFileChange}
+              multiple={false}
+              style={{ display: 'none' }}
+            />
+
+            <button 
+              type="button"
+              className="btn btn-primary" 
+              onClick={() => uploadFile()}
+              disabled={!postUrl || !selectedFile || upload.status === 'uploading' || upload.status === 'done'}
+            >
+              <i className="fa fa-upload" aria-hidden="true"></i>
+              Subir
+            </button>
+
+            {fileUrl && (
+              <button   
+                type="button" 
+                className="btn btn-primary" 
+                onClick={openFileInNewTab}
+                title="Ver archivo"
+              >
+                <i className="fa fa-picture-o" aria-hidden="true"></i>
+                Ver
+              </button>
+            )}
+
+            {showCleanButton && (
+              <button 
+                className="btn btn-secondary" 
+                onClick={clear}
+                disabled={isClearDisabled}
+              >
+                <i className="fa fa-trash" aria-hidden="true"></i>
+                Limpiar
+              </button>
+            )}
+          </>
+        ) : (
+          <input 
+            ref={inputRef}
+            type="file" 
+            onChange={onFileChange}
+            multiple={false}
+          />
+        )}
+      </div>
+
+      {/* Contenedor de mensajes */}
+      <div className="message-container">
+        {errors.length > 0 && (
+          <div className="mb-2">
+            {errors.map((err, index) => (
+              <small key={index} className="status-label error">{err}</small>
+            ))}
+          </div>
+        )}
+
+        {successMessage && (
+          <div className="mb-2">
+            <small className="status-label success">{successMessage}</small>
+          </div>
+        )}
+      </div>
+      
+      {selectedFile && showProgress && (
+        <div className="mb-2">
+          <div className="file-row">
+            <div>
+              <strong>{selectedFile.name}</strong>
+              <div className="small-muted">{humanSize(selectedFile.size)}</div>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              {upload.status === 'uploading' && (
+                <>
+                  <progress value={upload.progress} max="100">{upload.progress}%</progress>
+                  <small className="status-label info">Subiendo...</small>
+                </>
+              )}
+              {upload.status === 'done' && (
+                <>
+                  <small className="status-label success">Subido</small>
+                  {fileUrl && (
+                    <button 
+                      type="button" 
+                      className="btn btn-sm btn-outline-info" 
+                      onClick={openFileInNewTab}
+                      title="Ver archivo"
+                    >
+                      Ver
+                    </button>
+                  )}
+                </>
+              )}
+              {upload.status === 'error' && (
+                <>
+                  <small className="status-label error">Error</small>
+                  {upload.error && (
+                    <span className="small-muted ms-2">
+                      {typeof upload.error === 'string' ? upload.error : JSON.stringify(upload.error)}
+                    </span>
+                  )}
+                </>
+              )}
+              {upload.status === 'pending' && (
+                <small className="status-label pending">Pendiente</small>
+              )}
+              <button 
+                type="button" 
+                className="btn btn-sm btn-outline-danger" 
+                onClick={removeFile}
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!hideInput && (
+        <div className="d-flex gap-2">
+          <button 
+            className="btn btn-primary" 
+            onClick={() => uploadFile()}
+            disabled={!postUrl || !selectedFile || upload.status === 'uploading' || upload.status === 'done'}
+          >
+            Subir
+          </button>
+          <button 
+            className="btn btn-secondary" 
+            onClick={clear}
+            disabled={!selectedFile}
+          >
+            Limpiar
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default UploadFile;
+

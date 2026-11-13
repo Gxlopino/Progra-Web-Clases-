@@ -11,6 +11,8 @@ import FileStore from 'session-file-store';
 import fs from 'fs';
 import crypto from 'crypto';
 
+import '../admin/models/index.js';
+
 import websiteRoutes from '../website/routes.js';
 import adminRoutes from '../admin/configs/routes.js';
 import { notFoundHandler, viewFlash, viewEnv, viewSession, viewHelpers } from './middlewares.js';

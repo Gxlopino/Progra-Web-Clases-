@@ -1,4 +1,4 @@
- // src/entries/enterprise.jsx
+// src/entries/enterprise.jsx
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
@@ -23,6 +23,9 @@ import NoEncontrado from '../pages/enterprise/NoEncontrado'
 import CarreraListado from '../pages/enterprise/CarreraListado'
 import CarreraNueva from '../pages/enterprise/CarreraNueva'
 import CarreraDetalle from '../pages/enterprise/CarreraDetalle'
+import StudentListado from '../pages/enterprise/StudentListado'
+import StudentNueva from '../pages/enterprise/StudentNueva'
+import StudentDetalle from '../pages/enterprise/StudentDetalle'
 
 import './enterprise.css'
 
@@ -93,6 +96,21 @@ function App() {
         <Route
           path="carrers/:id/edit"
           element={<CarreraDetalle />}
+        />
+
+        <Route
+          path="students"
+          element={<StudentListado />}
+        />
+
+        <Route
+          path="students/new"
+          element={<StudentNueva />}
+        />
+
+        <Route
+          path="students/:id/edit"
+          element={<StudentDetalle />}
         />
 
         <Route
