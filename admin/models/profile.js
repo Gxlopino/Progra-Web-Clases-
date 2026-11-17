@@ -19,9 +19,7 @@ const Profile = sequelize.define('Profile', {
   },
 }, {
   tableName: 'profiles',
-  timestamps: true,
-  createdAt: 'created',
-  updatedAt: 'updated',
+  timestamps: false
 });
 
 export default Profile;

@@ -117,8 +117,20 @@ export default function StudentListado() {
 
   return (
     <>
-      <h2>Estudiantes</h2>
-      <p>Bienvenido al panel del administrador</p>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <div>
+          <h2 className="mb-0">Estudiantes</h2>
+          <p className="mb-0">Bienvenido al panel del administrador</p>
+        </div>
+
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => navigate('/enterprise/students/new')}
+        >
+          Agregar estudiante
+        </button>
+      </div>
 
       {message !== '' && (
         <div className={`alert ${statusMessage ? 'alert-success' : 'alert-danger'}`} role="alert" id="alertMessage">

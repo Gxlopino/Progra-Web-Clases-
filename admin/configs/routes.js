@@ -6,6 +6,7 @@ import * as owners from '../controllers/owner_controllers.js';
 import * as enterprise from '../controllers/enterprise_controllers.js';
 import * as nationApis from '../apis/nations_apis.js';
 import * as carrers_api from '../apis/carrers_api.js';
+import * as profiles_api from '../apis/profile_api.js';
 import * as students_api from '../apis/students_api.js';
 import * as districts_api from '../apis/districts_api.js';
 import * as semesters_api from '../apis/semesters_api.js';
@@ -27,13 +28,21 @@ router.post('/api/v1/nations', nationApis.createNation);
 router.put('/api/v1/nations/:id', nationApis.updateNation);
 router.delete('/api/v1/nations/:id', nationApis.deleteNation);
 
-//Api
+// api carrers
 router.get('/api/v1/carrers', carrers_api.listCarrersSimple);
 router.post('/api/v1/carrers', carrers_api.createCarrer);
 router.delete('/api/v1/carrers/:id',carrers_api.deleteCarrer);
 router.get('/api/v1/carrers/:id', carrers_api.getCarrerById);
 router.put('/api/v1/carrers/:id', carrers_api.updateCarrer);
 
+// api profiles
+router.get('/api/v1/profiles', profiles_api.listProfilesSimple);
+router.post('/api/v1/profiles', profiles_api.createProfile);
+router.delete('/api/v1/profiles/:id', profiles_api.deleteProfile);
+router.get('/api/v1/profiles/:id', profiles_api.getProfileById);
+router.put('/api/v1/profiles/:id', profiles_api.updateProfile);
+
+// api students
 router.get('/api/v1/students', students_api.listStudents);
 router.get('/api/v1/students/:id', students_api.getStudentById);
 router.post('/api/v1/students', students_api.createStudent);
@@ -61,4 +70,7 @@ router.get('/enterprise/configuracion', enterprise.home);
 router.get('/enterprise/students', enterprise.home);
 router.get('/enterprise/students/new', enterprise.home);
 router.get('/enterprise/students/:id/edit', enterprise.home);
+router.get('/enterprise/profiles', enterprise.home);
+router.get('/enterprise/profiles/new', enterprise.home);
+router.get('/enterprise/profiles/:id/edit', enterprise.home);
 export default router;

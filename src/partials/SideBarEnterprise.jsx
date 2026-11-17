@@ -45,6 +45,14 @@ export default function SideBarEnterprise() {
           </NavLink>
 
           <NavLink
+            to="/enterprise/profiles"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Listado Perfiles
+          </NavLink>
+
+          <NavLink
             to="/enterprise/students"
             className={linkClass}
           >

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import './StudentNueva.css';
 import axios from 'axios';
@@ -21,6 +21,32 @@ export default function StudentNueva() {
   const [form, setForm] = useState(initialForm);
   const [message, setMessage] = useState('');
   const [statusMessage, setStatusMessage] = useState(false);
+  const [distritos, setDistritos] = useState([]);
+  const [carreras, setCarreras] = useState([]);
+  const [semestres, setSemestres] = useState([]);
+  const [perfiles, setPerfiles] = useState([]);
+
+  useEffect(() => {
+    const _cargarCatalogos = async () => {
+      try {
+        const [distritosRes, carrerasRes, semestresRes, perfilesRes] = await Promise.all([
+          axios.get('/api/v1/districts'),
+          axios.get('/api/v1/carrers'),
+          axios.get('/api/v1/semesters'),
+          axios.get('/api/v1/profiles')
+        ]);
+
+        setDistritos(distritosRes.data?.data || []);
+        setCarreras(carrerasRes.data?.data || []);
+        setSemestres(semestresRes.data?.data || []);
+        setPerfiles(perfilesRes.data?.data || []);
+      } catch (error) {
+        console.error('Error cargando catálogos de estudiante', error);
+      }
+    };
+
+    _cargarCatalogos();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,7 +60,7 @@ export default function StudentNueva() {
       ...form,
       district_id: form.district_id ? Number(form.district_id) : null,
       carrere_id: form.carrere_id ? Number(form.carrere_id) : null,
-      sementer_id: form.semeter_id ? Number(form.semeter_id) : null,
+      sementer_id: form.sementer_id ? Number(form.sementer_id) : null,
       user_id: form.user_id ? Number(form.user_id) : null,
       phone: form.phone || null,
       picture_url: form.picture_url || null,
@@ -134,52 +160,68 @@ export default function StudentNueva() {
         <div className="row">
           <div className="col-md-4 mb-3">
             <label htmlFor="district_id" className="form-label">Distrito</label>
-            <input
-              type="number"
+            <select
               id="district_id"
               name="district_id"
               className="form-control"
               value={form.district_id}
               onChange={handleChange}
-            />
+            >
+              <option value="">Selecciona un distrito</option>
+              {distritos.map((item) => (
+                <option key={item.id} value={item.id}>{item.name}</option>
+              ))}
+            </select>
           </div>
 
           <div className="col-md-4 mb-3">
             <label htmlFor="carrere_id" className="form-label">Carrera</label>
-            <input
-              type="number"
+            <select
               id="carrere_id"
               name="carrere_id"
               className="form-control"
               value={form.carrere_id}
               onChange={handleChange}
-            />
+            >
+              <option value="">Selecciona una carrera</option>
+              {carreras.map((item) => (
+                <option key={item.id} value={item.id}>{item.name}</option>
+              ))}
+            </select>
           </div>
 
           <div className="col-md-4 mb-3">
-            <label htmlFor="semeter_id" className="form-label">Semestre</label>
-            <input
-              type="number"
-              id="semeter_id"
-              name="semeter_id"
+            <label htmlFor="sementer_id" className="form-label">Semestre</label>
+            <select
+              id="sementer_id"
+              name="sementer_id"
               className="form-control"
-              value={form.semeter_id}
+              value={form.sementer_id}
               onChange={handleChange}
-            />
+            >
+              <option value="">Selecciona un semestre</option>
+              {semestres.map((item) => (
+                <option key={item.id} value={item.id}>{item.name}</option>
+              ))}
+            </select>
           </div>
         </div>
 
         <div className="row">
           <div className="col-md-6 mb-3">
             <label htmlFor="user_id" className="form-label">Usuario</label>
-            <input
-              type="number"
+            <select
               id="user_id"
               name="user_id"
               className="form-control"
               value={form.user_id}
               onChange={handleChange}
-            />
+            >
+              <option value="">Selecciona un usuario</option>
+              {perfiles.map((item) => (
+                <option key={item.id} value={item.user_id}>{item.user_id} - {item.name}</option>
+              ))}
+            </select>
           </div>
 
           <div className="col-md-6 mb-3">

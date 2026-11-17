@@ -1,0 +1,8 @@
+.enterprise-student-list {
+  width: 100%;
+}
+
+.enterprise-student-actions {
+  display: flex;
+  gap: 8px;
+}
