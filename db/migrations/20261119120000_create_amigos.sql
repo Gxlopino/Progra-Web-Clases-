@@ -1,0 +1,10 @@
+-- migrate:up
+CREATE TABLE IF NOT EXISTS amigos (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(30) NOT NULL,
+    apellido VARCHAR(30) NOT NULL,
+    celular VARCHAR(15) NOT NULL
+);
+
+-- migrate:down
+DROP TABLE IF EXISTS amigos CASCADE;

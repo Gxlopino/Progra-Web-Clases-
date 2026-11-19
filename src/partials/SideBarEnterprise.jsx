@@ -1,5 +1,4 @@
 // src/partials/SideBarEnterprise.jsx
- 
 import { NavLink } from 'react-router-dom'
 import './SideBarEnterprise.css'
 
@@ -58,6 +57,14 @@ export default function SideBarEnterprise() {
           >
             <span className="enterprise-sidebar-bullet" />
             Listado Estudiantes
+          </NavLink>
+
+          <NavLink
+            to="/enterprise/amigos"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Listado Amigos
           </NavLink>
 
           <NavLink

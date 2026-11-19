@@ -29,6 +29,9 @@ import StudentDetalle from '../pages/enterprise/StudentDetalle'
 import PerfilListado from '../pages/enterprise/PerfilListado'
 import PerfilNueva from '../pages/enterprise/PerfilNueva'
 import PerfilDetalle from '../pages/enterprise/PeriflDetalle'
+import AmigoListado from '../pages/enterprise/AmigoListado'
+import AmigoNueva from '../pages/enterprise/AmigoNueva'
+import AmigoDetalle from '../pages/enterprise/AmigoDetalle'
 
 import './enterprise.css'
 
@@ -129,6 +132,21 @@ function App() {
         <Route
           path="profiles/:id/edit"
           element={<PerfilDetalle />}
+        />
+
+        <Route
+          path="amigos"
+          element={<AmigoListado />}
+        />
+
+        <Route
+          path="amigos/new"
+          element={<AmigoNueva />}
+        />
+
+        <Route
+          path="amigos/:id/edit"
+          element={<AmigoDetalle />}
         />
 
         <Route
