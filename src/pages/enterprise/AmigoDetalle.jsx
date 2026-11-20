@@ -1,5 +1,3 @@
-// src/pages/enterprise/AmigoDetalle.jsx
-
 import { useState, useEffect } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import './AmigoDetalle.css';
@@ -11,50 +9,35 @@ export default function AmigoDetalle() {
   const [apellido, setApellido] = useState("");
   const [celular, setCelular] = useState("");
   const [name, setName] = useState("");
-  const {id}= useParams();
+  const { id } = useParams();
 
-  const _obtenerAmigo = async ()=> {
-    if(id!==undefined){
+  const _obtenerAmigo = async () => {
+    if (id !== undefined) {
       try {
-        const response = await axios.get('/api/v1/amigos/'+id);
-        console.log(response.data);
-        setName(response.data.data.name)
-        setApellido(response.data.data.apellido)
-        setCelular(response.data.data.celular)
-      }catch (error) {
+        const response = await axios.get('/api/v1/amigos/' + id);
+        setName(response.data.data.name);
+        setApellido(response.data.data.apellido);
+        setCelular(response.data.data.celular);
+      } catch (error) {
         console.error(error);
       }
     }
-  }
+  };
 
-    useEffect(()=> {
-  _obtenerAmigo();
-  },[id]);
+  useEffect(() => {
+    _obtenerAmigo();
+  }, [id]);
 
   const _guardarAmigo = async (e) => {
     e.preventDefault();
 
     try {
-      let response;
-      if(id===undefined){
-        response = await axios.post('/api/v1/amigos', {
+      const response = await axios.put('/api/v1/amigos/' + id, {
         name: name,
-        apellido:apellido,
-        celular:celular
+        apellido: apellido,
+        celular: celular
       });
-        if (response.data.success) {
-          setName("")
-          setApellido("")
-          setCelular("");
-        }
-      }else{
-        response = await axios.put('/api/v1/amigos/'+id, {
-        name: name,
-        apellido:apellido,
-        celular:celular
-      });
-      }
-      
+
       setMessage(response.data.message);
       setStatusMessage(response.data.success);
 
@@ -62,7 +45,7 @@ export default function AmigoDetalle() {
       console.error(error);
 
       setMessage(
-        error.response?.data?.message || "Error al registrar la Amigo"
+        error.response?.data?.message || "Error al actualizar el amigo"
       );
       setStatusMessage(false);
     }
@@ -87,12 +70,10 @@ export default function AmigoDetalle() {
       </NavLink>
 
       <form onSubmit={_guardarAmigo}>
-
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Nombre del Amigo
           </label>
-
           <input
             type="text"
             id="name"
@@ -103,13 +84,13 @@ export default function AmigoDetalle() {
             maxLength={30}
             required
           />
-          <label htmlFor="name" className="form-label">
+
+          <label htmlFor="apellido" className="form-label mt-2">
             Apellido del Amigo
           </label>
-
           <input
             type="text"
-            id="name"
+            id="apellido"
             className="form-control"
             placeholder="Ingrese el apellido del Amigo"
             value={apellido}
@@ -117,19 +98,18 @@ export default function AmigoDetalle() {
             maxLength={30}
             required
           />
-          
-          <label htmlFor="name" className="form-label">
+
+          <label htmlFor="celular" className="form-label mt-2">
             Celular del Amigo
           </label>
-
           <input
             type="text"
-            id="name"
+            id="celular"
             className="form-control"
             placeholder="Ingrese el celular del Amigo"
             value={celular}
             onChange={(e) => setCelular(e.target.value)}
-            maxLength={30}
+            maxLength={15}
             required
           />
         </div>
@@ -137,7 +117,6 @@ export default function AmigoDetalle() {
         <button type="submit" className="btn btn-primary">
           Guardar Amigo
         </button>
-
       </form>
     </>
   );

@@ -11,6 +11,8 @@ import * as students_api from '../apis/students_api.js';
 import * as districts_api from '../apis/districts_api.js';
 import * as semesters_api from '../apis/semesters_api.js';
 import * as amigos_api from '../apis/amigos_api.js';
+import * as amigos2_api from '../apis/amigos2_api.js';
+import * as users_api from '../apis/users_api.js';
 import { redirectIfAuthenticated, requireAuth,soloEnterprise,soloLogueado,soloOwner } from '../../configs/middlewares.js'; 
 
 const router = Router();
@@ -57,6 +59,15 @@ router.post('/api/v1/amigos', amigos_api.createamigos);
 router.put('/api/v1/amigos/:id', amigos_api.updateamigos);
 router.delete('/api/v1/amigos/:id', amigos_api.deleteamigos);
 
+// api amigos2
+router.get('/api/v1/amigos2', amigos2_api.listAmigos2);
+router.get('/api/v1/amigos2/:id', amigos2_api.getAmigo2ById);
+router.post('/api/v1/amigos2', amigos2_api.createAmigo2);
+router.put('/api/v1/amigos2/:id', amigos2_api.updateAmigo2);
+router.delete('/api/v1/amigos2/:id', amigos2_api.deleteAmigo2);
+router.get('/api/v1/users', users_api.listUsersSimple);
+
+
 router.get('/api/v1/districts', districts_api.listDistricts);
 router.get('/api/v1/semesters', semesters_api.listSemesters);
 
@@ -84,4 +95,7 @@ router.get('/enterprise/profiles/:id/edit', enterprise.home);
 router.get('/enterprise/amigos', enterprise.home);
 router.get('/enterprise/amigos/new', enterprise.home);
 router.get('/enterprise/amigos/:id/edit', enterprise.home);
+router.get('/enterprise/amigos2', enterprise.home);
+router.get('/enterprise/amigos2/new', enterprise.home);
+router.get('/enterprise/amigos2/:id/edit', enterprise.home);
 export default router;

@@ -32,6 +32,9 @@ import PerfilDetalle from '../pages/enterprise/PeriflDetalle'
 import AmigoListado from '../pages/enterprise/AmigoListado'
 import AmigoNueva from '../pages/enterprise/AmigoNueva'
 import AmigoDetalle from '../pages/enterprise/AmigoDetalle'
+import Amigo2Listado from '../pages/enterprise/Amigo2Listado'
+import Amigo2Nueva from '../pages/enterprise/Amigo2Nueva'
+import Amigo2Detalle from '../pages/enterprise/Amigo2Detalle'
 
 import './enterprise.css'
 
@@ -147,6 +150,18 @@ function App() {
         <Route
           path="amigos/:id/edit"
           element={<AmigoDetalle />}
+        />
+
+        <Route
+        path="amigos2" element={<Amigo2Listado />}
+        />
+
+        <Route
+        path="amigos2/new" element={<Amigo2Nueva />}
+        />
+
+        <Route
+        path="amigos2/:id/edit" element={<Amigo2Detalle />}
         />
 
         <Route

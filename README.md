@@ -1,193 +1,331 @@
-# Plantilla del Curso de Programación Web 
+# Plataforma de Empleo
 
-2026-2
+Aplicacion web full-stack para gestionar carreras, perfiles, estudiantes, empresas, convocatorias y postulaciones.
 
----
+El proyecto combina:
 
-## Descripción del Proyecto
+- React 18 y Vite para las interfaces del panel.
+- Node.js y Express para el servidor y las APIs.
+- PostgreSQL, compatible con Supabase, como base de datos.
+- Sequelize para el acceso desde la aplicacion.
+- Dbmate para las migraciones SQL.
+- EJS para las vistas servidas por Express.
 
-Esta plantilla implementa una aplicación web full-stack utilizando React.js + Vite para el frontend y Node.js + Express para el backend. El proyecto está organizado para separar la interfaz, lógica de negocio, acceso a datos y configuración, permitiendo desarrollar tanto el sitio web como un panel administrativo.
+## Requisitos
 
-La aplicación utiliza Supabase como base de datos y dispone de migraciones SQL para gestionar su estructura y datos iniciales. Además, incluye configuración para Vercel, vistas EJS para páginas del servidor y una API organizada mediante controladores, servicios y repositorios.
+- Node.js 18 o superior.
+- npm.
+- PostgreSQL o un proyecto de Supabase.
+- Git, si se desea trabajar con el repositorio.
 
-| Carpeta | Descripción |
-|---|---|
-| `admin/` | Lógica del panel administrativo: APIs, controladores, modelos, repositorios y servicios. |
-| `api/` | Punto de entrada de la API del servidor. |
-| `configs/` | Configuración general, base de datos, middlewares y funciones auxiliares. |
-| `db/` | Esquema y migraciones SQL de la base de datos Supabase. |
-| `docs/` | Documentación técnica, incluyendo el diagrama de la base de datos. |
-| `public/` | Archivos públicos y recursos estáticos. |
-| `src/` | Aplicación React: páginas, componentes, estilos, helpers y entradas de la aplicación. |
-| `views/` | Plantillas EJS para las páginas renderizadas por Express. |
-| `website/` | Lógica del sitio web: APIs, controladores, modelos, repositorios, rutas y servicios. |
-| `server.js` | Archivo principal para iniciar y configurar el servidor Express. |
+## Instalacion
 
-## Comandos Git
+Desde la carpeta raiz del proyecto:
 
-Descargar Git [Enlace](https://git-scm.com/install/windows)
+```bash
+npm install
+```
 
-![Sitio web de descarga](./docs/gitwindows.png)
-## Crear proyecto git
+Crea un archivo `.env` en la raiz. No subas este archivo al repositorio porque contiene credenciales.
 
-    >git init
+```env
+NODE_ENV=development
+PORT=3000
 
-## Pasos para guardar el proyecto en git
+DB_HOST=localhost
+DB_PORT=5432
+DB_NAME=postgres
+DB_USER=postgres
+DB_PASS=tu_contrasena
+DB_SSL=false
 
-    >git status
-    >git add . o "Nombre del archivo"
-    >git restore . o "Nombre del archivo"
-    >git commit -m "Titulo"
-    >git log --oneline
+SESSION_SECRET=una-clave-local
+CORS_ORIGIN=http://localhost:3000
+SHOW_DB_ERRORS=true
+```
 
-## Logearse
+Para Supabase, usa los datos de conexion de tu proyecto y normalmente configura:
 
-    >git config --global user.name "tu nombre"
-    >git config --global user.email "tu correo"
+```env
+DB_SSL=true
+```
 
-## Crear rama
-    
-    >git checkout -b "nombre de la dimension 2XD"
+## Base de datos
 
-## Ver rama
+Las migraciones se encuentran en `db/migrations/` y utilizan los comentarios `-- migrate:up` y `-- migrate:down`.
 
-    >git branch
+Aplicar las migraciones pendientes:
 
-## Regresar a rama
+```bash
+npm run db:up
+```
 
-    >git checkout master
+Crear una migracion nueva:
 
-## Ir a una etapa del git
+```bash
+npm run db:new -- nombre_de_la_migracion
+```
 
-    >git reset --hard "id del commit"
+Revertir la ultima migracion:
 
-## Subir a tu github personal
+```bash
+npm run db:rollback
+```
 
-    >git remote set-url origin git@github:usuario/repositorio.git
+Actualizar el archivo `db/schema.sql` desde la base de datos:
 
-## Instalar dependencias:
+```bash
+npm run db:dump
+```
 
-Para esto tenemos que instalar node.js (variable de entorono de ser necesario)
+Crear un volcado completo de datos:
 
-    npm install (en la carpeta de tu proyecto)
+```bash
+npm run db:dumpdata
+```
 
-## Correr dependencia:
+Dbmate registra las migraciones aplicadas en la tabla `schema_migrations`. Si editas una migracion que ya fue aplicada, sus cambios no se ejecutaran otra vez. En ese caso crea una nueva migracion.
 
-    npm run dev (se corre el front y backend)
+## Ejecutar el proyecto
 
-## Crear html:
+### Desarrollo en Windows
 
-    html:5 (en un archivo creado y se crea una base)
+En una terminal, genera el frontend:
 
-## 🎨 Resumen de propiedades CSS
+```bash
+npx vite build
+```
 
-| Propiedad               | Valores utilizados                  | Diferencia clave                                                                                                    |
-| ----------------------- | ----------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `display`               | `block`                             | Hace que el elemento se comporte como un bloque y ocupe una línea completa.                                         |
-| `margin`                | `0 auto` / `10px auto`              | `0 auto` no agrega margen vertical; `10px auto` agrega 10px arriba y abajo. `auto` permite centrar horizontalmente. |
-| `width`                 | `385px` / `203px`                   | Define el ancho del elemento. `.form` tiene 385px y `.logo` 203px.                                                  |
-| `height`                | `100vh` / `50px`                    | `100vh` ocupa el 100% de la altura de la ventana; `50px` establece una altura fija.                                 |
-| `background-color`      | `rgba(255, 255, 255, 0.8)`          | Define un fondo blanco con 80% de opacidad.                                                                         |
-| `background-image`      | `url("/assets/img/Ulimafondo.png")` | Establece una imagen como fondo.                                                                                    |
-| `background-size`       | `cover`                             | Hace que la imagen cubra todo el contenedor, pudiendo recortar parte de ella.                                       |
-| `background-position`   | `center`                            | Centra la imagen de fondo.                                                                                          |
-| `background-repeat`     | `no-repeat`                         | Evita que la imagen de fondo se repita.                                                                             |
-| `background-attachment` | `fixed`                             | Mantiene la imagen de fondo fija al desplazarse.                                                                    |
-| `padding-top`           | `50px`                              | Agrega 50px de espacio interno en la parte superior.                                                                |
-| `text-align`            | `center` / `justify`                | `center` centra el texto; `justify` distribuye el texto para alinear ambos extremos.                                |
-| `justify-content`       | `center`                            | Centra el contenido en el eje principal cuando se utiliza Flexbox.                                                  |
-| `align-items`           | `center`                            | Centra los elementos en el eje transversal cuando se utiliza Flexbox.                                               |
-| `padding`               | `10px`                              | Agrega espacio interno en los 4 lados del elemento (a diferencia de `padding-top`, que solo afecta arriba).         |
-| `border`                | `#343434 1px solid`                 | Shorthand que define color, grosor y estilo del borde en una sola línea.                                            |
-| `border-radius`         | `0px`                               | Controla qué tan redondeadas son las esquinas del elemento (`0px` = esquinas totalmente rectas).                    |
-| `box-sizing`            | `border-box`                        | Hace que el padding y el borde se incluyan dentro del `width` definido, en vez de sumarse por fuera.                |
-| `background`            | `#121314`                           | Shorthand que puede definir color, imagen, posición, etc. de fondo en una sola propiedad.                           |
-| `color`                 | `aliceblue`                         | Define el color del texto del elemento.                                                                             |
+En otra terminal, inicia Express:
 
-## 📌 Clases utilizadas
+```bash
+npm run dev-server
+```
 
-### `.form`
+El servidor queda disponible en:
 
-Es el contenedor principal del formulario.
+```text
+http://localhost:3000
+```
 
-* `width: 300px`
-* `background-color: rgba(255, 255, 255, 0.8)`
-* `margin: 0 auto`
-* `padding-top: 50px`
-* `margin-top: 80px`
+El comando previsto para levantar frontend y backend juntos es:
 
-**Diferencia clave:** permite crear un panel de 300px de ancho, centrado horizontalmente y con un fondo semitransparente.
+```bash
+npm run dev
+```
 
-### `.logo`
+Si ese comando falla en Windows por `mkdir -p`, usa las dos instrucciones anteriores o ejecuta directamente `npx vite build`.
 
-Controla la posición y tamaño del logo.
+### Compilacion de produccion
 
-* `display: block`
-* `margin: auto`
-* `width: 203px`
-* `height: 50px`
+```bash
+npx vite build
+```
 
-**Diferencia clave:** utiliza `margin: auto` para centrar la imagen.
+Los archivos compilados se generan en `public/dist/`.
 
-### `.centro`
+Para revisar el build con Vite:
 
-Busca centrar el contenido del enlace.
+```bash
+npm run preview
+```
 
-* `display: block`
-* `justify-content: center`
-* `align-items: center`
-* `text-align: center`
+## Arquitectura
 
-**Diferencia clave:** `text-align: center` sí centra directamente el texto. En cambio, `justify-content` y `align-items` normalmente requieren `display: flex` para funcionar.
+```text
+admin/
+  apis/          Handlers HTTP de los endpoints administrativos.
+  configs/       Registro de rutas del panel y la API.
+  controllers/   Controladores del panel y respuestas HTTP.
+  models/        Modelos Sequelize.
+  repositories/  Consultas y operaciones sobre la base de datos.
+  services/      Logica de negocio.
 
-### `.input`
+api/             Entrada de la funcion para despliegues serverless.
+configs/         Base de datos, middlewares y bootstrap de Express.
+db/
+  migrations/    Migraciones ejecutables con Dbmate.
+  schema.sql     Volcado del esquema de la base de datos.
+docs/            Diagramas y documentacion de la base de datos.
+public/          Archivos publicos y bundles compilados.
+src/
+  entries/       Entradas React para cada panel o sitio.
+  pages/         Paginas de React.
+  partials/      Cabecera, sidebar, footer y componentes compartidos.
+  helpers/       Funciones auxiliares del frontend.
+  widgets/       Componentes reutilizables.
+views/           Plantillas EJS renderizadas por Express.
+website/         Logica del sitio publico.
+server.js        Punto de entrada del servidor local.
+vite.config.js   Configuracion de Vite y sus entradas.
+vercel.json      Configuracion de despliegue en Vercel.
+```
 
-Da estilo a los campos de texto del formulario (usuario y contraseña).
+## Flujo de una solicitud
 
-* `display: block`
-* `border: #343434 1px solid`
-* `border-radius: 0px`
-* `width: 90%`
-* `padding: 10px`
-* `background-color: rgba(255, 255, 255, 0)`
-* `box-sizing: border-box`
+En el panel administrativo, una solicitud normalmente sigue este recorrido:
 
-**Diferencia clave:** `box-sizing: border-box` hace que el padding y el borde queden *dentro* del 90% de ancho definido, en vez de sumarse aparte y desbordar el contenedor. El fondo con alpha en `0` lo deja transparente, dejando ver el fondo semitransparente de `.form`.
+```text
+React
+  -> ruta HTTP
+  -> API o controlador
+  -> service
+  -> repository
+  -> modelo Sequelize
+  -> PostgreSQL
+```
 
-### `.bing`
+Las rutas de la API se registran principalmente en `admin/configs/routes.js`.
 
-Da estilo al botón de "Iniciar sesión".
+## API principal
 
-* `border-radius: 0px`
-* `width: 75%`
-* `padding: 10px`
-* `background: #121314`
-* `color: aliceblue`
+La base de las rutas administrativas es `/api/v1`.
 
-**Diferencia clave:** usa `background` (oscuro) junto con `color` (claro) para lograr contraste de texto legible, a diferencia de `.input`, que usa fondo transparente.
+| Recurso | GET lista | GET detalle | POST | PUT | DELETE |
+|---|---|---|---|---|---|
+| Naciones | `/api/v1/nations` | `/api/v1/nations/:id` | Si | Si | Si |
+| Carreras | `/api/v1/carrers` | `/api/v1/carrers/:id` | Si | Si | Si |
+| Perfiles | `/api/v1/profiles` | `/api/v1/profiles/:id` | Si | Si | Si |
+| Estudiantes | `/api/v1/students` | `/api/v1/students/:id` | Si | Si | Si |
+| Amigos | `/api/v1/amigos` | `/api/v1/amigos/:id` | Si | Si | Si |
+| Distritos | `/api/v1/districts` | No disponible | No disponible | No disponible | No disponible |
+| Semestres | `/api/v1/semesters` | No disponible | No disponible | No disponible | No disponible |
 
-## 🏷️ Selectores HTML
+Ejemplo para listar carreras:
 
-También se aplican estilos directamente a etiquetas:
+```bash
+curl http://localhost:3000/api/v1/carrers
+```
 
-* `body` → controla el fondo y tamaño general de la página.
-* `label` → organiza las etiquetas como bloques.
-* `input` → organiza los campos y botones mediante márgenes.
-* `button` → centra el botón y agrega separación.
-* `h1` → agrega margen al título.
-* `p` → agrega margen y justifica el comunicado.
-* `small` → convierte el texto pequeño en bloque y agrega margen.
+Ejemplo para crear un amigo:
 
-## 🔑 Diferencias importantes
+```bash
+curl -X POST http://localhost:3000/api/v1/amigos ^
+  -H "Content-Type: application/json" ^
+  -d "{\"name\":\"Alain\",\"apellido\":\"Choy\",\"celular\":\"987654321\"}"
+```
 
-* **`margin` vs `padding`**: `margin` crea espacio **fuera** del elemento; `padding` crea espacio **dentro**.
-* **`width` vs `height`**: `width` controla el ancho; `height` controla la altura.
-* **`text-align` vs `justify-content`**: `text-align` alinea texto; `justify-content` distribuye elementos dentro de un contenedor Flexbox.
-* **`background-image` vs `background-color`**: uno utiliza una imagen como fondo y el otro establece un color.
-* **`display: block / flex`**: `block` organiza el elemento como bloque; `flex` permite organizar y alinear elementos mediante Flexbox.
-* **Selector de etiqueta vs. selector de clase**: un selector de clase (`.input`, `.bing`) tiene más especificidad que uno de etiqueta (`input`, `button`). Por eso, aunque `input` y `button` ya definen `margin: 10px auto`, las clases `.input` y `.bing` pueden agregar o sobreescribir propiedades (como `border`, `padding`, `background`) sin necesidad de tocar el selector genérico.
+En PowerShell se puede usar `curl.exe` o `Invoke-RestMethod`.
 
+## Paneles y rutas React
 
+El frontend tiene entradas independientes configuradas en `vite.config.js`:
+
+- `web`: sitio publico.
+- `admin`: panel administrativo.
+- `owner`: panel del propietario.
+- `enterprise`: panel de la empresa.
+
+Rutas relevantes del panel de empresa:
+
+- `/enterprise`
+- `/enterprise/carrers`
+- `/enterprise/profiles`
+- `/enterprise/students`
+- `/enterprise/amigos`
+- `/enterprise/convocatorias`
+- `/enterprise/postulantes`
+- `/enterprise/perfil`
+- `/enterprise/resenas`
+
+Cuando se agrega una pagina React, se debe verificar que exista la cadena completa:
+
+1. Componente en `src/pages/enterprise/`.
+2. Import en `src/entries/enterprise.jsx`.
+3. Ruta React dentro de `enterprise.jsx`.
+4. Enlace en el sidebar, si corresponde.
+5. Endpoint backend si la pagina consulta datos.
+6. Nuevo build con `npx vite build`.
+
+## Modelos y base de datos
+
+Los modelos Sequelize deben usar el mismo nombre que las tablas PostgreSQL. Por ejemplo:
+
+```js
+{
+  tableName: 'amigos',
+  timestamps: false
+}
+```
+
+Las columnas de la tabla `amigos` son:
+
+- `id`
+- `name`
+- `apellido`
+- `celular`
+
+Al cambiar la estructura de una tabla, crea una migracion nueva y despues ejecuta:
+
+```bash
+npm run db:up
+```
+
+## Calidad y comprobaciones
+
+Ejecutar el linter:
+
+```bash
+npm run lint
+```
+
+Construir el frontend para detectar imports, errores de JSX y problemas de Vite:
+
+```bash
+npx vite build
+```
+
+Comprobar manualmente un endpoint:
+
+```bash
+curl http://localhost:3000/api/v1/amigos
+```
+
+Si una pagina aparece en blanco:
+
+1. Revisa la consola del navegador.
+2. Comprueba que el endpoint responda con estado 200.
+3. Ejecuta `npx vite build`.
+4. Reinicia `npm run dev-server`.
+5. Recarga con `Ctrl + F5`.
+
+## Despliegue en Vercel
+
+Instala la CLI e inicia sesion:
+
+```bash
 npm install -g vercel
 vercel login
+```
+
+Configura en Vercel las variables de entorno de la base de datos y la sesion. Despues despliega:
+
+```bash
 vercel --prod
+```
+
+`vercel.json` configura el build estatico de `public/dist` y la funcion serverless `api/index.js`.
+
+## Convenciones recomendadas
+
+- Usa nombres consistentes entre tabla, modelo, repositorio, servicio y endpoint.
+- No guardes contrasenas, tokens ni archivos `.env` en Git.
+- No edites una migracion que ya fue aplicada; crea otra.
+- Valida los campos obligatorios antes de insertarlos.
+- Mantiene las consultas en repositories y la logica de negocio en services.
+- Verifica el build despues de cambiar imports o rutas React.
+
+## Git basico
+
+```bash
+git status
+git add .
+git commit -m "Descripcion del cambio"
+git log --oneline
+git branch
+git switch -c nombre-de-la-rama
+```
+
+## Licencia
+
+No se ha definido una licencia para este proyecto.

@@ -21,10 +21,16 @@ import StudentApplicationSaved from './student_application_saved.js';
 import StudentSkillSkillLevel from './student_skill_skil_level.js';
 import ApplicationSkill from './application_skill.js';
 import ApplicationCarrer from './application_carrer.js';
+import Amigos from './amigos.js';
+import Amigos2 from './amigos2.js';
 
 // ==========================================
 // 1. RELACIONES DE PERFIL Y USUARIO
 // ==========================================
+
+// User -> Amigos2 (1:1)
+User.hasOne(Amigos2, { foreignKey: 'user_id', as: 'amigo2' });
+Amigos2.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
 
 // User -> Profile (1:1)
 User.hasOne(Profile, { foreignKey: 'user_id', as: 'profile' });
@@ -240,4 +246,5 @@ export {
   StudentSkillSkillLevel,
   ApplicationSkill,
   ApplicationCarrer,
+  Amigos2,
 };

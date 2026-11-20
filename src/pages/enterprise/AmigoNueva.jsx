@@ -1,5 +1,3 @@
-// src/pages/enterprise/amigoNueva.jsx
-
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './AmigoNueva.css';
@@ -26,8 +24,8 @@ export default function AmigoNueva() {
       setStatusMessage(response.data.success);
 
       if (response.data.success) {
-        setName("")
-        setApellido("")
+        setName("");
+        setApellido("");
         setCelular("");
       }
 
@@ -43,7 +41,7 @@ export default function AmigoNueva() {
 
   return (
     <>
-      <h1>amigo Nuevo</h1>
+      <h1>Amigo Nuevo</h1>
 
       {message !== "" && (
         <div
@@ -60,12 +58,10 @@ export default function AmigoNueva() {
       </NavLink>
 
       <form onSubmit={_agregaramigo}>
-
         <div className="mb-3">
           <label htmlFor="name" className="form-label">
             Nombre del Amigo
           </label>
-
           <input
             type="text"
             id="name"
@@ -76,13 +72,13 @@ export default function AmigoNueva() {
             maxLength={30}
             required
           />
-          <label htmlFor="name" className="form-label">
+
+          <label htmlFor="apellido" className="form-label mt-2">
             Apellido del Amigo
           </label>
-
           <input
             type="text"
-            id="name"
+            id="apellido"
             className="form-control"
             placeholder="Ingrese el apellido del Amigo"
             value={apellido}
@@ -90,19 +86,18 @@ export default function AmigoNueva() {
             maxLength={30}
             required
           />
-          
-          <label htmlFor="name" className="form-label">
+
+          <label htmlFor="celular" className="form-label mt-2">
             Celular del Amigo
           </label>
-
           <input
             type="text"
-            id="name"
+            id="celular"
             className="form-control"
             placeholder="Ingrese el celular del Amigo"
             value={celular}
             onChange={(e) => setCelular(e.target.value)}
-            maxLength={30}
+            maxLength={15}
             required
           />
         </div>
@@ -110,7 +105,6 @@ export default function AmigoNueva() {
         <button type="submit" className="btn btn-primary">
           Guardar amigo
         </button>
-
       </form>
     </>
   );

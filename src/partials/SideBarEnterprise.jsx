@@ -68,6 +68,14 @@ export default function SideBarEnterprise() {
           </NavLink>
 
           <NavLink
+            to="/enterprise/amigos2"
+            className={linkClass}
+          >
+            <span className="enterprise-sidebar-bullet" />
+            Listado Amigos 2
+          </NavLink>
+
+          <NavLink
             to="/enterprise/postulantes"
             className={linkClass}
           >
