@@ -4,7 +4,9 @@ import '../models/index.js';
 
 const amigos2Relations = [
   {
-    model: User, as: 'user'
+    model: User,
+    as: 'user',
+    attributes: ['id', 'email', 'created', 'updated']
   }
 ];
 

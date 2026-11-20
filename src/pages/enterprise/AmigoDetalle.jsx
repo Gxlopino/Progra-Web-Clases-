@@ -6,6 +6,7 @@ import axios from 'axios';
 export default function AmigoDetalle() {
   const [message, setMessage] = useState("");
   const [statusMessage, setStatusMessage] = useState(false);
+  const [email, setEmail] = useState("");
   const [apellido, setApellido] = useState("");
   const [celular, setCelular] = useState("");
   const [name, setName] = useState("");
